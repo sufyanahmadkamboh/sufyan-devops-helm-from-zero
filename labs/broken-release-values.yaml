@@ -1,0 +1,13 @@
+# Lab 15: a values file with mistakes in it, on purpose. Do not use it as an example.
+environment: dev
+replicaCount: 1
+image:
+  tag: "1.0"
+containerPort: 3000
+ingress:
+  enabled: true
+  hosts:
+    - host: trouble.localhost
+      paths:
+        - path: /
+          pathType: Prefix

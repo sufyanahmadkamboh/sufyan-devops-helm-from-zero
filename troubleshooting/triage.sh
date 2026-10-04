@@ -20,7 +20,7 @@ section "values supplied by the user"
 helm get values "$release" --namespace "$ns" 2>&1
 
 section "pods"
-kubectl get pods --namespace "$ns" -l "$selector" -o wide 2>&1 | cut -c1-140
+kubectl get pods --namespace "$ns" -l "$selector" 2>&1
 
 section "workloads and services"
 kubectl get deployments,statefulsets,services,ingresses --namespace "$ns" -l "$selector" 2>&1
