@@ -1,0 +1,14 @@
+kubectl logs --namespace lab-13 job/hooks-pre-delete
+kubectl get jobs,configmaps --namespace lab-13
+---
+pre-delete hook · release hooks · revision 2 · 23:05:31
+NAME                           STATUS     COMPLETIONS   DURATION   AGE
+job.batch/hooks-post-install   Complete   1/1           3s         14s
+job.batch/hooks-post-upgrade   Complete   1/1           3s         7s
+job.batch/hooks-pre-delete     Complete   1/1           3s         3s
+job.batch/hooks-pre-install    Complete   1/1           6s         20s
+job.batch/hooks-pre-upgrade    Complete   1/1           3s         11s
+
+NAME                         DATA   AGE
+configmap/kube-root-ca.crt   1      20s
+# exit 0

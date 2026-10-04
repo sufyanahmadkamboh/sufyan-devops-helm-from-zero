@@ -1,0 +1,5 @@
+helm test shop --namespace bookshop-dev --logs | tail -3
+---
+frontend environment: dev
+all checks passed
+# exit 0

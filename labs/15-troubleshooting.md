@@ -68,14 +68,14 @@ bash troubleshooting/triage.sh mystery trouble
 
 == helm status
 NAME: mystery
-LAST DEPLOYED: Mon Oct  5 00:28:05 2026
+LAST DEPLOYED: Mon Oct  5 01:18:20 2026
 STATUS: failed
 REVISION: 1
 DESCRIPTION: Release "mystery" failed: resource Deployment/trouble/mystery-demo-app not ready. status: InProgress, message: Available: 0/1
 
 == helm history (last 3)
 REVISION	UPDATED                 	STATUS	CHART         	APP VERSION	DESCRIPTION                                                             
-1       	Mon Oct  5 00:28:05 2026	failed	demo-app-1.0.0	1.0.0      	Release "mystery" failed: resource Deployment/trouble/mystery-demo-app n
+1       	Mon Oct  5 01:18:20 2026	failed	demo-app-1.0.0	1.0.0      	Release "mystery" failed: resource Deployment/trouble/mystery-demo-app n
 
 == values supplied by the user
 USER-SUPPLIED VALUES:
@@ -94,26 +94,26 @@ replicaCount: 1
 
 == pods
 NAME                               READY   STATUS         RESTARTS   AGE
-mystery-demo-app-7797dc4f8-t4dlq   0/1     ErrImagePull   0          61s
+mystery-demo-app-7797dc4f8-nhlnq   0/1     ErrImagePull   0          61s
 
 == workloads and services
 NAME                               READY   UP-TO-DATE   AVAILABLE   AGE
 deployment.apps/mystery-demo-app   0/1     1            0           61s
 
-NAME                       TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)    AGE
-service/mystery-demo-app   ClusterIP   10.96.78.138   <none>        8080/TCP   61s
+NAME                       TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
+service/mystery-demo-app   ClusterIP   10.96.181.140   <none>        8080/TCP   61s
 
 NAME                                         CLASS     HOSTS               ADDRESS   PORTS   AGE
 ingress.networking.k8s.io/mystery-demo-app   traefik   trouble.localhost             80      61s
 
 == service endpoints
-SERVICE            ENDPOINTS     READY
-mystery-demo-app   10.244.1.61   false
+SERVICE            ENDPOINTS      READY
+mystery-demo-app   10.244.1.142   false
 
 == warning events of the release's objects (last 8)
-mystery-demo-app-7797dc4f8-t4dlq   Failed   Failed to pull image "ghcr.io/sufyanahmadkamboh/bookshop-frontend:1.0": rpc error: code = NotFound desc = failed to 
-mystery-demo-app-7797dc4f8-t4dlq   Failed   Error: ErrImagePull
-mystery-demo-app-7797dc4f8-t4dlq   Failed   Error: ImagePullBackOff
+mystery-demo-app-7797dc4f8-nhlnq   Failed   Failed to pull image "ghcr.io/sufyanahmadkamboh/bookshop-frontend:1.0": rpc error: code = NotFound desc = failed to 
+mystery-demo-app-7797dc4f8-nhlnq   Failed   Error: ErrImagePull
+mystery-demo-app-7797dc4f8-nhlnq   Failed   Error: ImagePullBackOff
 ```
 
 Top to bottom: status `failed`; the values contain an image tag and a container port; the Pod is in
@@ -153,30 +153,30 @@ bash troubleshooting/triage.sh mystery trouble | sed -n '/== pods/,$p'
 
 ```text
 == pods
-NAME                                READY   STATUS             RESTARTS     AGE
-mystery-demo-app-7797dc4f8-t4dlq    0/1     ImagePullBackOff   0            2m3s
-mystery-demo-app-7dc6b4dddd-zwjpc   0/1     Running            2 (1s ago)   61s
+NAME                                READY   STATUS             RESTARTS      AGE
+mystery-demo-app-7797dc4f8-nhlnq    0/1     ImagePullBackOff   0             2m2s
+mystery-demo-app-7dc6b4dddd-2s96p   0/1     Running            1 (30s ago)   60s
 
 == workloads and services
 NAME                               READY   UP-TO-DATE   AVAILABLE   AGE
 deployment.apps/mystery-demo-app   0/1     1            0           2m3s
 
-NAME                       TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)    AGE
-service/mystery-demo-app   ClusterIP   10.96.78.138   <none>        8080/TCP   2m3s
+NAME                       TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
+service/mystery-demo-app   ClusterIP   10.96.181.140   <none>        8080/TCP   2m3s
 
 NAME                                         CLASS     HOSTS               ADDRESS   PORTS   AGE
 ingress.networking.k8s.io/mystery-demo-app   traefik   trouble.localhost             80      2m3s
 
 == service endpoints
-SERVICE            ENDPOINTS                 READY
-mystery-demo-app   10.244.1.61,10.244.1.62   false,false
+SERVICE            ENDPOINTS                   READY
+mystery-demo-app   10.244.1.142,10.244.1.143   false,false
 
 == warning events of the release's objects (last 8)
-mystery-demo-app-7797dc4f8-t4dlq    Failed      Failed to pull image "ghcr.io/sufyanahmadkamboh/bookshop-frontend:1.0": rpc error: code = NotFound desc = failed
-mystery-demo-app-7797dc4f8-t4dlq    Failed      Error: ErrImagePull
-mystery-demo-app-7797dc4f8-t4dlq    Failed      Error: ImagePullBackOff
-mystery-demo-app-7dc6b4dddd-zwjpc   Unhealthy   Liveness probe failed: Get "http://10.244.1.62:3000/health": dial tcp 10.244.1.62:3000: connect: connection refu
-mystery-demo-app-7dc6b4dddd-zwjpc   Unhealthy   Readiness probe failed: Get "http://10.244.1.62:3000/health": dial tcp 10.244.1.62:3000: connect: connection ref
+mystery-demo-app-7797dc4f8-nhlnq    Failed      Failed to pull image "ghcr.io/sufyanahmadkamboh/bookshop-frontend:1.0": rpc error: code = NotFound desc = failed
+mystery-demo-app-7797dc4f8-nhlnq    Failed      Error: ErrImagePull
+mystery-demo-app-7797dc4f8-nhlnq    Failed      Error: ImagePullBackOff
+mystery-demo-app-7dc6b4dddd-2s96p   Unhealthy   Liveness probe failed: Get "http://10.244.1.143:3000/health": dial tcp 10.244.1.143:3000: connect: connection re
+mystery-demo-app-7dc6b4dddd-2s96p   Unhealthy   Readiness probe failed: Get "http://10.244.1.143:3000/health": dial tcp 10.244.1.143:3000: connect: connection r
 ```
 
 The new Pod (fixed image) is `Running`; the old one keeps failing to pull until a rollout succeeds and replaces it.
@@ -226,10 +226,10 @@ Phase:          Succeeded
 window.APP_CONFIG = { ADMIN_URL: "", APP_ENV: "dev" };
 
 REVISION	UPDATED                 	STATUS    	CHART         	APP VERSION	DESCRIPTION                           
-1       	Mon Oct  5 00:28:05 2026	failed    	demo-app-1.0.0	1.0.0      	Release "mystery" failed: resource Dep
+1       	Mon Oct  5 01:18:20 2026	failed    	demo-app-1.0.0	1.0.0      	Release "mystery" failed: resource Dep
         	                        	          	              	           	conte...                              
-2       	Mon Oct  5 00:29:07 2026	superseded	demo-app-1.0.0	1.0.0      	Upgrade "mystery" failed: resource Dep
-3       	Mon Oct  5 00:30:08 2026	deployed  	demo-app-1.0.0	1.0.0      	Upgrade complete                      
+2       	Mon Oct  5 01:19:22 2026	superseded	demo-app-1.0.0	1.0.0      	Upgrade "mystery" failed: resource Dep
+3       	Mon Oct  5 01:20:23 2026	deployed  	demo-app-1.0.0	1.0.0      	Upgrade complete                      
 ```
 
 ## Cleanup

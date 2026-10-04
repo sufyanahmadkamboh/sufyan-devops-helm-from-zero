@@ -1,0 +1,13 @@
+sed -i 's/^\tport: 8080$/  port: 8080/' labs/work/lint-me/values-dev.yaml
+helm lint labs/work/lint-me -f labs/work/lint-me/values-dev.yaml
+---
+==> Linting labs/work/lint-me
+[ERROR] Chart.yaml: version 'latest' is not a valid SemVer
+[INFO] Chart.yaml: icon is recommended
+[WARNING] Chart.yaml: version 'latest' is not a valid SemVerV2
+[ERROR] templates/: validation: chart.metadata.version "latest" is invalid
+[ERROR] : unable to load chart
+	validation: chart.metadata.version "latest" is invalid
+
+Error: 1 chart(s) linted, 1 chart(s) failed
+# exit 1

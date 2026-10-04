@@ -1,0 +1,9 @@
+kubectl rollout status deployment/demo-demo-app --namespace demo-dev
+kubectl rollout history deployment/demo-demo-app --namespace demo-dev
+---
+deployment "demo-demo-app" successfully rolled out
+deployment.apps/demo-demo-app 
+REVISION  CHANGE-CAUSE
+1         <none>
+2         <none>
+# exit 0

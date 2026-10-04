@@ -1,0 +1,14 @@
+helm install catalog podinfo/podinfo --version 6.14.1 \
+  --namespace lab-11 --create-namespace \
+  -f labs/work/podinfo-values.yaml --wait --timeout 3m
+---
+NAME: catalog
+LAST DEPLOYED: Mon Oct  5 01:03:32 2026
+NAMESPACE: lab-11
+STATUS: deployed
+REVISION: 1
+DESCRIPTION: Install complete
+NOTES:
+1. Get the application URL by running these commands:
+  http://podinfo.localhost/
+# exit 0

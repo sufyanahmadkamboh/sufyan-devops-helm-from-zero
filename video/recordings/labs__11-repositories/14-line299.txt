@@ -1,0 +1,23 @@
+helm install shopfront oci://localhost:5001/charts/demo-app --version 1.0.0 --plain-http \
+  --namespace lab-11 --wait --timeout 3m
+---
+Pulled: localhost:5001/charts/demo-app:1.0.0
+Digest: sha256:78805d9c750318d528305bda5c6fcb2c5eaf09d558c201cc5547358a74ecf8a9
+NAME: shopfront
+LAST DEPLOYED: Mon Oct  5 01:03:54 2026
+NAMESPACE: lab-11
+STATUS: deployed
+REVISION: 1
+DESCRIPTION: Install complete
+NOTES:
+demo-app 1.0.0 (chart 1.0.0) is deployed as release "shopfront" in namespace "lab-11".
+Environment: local · revision 1
+
+No Ingress (ingress.enabled=false). Reach it with a port-forward:
+  kubectl --namespace lab-11 port-forward service/shopfront-demo-app 8080:8080
+  then open http://localhost:8080/
+
+Check it:
+  kubectl --namespace lab-11 get pods -l app.kubernetes.io/instance=shopfront
+  helm test shopfront --namespace lab-11
+# exit 0

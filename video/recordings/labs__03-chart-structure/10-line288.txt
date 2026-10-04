@@ -1,0 +1,8 @@
+helm show chart labs/work/demo-app-1.0.1.tgz | grep -E '^(name|version|appVersion)'
+helm template demo labs/work/demo-app-1.0.1.tgz --show-only templates/deployment.yaml | grep 'image:'
+---
+appVersion: 1.1.0
+name: demo-app
+version: 1.0.1
+          image: "ghcr.io/sufyanahmadkamboh/bookshop-frontend:1.1.0"
+# exit 0

@@ -1,0 +1,137 @@
+kubectl create namespace lab-05 --dry-run=client -o yaml | kubectl apply -f - > /dev/null
+helm install web examples/basic-chart --namespace lab-05 --dry-run=server --set ingress.enabled=true
+---
+NAME: web
+LAST DEPLOYED: Mon Oct  5 00:59:30 2026
+NAMESPACE: lab-05
+STATUS: pending-install
+REVISION: 1
+DESCRIPTION: Dry run complete
+TEST SUITE: None
+HOOKS:
+MANIFEST:
+---
+# Source: basic-chart/templates/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: web-config
+  labels:
+    app.kubernetes.io/name: basic-chart
+    app.kubernetes.io/instance: web
+    app.kubernetes.io/version: "1.0.0"
+    app.kubernetes.io/managed-by: Helm
+    helm.sh/chart: basic-chart-0.1.0
+    environment: "dev"
+    team: web
+data:
+  FEATURE_REVIEWS: "true"
+  LOG_LEVEL: "info"
+
+---
+# Source: basic-chart/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: web
+  labels:
+    app.kubernetes.io/name: basic-chart
+    app.kubernetes.io/instance: web
+    app.kubernetes.io/version: "1.0.0"
+    app.kubernetes.io/managed-by: Helm
+    helm.sh/chart: basic-chart-0.1.0
+    environment: "dev"
+    team: web
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: basic-chart
+    app.kubernetes.io/instance: web
+  ports:
+    - port: 8080
+      targetPort: 8080
+
+---
+# Source: basic-chart/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  # include: insert a named template from _helpers.tpl
+  name: web
+  labels:
+    # nindent 4: a new line, then indent every line by 4 spaces (YAML is indentation-sensitive)
+    app.kubernetes.io/name: basic-chart
+    app.kubernetes.io/instance: web
+    app.kubernetes.io/version: "1.0.0"
+    app.kubernetes.io/managed-by: Helm
+    helm.sh/chart: basic-chart-0.1.0
+    environment: "dev"
+    team: web
+spec:
+  # .Values: anything from values.yaml, -f files or --set
+  replicas: 2
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: basic-chart
+      app.kubernetes.io/instance: web
+  template:
+    metadata:
+      labels:
+        # the Pods get all labels (the selector labels are among them), so you can filter Pods by environment
+        app.kubernetes.io/name: basic-chart
+        app.kubernetes.io/instance: web
+        app.kubernetes.io/version: "1.0.0"
+        app.kubernetes.io/managed-by: Helm
+        helm.sh/chart: basic-chart-0.1.0
+        environment: "dev"
+        team: web
+    spec:
+      containers:
+        # .Chart: the fields of Chart.yaml (here its name)
+        - name: basic-chart
+          # default: use the tag if set, otherwise the chart's appVersion
+          image: "ghcr.io/sufyanahmadkamboh/bookshop-frontend:1.0.0"
+          ports:
+            - containerPort: 8080
+          env:
+            # quote: always a YAML string ("dev"), even for values like 1.10 or true
+            - name: APP_ENV
+              value: "dev"
+            # .Release: facts about this install (name, namespace, revision, IsInstall, IsUpgrade)
+            - name: RELEASE
+              value: "web rev 1 in lab-05"
+          imagePullPolicy: IfNotPresent
+          # toYaml: a whole map from values, written as YAML (here the resources block)
+          resources:
+            requests:
+              cpu: 10m
+              memory: 32Mi
+
+---
+# Source: basic-chart/templates/ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: web
+  labels:
+    app.kubernetes.io/name: basic-chart
+    app.kubernetes.io/instance: web
+    app.kubernetes.io/version: "1.0.0"
+    app.kubernetes.io/managed-by: Helm
+    helm.sh/chart: basic-chart-0.1.0
+    environment: "dev"
+    team: web
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: web
+                port:
+                  number: 8080
+      # with: if the value is set, run the block with "." = that value. No host = a rule for every host name.
+      host: "basic.localhost"
+# exit 0

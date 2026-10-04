@@ -1,0 +1,5 @@
+printf 'replicaCount: 3\n' > labs/work/my-values.yaml
+helm template demo charts/demo-app -f labs/work/my-values.yaml --show-only templates/deployment.yaml | grep replicas
+---
+  replicas: 3
+# exit 0

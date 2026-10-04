@@ -57,9 +57,9 @@ helm history demo --namespace trouble
 
 ```text
 REVISION	UPDATED                 	STATUS    	CHART         	APP VERSION	DESCRIPTION     
-1       	Mon Oct  5 00:08:51 2026	superseded	demo-app-1.0.0	1.0.0      	Install complete
-2       	Mon Oct  5 00:08:52 2026	superseded	demo-app-1.0.0	1.0.0      	Upgrade complete
-3       	Mon Oct  5 00:08:54 2026	deployed  	demo-app-1.0.0	1.0.0      	Upgrade complete
+1       	Mon Oct  5 01:09:44 2026	superseded	demo-app-1.0.0	1.0.0      	Install complete
+2       	Mon Oct  5 01:09:45 2026	superseded	demo-app-1.0.0	1.0.0      	Upgrade complete
+3       	Mon Oct  5 01:09:51 2026	deployed  	demo-app-1.0.0	1.0.0      	Upgrade complete
 ```
 
 Compare the values of the last two revisions, then the objects they produced:
@@ -123,9 +123,9 @@ helm history demo --namespace trouble | tail -2
 window.APP_CONFIG = { ADMIN_URL: "http://admin.example.com", APP_ENV: "dev" };
 
 NAME            CLASS     HOSTS               ADDRESS   PORTS   AGE
-demo-demo-app   traefik   trouble.localhost             80      1s
-3       	Mon Oct  5 00:08:54 2026	superseded	demo-app-1.0.0	1.0.0      	Upgrade complete
-4       	Mon Oct  5 00:08:57 2026	deployed  	demo-app-1.0.0	1.0.0      	Rollback to 2   
+demo-demo-app   traefik   trouble.localhost             80      6s
+3       	Mon Oct  5 01:09:51 2026	superseded	demo-app-1.0.0	1.0.0      	Upgrade complete
+4       	Mon Oct  5 01:09:59 2026	deployed  	demo-app-1.0.0	1.0.0      	Rollback to 2   
 ```
 
 The Ingress is back, and so is the admin link: a rollback restores the whole revision, values included.

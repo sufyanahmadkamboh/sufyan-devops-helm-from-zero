@@ -87,9 +87,9 @@ helm history demo --namespace demo-rollback
 
 ```text
 REVISION	UPDATED                 	STATUS    	CHART         	APP VERSION	DESCRIPTION                                                                                                                          
-1       	Sun Oct  4 23:37:31 2026	superseded	demo-app-1.0.0	1.0.0      	Install complete                                                                                                                     
-2       	Sun Oct  4 23:37:32 2026	deployed  	demo-app-1.0.0	1.0.0      	Upgrade complete                                                                                                                     
-3       	Sun Oct  4 23:37:36 2026	failed    	demo-app-1.0.0	1.0.0      	Upgrade "demo" failed: resource Deployment/demo-rollback/demo-demo-app not ready. status: InProgress, message: Pending termination...
+1       	Mon Oct  5 01:00:57 2026	superseded	demo-app-1.0.0	1.0.0      	Install complete                                                                                                                     
+2       	Mon Oct  5 01:00:58 2026	deployed  	demo-app-1.0.0	1.0.0      	Upgrade complete                                                                                                                     
+3       	Mon Oct  5 01:01:02 2026	failed    	demo-app-1.0.0	1.0.0      	Upgrade "demo" failed: resource Deployment/demo-rollback/demo-demo-app not ready. status: InProgress, message: Pending termination...
 ```
 
 The Kubernetes side:
@@ -101,8 +101,8 @@ kubectl get pods --namespace demo-rollback
 
 ```text
 NAME                             READY   STATUS         RESTARTS   AGE
-demo-demo-app-56457858d8-ht7np   1/1     Running        0          64s
-demo-demo-app-6dc6b54f46-lpc2j   0/1     ErrImagePull   0          60s
+demo-demo-app-56457858d8-5plb6   1/1     Running        0          64s
+demo-demo-app-6dc6b54f46-jl4tj   0/1     ErrImagePull   0          60s
 ```
 
 <!-- test: contains=1.0.1-hotfix; output -->
@@ -151,10 +151,10 @@ helm status demo --namespace demo-rollback | grep -E '^(STATUS|REVISION):'
 
 ```text
 REVISION	UPDATED                 	STATUS    	CHART         	APP VERSION	DESCRIPTION                                                                                                                          
-1       	Sun Oct  4 23:37:31 2026	superseded	demo-app-1.0.0	1.0.0      	Install complete                                                                                                                     
-2       	Sun Oct  4 23:37:32 2026	superseded	demo-app-1.0.0	1.0.0      	Upgrade complete                                                                                                                     
-3       	Sun Oct  4 23:37:36 2026	failed    	demo-app-1.0.0	1.0.0      	Upgrade "demo" failed: resource Deployment/demo-rollback/demo-demo-app not ready. status: InProgress, message: Pending termination...
-4       	Sun Oct  4 23:38:37 2026	deployed  	demo-app-1.0.0	1.0.0      	Rollback to 2                                                                                                                        
+1       	Mon Oct  5 01:00:57 2026	superseded	demo-app-1.0.0	1.0.0      	Install complete                                                                                                                     
+2       	Mon Oct  5 01:00:58 2026	superseded	demo-app-1.0.0	1.0.0      	Upgrade complete                                                                                                                     
+3       	Mon Oct  5 01:01:02 2026	failed    	demo-app-1.0.0	1.0.0      	Upgrade "demo" failed: resource Deployment/demo-rollback/demo-demo-app not ready. status: InProgress, message: Pending termination...
+4       	Mon Oct  5 01:02:03 2026	deployed  	demo-app-1.0.0	1.0.0      	Rollback to 2                                                                                                                        
 STATUS: deployed
 REVISION: 4
 ```
@@ -172,7 +172,7 @@ curl -s http://demo-rollback.localhost:8080/config.js; echo
 ```text
 deployment "demo-demo-app" successfully rolled out
 NAME                             READY   STATUS    RESTARTS   AGE
-demo-demo-app-56457858d8-ht7np   1/1     Running   0          68s
+demo-demo-app-56457858d8-5plb6   1/1     Running   0          68s
 window.APP_CONFIG = { ADMIN_URL: "http://admin.example.com", APP_ENV: "dev" };
 ```
 
@@ -205,12 +205,12 @@ helm history demo --namespace demo-rollback
 
 ```text
 REVISION	UPDATED                 	STATUS    	CHART         	APP VERSION	DESCRIPTION                                                                                                                          
-1       	Sun Oct  4 23:37:31 2026	superseded	demo-app-1.0.0	1.0.0      	Install complete                                                                                                                     
-2       	Sun Oct  4 23:37:32 2026	superseded	demo-app-1.0.0	1.0.0      	Upgrade complete                                                                                                                     
-3       	Sun Oct  4 23:37:36 2026	failed    	demo-app-1.0.0	1.0.0      	Upgrade "demo" failed: resource Deployment/demo-rollback/demo-demo-app not ready. status: InProgress, message: Pending termination...
-4       	Sun Oct  4 23:38:37 2026	superseded	demo-app-1.0.0	1.0.0      	Rollback to 2                                                                                                                        
-5       	Sun Oct  4 23:38:41 2026	failed    	demo-app-1.0.0	1.0.0      	Upgrade "demo" failed: resource Deployment/demo-rollback/demo-demo-app not ready. status: InProgress, message: Pending termination...
-6       	Sun Oct  4 23:39:41 2026	deployed  	demo-app-1.0.0	1.0.0      	Rollback to 4                                                                                                                        
+1       	Mon Oct  5 01:00:57 2026	superseded	demo-app-1.0.0	1.0.0      	Install complete                                                                                                                     
+2       	Mon Oct  5 01:00:58 2026	superseded	demo-app-1.0.0	1.0.0      	Upgrade complete                                                                                                                     
+3       	Mon Oct  5 01:01:02 2026	failed    	demo-app-1.0.0	1.0.0      	Upgrade "demo" failed: resource Deployment/demo-rollback/demo-demo-app not ready. status: InProgress, message: Pending termination...
+4       	Mon Oct  5 01:02:03 2026	superseded	demo-app-1.0.0	1.0.0      	Rollback to 2                                                                                                                        
+5       	Mon Oct  5 01:02:07 2026	failed    	demo-app-1.0.0	1.0.0      	Upgrade "demo" failed: resource Deployment/demo-rollback/demo-demo-app not ready. status: InProgress, message: Pending termination...
+6       	Mon Oct  5 01:03:07 2026	deployed  	demo-app-1.0.0	1.0.0      	Rollback to 4                                                                                                                        
 ```
 
 ## Expected Output
@@ -277,8 +277,8 @@ helm history demo --namespace demo-rollback | tail -2
 ```
 
 ```text
-6       	Sun Oct  4 23:39:41 2026	deployed       	demo-app-1.0.0	1.0.0      	Rollback to 4                                                                                                                        
-7       	Sun Oct  4 23:39:41 2026	pending-upgrade	demo-app-1.0.0	1.0.0      	Preparing upgrade                                                                                                                    
+6       	Mon Oct  5 01:03:07 2026	deployed       	demo-app-1.0.0	1.0.0      	Rollback to 4                                                                                                                        
+7       	Mon Oct  5 01:03:07 2026	pending-upgrade	demo-app-1.0.0	1.0.0      	Preparing upgrade                                                                                                                    
 ```
 
 Helm refuses to start a second operation on a release with a pending one; that lock protects you from two pipelines
@@ -295,9 +295,9 @@ helm history demo --namespace demo-rollback | tail -3
 ```
 
 ```text
-6       	Sun Oct  4 23:39:41 2026	superseded     	demo-app-1.0.0	1.0.0      	Rollback to 4                                                                                                                        
-7       	Sun Oct  4 23:39:41 2026	pending-upgrade	demo-app-1.0.0	1.0.0      	Preparing upgrade                                                                                                                    
-8       	Sun Oct  4 23:39:47 2026	deployed       	demo-app-1.0.0	1.0.0      	Rollback to 6                                                                                                                        
+6       	Mon Oct  5 01:03:07 2026	superseded     	demo-app-1.0.0	1.0.0      	Rollback to 4                                                                                                                        
+7       	Mon Oct  5 01:03:07 2026	pending-upgrade	demo-app-1.0.0	1.0.0      	Preparing upgrade                                                                                                                    
+8       	Mon Oct  5 01:03:13 2026	deployed       	demo-app-1.0.0	1.0.0      	Rollback to 6                                                                                                                        
 ```
 
 (Revision 7 stays `pending-upgrade` in the history: a record of what happened, no longer a lock.) Before you do this

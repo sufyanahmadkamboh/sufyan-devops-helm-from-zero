@@ -1,0 +1,6 @@
+kubectl get pods --namespace trouble
+---
+NAME                             READY   STATUS             RESTARTS      AGE
+demo-demo-app-5965f57d7f-4n4zj   0/1     CrashLoopBackOff   3 (21s ago)   60s
+demo-demo-app-68d8b4d8dc-f5fjt   1/1     Running            0             62s
+# exit 0

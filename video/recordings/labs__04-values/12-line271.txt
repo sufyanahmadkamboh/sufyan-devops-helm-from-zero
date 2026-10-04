@@ -1,0 +1,4 @@
+helm show values charts/demo-app | grep -i '^replica'
+---
+replicaCount: 1
+# exit 0

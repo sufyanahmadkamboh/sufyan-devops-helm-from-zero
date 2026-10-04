@@ -1,0 +1,7 @@
+helm list --all-namespaces --filter '^demo$'
+---
+NAME	NAMESPACE   	REVISION	UPDATED                               	STATUS  	CHART         	APP VERSION
+demo	demo-dev    	7       	2026-10-05 01:00:56.5838392 +0200 CEST	deployed	demo-app-1.0.0	1.0.0      
+demo	demo-prod   	1       	2026-10-05 01:03:16.7846988 +0200 CEST	deployed	demo-app-1.0.0	1.0.0      
+demo	demo-staging	1       	2026-10-05 01:03:15.3055185 +0200 CEST	deployed	demo-app-1.0.0	1.0.0      
+# exit 0

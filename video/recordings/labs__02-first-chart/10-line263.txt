@@ -1,0 +1,8 @@
+mv labs/work/hello/Chart.yaml.bak labs/work/hello/Chart.yaml
+helm lint labs/work/hello
+---
+==> Linting labs/work/hello
+[INFO] Chart.yaml: icon is recommended
+
+1 chart(s) linted, 0 chart(s) failed
+# exit 0

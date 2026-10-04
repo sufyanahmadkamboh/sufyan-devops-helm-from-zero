@@ -1,0 +1,5 @@
+helm uninstall blue --namespace demo-dev --wait
+rm -f labs/work/blue.yaml
+---
+release "blue" uninstalled
+# exit 0

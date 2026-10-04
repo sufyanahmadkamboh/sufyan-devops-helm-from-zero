@@ -1,0 +1,4 @@
+kubectl scale deployment shop-java-api --namespace bookshop-dev --replicas=0
+---
+deployment.apps/shop-java-api scaled
+# exit 0

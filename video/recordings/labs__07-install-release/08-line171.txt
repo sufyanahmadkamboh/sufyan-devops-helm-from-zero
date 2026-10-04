@@ -1,0 +1,15 @@
+helm get metadata demo --namespace demo-dev
+---
+NAME: demo
+CHART: demo-app
+VERSION: 1.0.0
+APP_VERSION: 1.0.0
+ANNOTATIONS: 
+LABELS: modifiedAt=1791154781,name=demo,owner=helm,status=deployed,version=1
+DEPENDENCIES: 
+NAMESPACE: demo-dev
+REVISION: 1
+STATUS: deployed
+DEPLOYED_AT: 2026-10-05T00:59:39+02:00
+APPLY_METHOD: server-side apply
+# exit 0

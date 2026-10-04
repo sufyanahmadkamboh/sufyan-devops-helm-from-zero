@@ -1,0 +1,9 @@
+kubectl describe pod --namespace trouble -l app.kubernetes.io/instance=demo | grep -E 'Port:|Liveness|Readiness|Unhealthy' | head -6
+---
+    Port:           80/TCP (http)
+    Host Port:      0/TCP (http)
+    Liveness:   http-get http://:http/health delay=0s timeout=1s period=10s successThreshold=1 failureThreshold=3
+    Readiness:  http-get http://:http/health delay=0s timeout=1s period=5s successThreshold=1 failureThreshold=3
+  Warning  Unhealthy  0s (x16 over 60s)  kubelet            spec.containers{demo-app}: Readiness probe failed: Get "http://10.244.1.94:80/health": dial tcp 10.244.1.94:80: connect: connection refused
+  Warning  Unhealthy  0s (x6 over 50s)   kubelet            spec.containers{demo-app}: Liveness probe failed: Get "http://10.244.1.94:80/health": dial tcp 10.244.1.94:80: connect: connection refused
+# exit 0

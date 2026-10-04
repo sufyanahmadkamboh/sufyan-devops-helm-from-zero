@@ -1,0 +1,5 @@
+kubectl get events --namespace bookshop-dev --field-selector reason=Failed \
+  -o custom-columns='POD:.involvedObject.name,MESSAGE:.message' | grep node-api | grep configmap | tail -2
+---
+shop-node-api-899845bc5-klcd4   Error: configmap "shop-config" not found
+# exit 0

@@ -1,0 +1,10 @@
+wc -l environments/dev/*.yaml | tail -1
+wc -l environments/staging/*.yaml | tail -1
+wc -l environments/prod/*.yaml | tail -1
+diff -r environments/dev environments/staging | grep -c '^[<>]'
+---
+  458 total
+  458 total
+  458 total
+74
+# exit 0

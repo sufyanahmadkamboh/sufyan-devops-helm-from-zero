@@ -1,0 +1,9 @@
+helm install web examples/basic-chart --namespace lab-05 --set ingress.enabled=true --wait --timeout 3m | head -6
+---
+NAME: web
+LAST DEPLOYED: Mon Oct  5 00:59:31 2026
+NAMESPACE: lab-05
+STATUS: deployed
+REVISION: 1
+DESCRIPTION: Install complete
+# exit 0

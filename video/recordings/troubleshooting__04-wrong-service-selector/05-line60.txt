@@ -1,0 +1,5 @@
+kubectl get pods --namespace trouble
+---
+NAME                             READY   STATUS    RESTARTS   AGE
+demo-demo-app-68d8b4d8dc-4xz6t   1/1     Running   0          5s
+# exit 0

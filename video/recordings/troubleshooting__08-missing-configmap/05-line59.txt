@@ -1,0 +1,9 @@
+helm get manifest shop --namespace bookshop-dev | grep -A3 '^kind: ConfigMap'
+kubectl get configmap shop-config --namespace bookshop-dev 2>&1 || true
+---
+kind: ConfigMap
+metadata:
+  name: shop-config
+  labels:
+Error from server (NotFound): configmaps "shop-config" not found
+# exit 0

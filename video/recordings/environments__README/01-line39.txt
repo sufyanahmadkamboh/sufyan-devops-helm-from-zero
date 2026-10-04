@@ -1,0 +1,21 @@
+kubectl apply -f environments/dev/namespace.yaml
+kubectl apply -f environments/dev/
+---
+namespace/bookshop-dev created
+configmap/bookshop-config created
+service/postgres created
+statefulset.apps/postgres created
+deployment.apps/frontend created
+deployment.apps/node-api created
+deployment.apps/python-api created
+deployment.apps/go-status created
+deployment.apps/java-api created
+ingress.networking.k8s.io/bookshop created
+namespace/bookshop-dev unchanged
+secret/db-credentials created
+service/frontend created
+service/node-api created
+service/python-api created
+service/go-status created
+service/java-api created
+# exit 0

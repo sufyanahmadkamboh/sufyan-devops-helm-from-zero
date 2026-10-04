@@ -1,0 +1,8 @@
+mkdir -p labs/work
+cat > labs/work/ts02-values.yaml <<'EOF'
+containerPort: 80
+EOF
+cat labs/work/ts02-values.yaml
+---
+containerPort: 80
+# exit 0

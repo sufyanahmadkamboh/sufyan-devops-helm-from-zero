@@ -1,0 +1,21 @@
+helm install demo charts/demo-app \
+  --namespace demo-dev --create-namespace \
+  -f charts/demo-app/values-dev.yaml \
+  --wait --timeout 3m
+---
+NAME: demo
+LAST DEPLOYED: Mon Oct  5 00:59:39 2026
+NAMESPACE: demo-dev
+STATUS: deployed
+REVISION: 1
+DESCRIPTION: Install complete
+NOTES:
+demo-app 1.0.0 (chart 1.0.0) is deployed as release "demo" in namespace "demo-dev".
+Environment: dev · revision 1
+
+Open:  http://demo-dev.localhost:8080/
+
+Check it:
+  kubectl --namespace demo-dev get pods -l app.kubernetes.io/instance=demo
+  helm test demo --namespace demo-dev
+# exit 0

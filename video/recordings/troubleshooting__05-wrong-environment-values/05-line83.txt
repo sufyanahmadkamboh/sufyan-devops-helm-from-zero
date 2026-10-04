@@ -1,0 +1,7 @@
+kubectl get all --namespace trouble -l app.kubernetes.io/instance=demo -L environment --no-headers | awk '{print $1, $NF}'
+---
+pod/demo-demo-app-68d8b4d8dc-k4tt5 dev
+service/demo-demo-app dev
+deployment.apps/demo-demo-app dev
+replicaset.apps/demo-demo-app-68d8b4d8dc dev
+# exit 0

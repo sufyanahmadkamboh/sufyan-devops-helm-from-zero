@@ -98,7 +98,7 @@ helm upgrade --install demo charts/demo-app \
 ```text
 Release "demo" does not exist. Installing it now.
 NAME: demo
-LAST DEPLOYED: Sun Oct  4 23:39:25 2026
+LAST DEPLOYED: Mon Oct  5 01:03:15 2026
 NAMESPACE: demo-staging
 STATUS: deployed
 REVISION: 1
@@ -116,7 +116,7 @@ helm upgrade --install demo charts/demo-app \
 ```text
 Release "demo" does not exist. Installing it now.
 NAME: demo
-LAST DEPLOYED: Sun Oct  4 23:39:26 2026
+LAST DEPLOYED: Mon Oct  5 01:03:16 2026
 NAMESPACE: demo-prod
 STATUS: deployed
 REVISION: 1
@@ -131,11 +131,10 @@ helm list --all-namespaces --filter '^demo$'
 ```
 
 ```text
-NAME	NAMESPACE    	REVISION	UPDATED                               	STATUS         	CHART         	APP VERSION
-demo	demo-rollback	5       	2026-10-04 23:38:41.1761555 +0200 CEST	pending-upgrade	demo-app-1.0.0	1.0.0      
-demo	demo-staging 	1       	2026-10-04 23:39:25.3244092 +0200 CEST	deployed       	demo-app-1.0.0	1.0.0      
-demo	demo-dev     	7       	2026-10-04 23:32:13.2152123 +0200 CEST	deployed       	demo-app-1.0.0	1.0.0      
-demo	demo-prod    	1       	2026-10-04 23:39:26.8553602 +0200 CEST	deployed       	demo-app-1.0.0	1.0.0      
+NAME	NAMESPACE   	REVISION	UPDATED                               	STATUS  	CHART         	APP VERSION
+demo	demo-dev    	7       	2026-10-05 01:00:56.5838392 +0200 CEST	deployed	demo-app-1.0.0	1.0.0      
+demo	demo-prod   	1       	2026-10-05 01:03:16.7846988 +0200 CEST	deployed	demo-app-1.0.0	1.0.0      
+demo	demo-staging	1       	2026-10-05 01:03:15.3055185 +0200 CEST	deployed	demo-app-1.0.0	1.0.0      
 ```
 
 ### 3 · Compare
@@ -149,13 +148,12 @@ kubectl get hpa --all-namespaces
 ```
 
 ```text
-NAMESPACE       NAME            READY   UP-TO-DATE   AVAILABLE   AGE    ENVIRONMENT
-demo-dev        demo-demo-app   1/1     1            1           9m7s   dev
-demo-prod       demo-demo-app   3/3     3            3           0s     prod
-demo-rollback   demo-demo-app   1/1     1            1           116s   dev
-demo-staging    demo-demo-app   2/2     2            2           2s     staging
+NAMESPACE      NAME            READY   UP-TO-DATE   AVAILABLE   AGE     ENVIRONMENT
+demo-dev       demo-demo-app   1/1     1            1           3m38s   dev
+demo-prod      demo-demo-app   3/3     3            3           2s      prod
+demo-staging   demo-demo-app   2/2     2            2           3s      staging
 NAMESPACE   NAME            REFERENCE                  TARGETS              MINPODS   MAXPODS   REPLICAS   AGE
-demo-prod   demo-demo-app   Deployment/demo-demo-app   cpu: <unknown>/70%   3         6         1          1s
+demo-prod   demo-demo-app   Deployment/demo-demo-app   cpu: <unknown>/70%   3         6         1          2s
 ```
 
 Production has a HorizontalPodAutoscaler that keeps between 3 and 6 replicas. Its CPU target shows `<unknown>`: kind
@@ -297,11 +295,9 @@ kubectl get ingress --namespace demo-staging 2>&1
 ```
 
 ```text
-  enabled: false
 environment: local
-  enabled: false
-  enabled: false
 replicaCount: 1
+No resources found in demo-staging namespace.
 ```
 
 Later files win. `values.yaml` came last, so its defaults (`environment: local`, `replicaCount: 1`,
@@ -364,12 +360,11 @@ helm list --all-namespaces --filter '^demo$'
 ```text
 window.APP_CONFIG = { ADMIN_URL: "http://admin-qa.example.com", APP_ENV: "qa" };
 
-NAME	NAMESPACE    	REVISION	UPDATED                               	STATUS         	CHART         	APP VERSION
-demo	demo-staging 	3       	2026-10-04 23:39:34.3620855 +0200 CEST	deployed       	demo-app-1.0.0	1.0.0      
-demo	demo-dev     	7       	2026-10-04 23:32:13.2152123 +0200 CEST	deployed       	demo-app-1.0.0	1.0.0      
-demo	demo-prod    	1       	2026-10-04 23:39:26.8553602 +0200 CEST	deployed       	demo-app-1.0.0	1.0.0      
-demo	demo-qa      	1       	2026-10-04 23:39:37.285147 +0200 CEST 	deployed       	demo-app-1.0.0	1.0.0      
-demo	demo-rollback	5       	2026-10-04 23:38:41.1761555 +0200 CEST	pending-upgrade	demo-app-1.0.0	1.0.0      
+NAME	NAMESPACE   	REVISION	UPDATED                               	STATUS  	CHART         	APP VERSION
+demo	demo-qa     	1       	2026-10-05 01:03:24.3403075 +0200 CEST	deployed	demo-app-1.0.0	1.0.0      
+demo	demo-staging	3       	2026-10-05 01:03:21.539347 +0200 CEST 	deployed	demo-app-1.0.0	1.0.0      
+demo	demo-dev    	7       	2026-10-05 01:00:56.5838392 +0200 CEST	deployed	demo-app-1.0.0	1.0.0      
+demo	demo-prod   	1       	2026-10-05 01:03:16.7846988 +0200 CEST	deployed	demo-app-1.0.0	1.0.0      
 ```
 
 ## Cleanup

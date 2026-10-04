@@ -1,0 +1,7 @@
+kubectl get service demo-demo-app --namespace trouble -o jsonpath='{.spec.selector}'; echo
+kubectl get pods --namespace trouble --show-labels
+---
+{"app.kubernetes.io/component":"web","app.kubernetes.io/instance":"demo","app.kubernetes.io/name":"demo-app"}
+NAME                             READY   STATUS    RESTARTS   AGE   LABELS
+demo-demo-app-68d8b4d8dc-4xz6t   1/1     Running   0          5s    app.kubernetes.io/instance=demo,app.kubernetes.io/managed-by=Helm,app.kubernetes.io/name=demo-app,app.kubernetes.io/part-of=bookshop,app.kubernetes.io/version=1.0.0,environment=dev,helm.sh/chart=demo-app-1.0.0,pod-template-hash=68d8b4d8dc
+# exit 0

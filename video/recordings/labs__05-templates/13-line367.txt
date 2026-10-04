@@ -1,0 +1,4 @@
+helm template web labs/work/tpl --set replicaCount=1 --show-only templates/pdb.yaml
+---
+Error: could not find template templates/pdb.yaml in chart
+# exit 1

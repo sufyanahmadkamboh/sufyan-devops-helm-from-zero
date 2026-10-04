@@ -1,0 +1,5 @@
+kubectl get secret sh.helm.release.v1.leaky.v1 --namespace sec-demo -o jsonpath='{.data.release}' \
+  | base64 -d | base64 -d | gunzip | grep -o '"apiToken":"[^"]*"' | head -1
+---
+"apiToken":"example-not-a-real-token"
+# exit 0

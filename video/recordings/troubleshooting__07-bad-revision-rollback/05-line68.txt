@@ -1,0 +1,10 @@
+diff <(helm get values demo --namespace trouble --revision 2) <(helm get values demo --namespace trouble --revision 3) || true
+---
+2,3d1
+< config:
+<   adminUrl: http://admin.example.com
+6c4
+<   enabled: true
+---
+>   enabled: false
+# exit 0

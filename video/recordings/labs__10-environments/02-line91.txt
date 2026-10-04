@@ -1,0 +1,22 @@
+helm upgrade --install demo charts/demo-app \
+  --namespace demo-staging --create-namespace \
+  -f charts/demo-app/values-staging.yaml \
+  --wait --timeout 3m
+---
+Release "demo" does not exist. Installing it now.
+NAME: demo
+LAST DEPLOYED: Mon Oct  5 01:03:15 2026
+NAMESPACE: demo-staging
+STATUS: deployed
+REVISION: 1
+DESCRIPTION: Install complete
+NOTES:
+demo-app 1.0.0 (chart 1.0.0) is deployed as release "demo" in namespace "demo-staging".
+Environment: staging · revision 1
+
+Open:  http://demo-staging.localhost:8080/
+
+Check it:
+  kubectl --namespace demo-staging get pods -l app.kubernetes.io/instance=demo
+  helm test demo --namespace demo-staging
+# exit 0

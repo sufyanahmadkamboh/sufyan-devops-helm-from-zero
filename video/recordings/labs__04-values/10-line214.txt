@@ -1,0 +1,7 @@
+helm install demo charts/demo-app --dry-run=client --debug --set replicaCount=3 2>/dev/null | sed -n '/USER-SUPPLIED VALUES/,/COMPUTED VALUES/p'
+---
+USER-SUPPLIED VALUES:
+replicaCount: 3
+
+COMPUTED VALUES:
+# exit 0

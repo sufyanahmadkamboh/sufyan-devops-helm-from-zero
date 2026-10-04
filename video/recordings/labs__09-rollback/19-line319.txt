@@ -1,0 +1,17 @@
+helm get values demo --namespace demo-rollback --revision 2
+helm get manifest demo --namespace demo-rollback --revision 5 | grep 'image:'
+---
+USER-SUPPLIED VALUES:
+config:
+  adminUrl: http://admin.example.com
+environment: dev
+ingress:
+  enabled: true
+  hosts:
+  - host: demo-rollback.localhost
+    paths:
+    - path: /
+      pathType: Prefix
+replicaCount: 1
+          image: "ghcr.io/sufyanahmadkamboh/bookshop-frontend:1.0.1-hotfix"
+# exit 0

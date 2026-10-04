@@ -1,0 +1,4 @@
+helm install hooks examples/hooks-example --namespace lab-13 --create-namespace --wait | grep STATUS
+---
+STATUS: deployed
+# exit 0

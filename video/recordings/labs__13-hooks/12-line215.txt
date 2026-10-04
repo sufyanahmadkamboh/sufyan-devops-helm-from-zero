@@ -1,0 +1,6 @@
+helm upgrade hooks examples/hooks-example --namespace lab-13 \
+  --set failAt=pre-upgrade --set message="new message" --wait --timeout 2m
+---
+level=WARN msg="upgrade failed" name=hooks error="pre-upgrade hooks failed: resource Job/lab-13/hooks-pre-upgrade not ready. status: Failed, message: Job Failed. failed: 1/1"
+Error: UPGRADE FAILED: pre-upgrade hooks failed: resource Job/lab-13/hooks-pre-upgrade not ready. status: Failed, message: Job Failed. failed: 1/1
+# exit 1

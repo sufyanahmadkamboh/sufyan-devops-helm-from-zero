@@ -1,0 +1,2 @@
+💻 The free lab with every command from this video: https://github.com/sufyanahmadkamboh/sufyan-devops-helm-from-zero
+Which Helm failure from chapter 21 have you already met in production? Tell me below.

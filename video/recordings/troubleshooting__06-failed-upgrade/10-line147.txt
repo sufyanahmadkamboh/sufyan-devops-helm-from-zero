@@ -1,0 +1,10 @@
+kubectl get pods --namespace trouble
+kubectl get deployment demo-demo-app --namespace trouble -o jsonpath='{.spec.template.spec.containers[0].resources}'; echo
+helm history demo --namespace trouble | tail -2
+---
+NAME                             READY   STATUS    RESTARTS   AGE
+demo-demo-app-67df7fc4f5-xng57   1/1     Running   0          4s
+{"limits":{"cpu":"200m","memory":"96Mi"},"requests":{"cpu":"10m","memory":"32Mi"}}
+2       	Mon Oct  5 01:08:37 2026	failed    	demo-app-1.0.0	1.0.0      	Upgrade "demo" failed: resource Deployment/trouble/demo-demo-app not ready. status: InProgress, message: Pending termination...
+3       	Mon Oct  5 01:09:39 2026	deployed  	demo-app-1.0.0	1.0.0      	Upgrade complete                                                                                                               
+# exit 0

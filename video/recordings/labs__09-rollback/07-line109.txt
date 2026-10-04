@@ -1,0 +1,5 @@
+kubectl describe pods --namespace demo-rollback -l app.kubernetes.io/instance=demo | grep -E 'Image:|Failed|not found' | sort -u | head -6
+---
+    Image:          ghcr.io/sufyanahmadkamboh/bookshop-frontend:1.0.0
+    Image:          ghcr.io/sufyanahmadkamboh/bookshop-frontend:1.0.1-hotfix
+# exit 0

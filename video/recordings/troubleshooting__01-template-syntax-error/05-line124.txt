@@ -1,0 +1,5 @@
+sed -i 's/^  rules:$/  {{- end }}\n  rules:/' labs/work/ts01/templates/ingress.yaml
+helm lint labs/work/ts01 -f charts/demo-app/values-dev.yaml | tail -1
+---
+1 chart(s) linted, 0 chart(s) failed
+# exit 0

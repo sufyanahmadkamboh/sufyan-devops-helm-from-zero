@@ -125,7 +125,7 @@ helm install demo charts/demo-app -f charts/demo-app/values-dev.yaml --namespace
 
 ```text
 NAME: demo
-LAST DEPLOYED: Sun Oct  4 23:25:56 2026
+LAST DEPLOYED: Mon Oct  5 00:59:37 2026
 NAMESPACE: default
 STATUS: pending-install
 REVISION: 1

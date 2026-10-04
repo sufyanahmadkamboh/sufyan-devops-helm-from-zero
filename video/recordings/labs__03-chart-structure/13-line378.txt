@@ -1,0 +1,4 @@
+helm template demo labs/work/broken --show-only templates/deployment.yaml | grep 'image:'
+---
+          image: "ghcr.io/sufyanahmadkamboh/bookshop-frontend:1.1"
+# exit 0

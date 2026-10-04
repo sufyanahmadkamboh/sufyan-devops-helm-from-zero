@@ -1,0 +1,7 @@
+helm get manifest shop --namespace bookshop-dev \
+  | kubectl diff --server-side --field-manager=helm --namespace bookshop-dev -f - \
+  | grep -E '^[-+] ' | grep -vE 'generation:|meta\.helm\.sh/|^-\s+annotations:$' || true
+---
+-  replicas: 0
++  replicas: 1
+# exit 0

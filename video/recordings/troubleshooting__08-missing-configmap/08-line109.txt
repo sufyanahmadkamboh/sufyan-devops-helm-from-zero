@@ -1,0 +1,4 @@
+helm test shop --namespace bookshop-dev --logs | tail -2
+---
+all checks passed
+# exit 0

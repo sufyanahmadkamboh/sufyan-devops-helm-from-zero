@@ -1,0 +1,4 @@
+kubectl delete namespace demo-tmp
+---
+namespace "demo-tmp" deleted
+# exit 0

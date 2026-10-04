@@ -1,0 +1,4 @@
+kubectl config get-contexts -o name | grep helm
+---
+kind-helm-lab
+# exit 0

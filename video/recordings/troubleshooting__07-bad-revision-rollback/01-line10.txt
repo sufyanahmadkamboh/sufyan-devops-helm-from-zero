@@ -1,0 +1,7 @@
+helm install demo charts/demo-app --namespace trouble --create-namespace \
+  -f troubleshooting/values-trouble.yaml --wait --timeout 3m > /dev/null
+helm upgrade demo charts/demo-app --namespace trouble -f troubleshooting/values-trouble.yaml \
+  --set config.adminUrl=http://admin.example.com --wait --timeout 3m | grep REVISION
+---
+REVISION: 2
+# exit 0

@@ -1,0 +1,11 @@
+helm search repo podinfo
+helm search repo podinfo --versions | head -5
+---
+NAME           	CHART VERSION	APP VERSION	DESCRIPTION                      
+podinfo/podinfo	6.15.0       	6.15.0     	Podinfo Helm chart for Kubernetes
+NAME           	CHART VERSION	APP VERSION	DESCRIPTION                      
+podinfo/podinfo	6.15.0       	6.15.0     	Podinfo Helm chart for Kubernetes
+podinfo/podinfo	6.14.1       	6.14.1     	Podinfo Helm chart for Kubernetes
+podinfo/podinfo	6.14.0       	6.14.0     	Podinfo Helm chart for Kubernetes
+podinfo/podinfo	6.13.0       	6.13.0     	Podinfo Helm chart for Kubernetes
+# exit 0

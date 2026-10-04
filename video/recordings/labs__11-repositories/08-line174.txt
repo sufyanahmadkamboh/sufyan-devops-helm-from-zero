@@ -1,0 +1,10 @@
+helm template catalog podinfo/podinfo --version 6.14.1 | grep -E '^kind:|image:' | sort | uniq -c
+---
+      1           image: "ghcr.io/stefanprodan/podinfo:6.14.1"
+      1       image: curlimages/curl:7.69.0
+      1       image: giantswarm/tiny-tools
+      1       image: stefanprodan/grpc_health_probe:v0.3.0
+      1 kind: Deployment
+      3 kind: Pod
+      1 kind: Service
+# exit 0

@@ -1,0 +1,46 @@
+for env in dev staging prod; do echo "# --- values-$env.yaml"; grep -v '^#' charts/demo-app/values-$env.yaml; done
+---
+# --- values-dev.yaml
+environment: dev
+replicaCount: 1
+ingress:
+  enabled: true
+  hosts:
+    - host: demo-dev.localhost
+      paths:
+        - path: /
+          pathType: Prefix
+# --- values-staging.yaml
+environment: staging
+replicaCount: 2
+ingress:
+  enabled: true
+  hosts:
+    - host: demo-staging.localhost
+      paths:
+        - path: /
+          pathType: Prefix
+# --- values-prod.yaml
+environment: prod
+image:
+  tag: "1.0.0"                 # pinned explicitly: production never follows a default
+autoscaling:
+  enabled: true
+  minReplicas: 3
+  maxReplicas: 6
+  targetCPUUtilizationPercentage: 70
+resources:
+  requests:
+    cpu: 50m
+    memory: 64Mi
+  limits:
+    cpu: 500m
+    memory: 256Mi
+ingress:
+  enabled: true
+  hosts:
+    - host: demo.localhost
+      paths:
+        - path: /
+          pathType: Prefix
+# exit 0

@@ -1,0 +1,5 @@
+kubectl get pods --namespace demo-dev -L app.kubernetes.io/instance,app.kubernetes.io/version,environment
+---
+NAME                             READY   STATUS    RESTARTS   AGE   INSTANCE   VERSION   ENVIRONMENT
+demo-demo-app-68d8b4d8dc-slxhf   1/1     Running   0          4s    demo       1.0.0     dev
+# exit 0

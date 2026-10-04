@@ -1,0 +1,5 @@
+helm uninstall demo --namespace trouble --wait > /dev/null
+rm -rf labs/work/ts04
+---
+
+# exit 0

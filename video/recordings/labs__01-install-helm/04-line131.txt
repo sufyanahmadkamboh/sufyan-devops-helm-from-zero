@@ -1,0 +1,4 @@
+helm list --kube-context does-not-exist
+---
+Error: kubernetes cluster unreachable: context "does-not-exist" does not exist
+# exit 1

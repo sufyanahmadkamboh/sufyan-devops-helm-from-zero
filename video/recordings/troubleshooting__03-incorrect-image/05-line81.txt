@@ -1,0 +1,4 @@
+kubectl logs --namespace trouble -l app.kubernetes.io/instance=demo
+---
+Error from server (BadRequest): container "demo-app" in pod "demo-demo-app-5b8d98bbf6-62tg8" is waiting to start: trying and failing to pull image
+# exit 1

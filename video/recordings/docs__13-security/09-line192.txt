@@ -1,0 +1,10 @@
+kubectl create namespace sec-demo2 > /dev/null
+kubectl create secret generic shop-db-external --namespace sec-demo2 --from-literal=DB_PASSWORD="$(head -c 18 /dev/urandom | base64)"
+helm template shop charts/bookshop --namespace sec-demo2 \
+  --set database.existingSecret=shop-db-external --set postgres.auth.existingSecret=shop-db-external \
+  | grep -E 'kind: Secret|name: shop-db' | sort | uniq -c
+kubectl delete namespace sec-demo2 --wait=false > /dev/null
+---
+secret/shop-db-external created
+      5                   name: shop-db-external
+# exit 0

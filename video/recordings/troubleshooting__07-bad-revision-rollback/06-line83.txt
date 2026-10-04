@@ -1,0 +1,6 @@
+diff <(helm get manifest demo --namespace trouble --revision 2 | grep -E '^kind:') \
+     <(helm get manifest demo --namespace trouble --revision 3 | grep -E '^kind:') || true
+---
+5d4
+< kind: Ingress
+# exit 0

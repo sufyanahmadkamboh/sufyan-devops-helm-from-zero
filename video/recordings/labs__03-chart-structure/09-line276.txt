@@ -1,0 +1,7 @@
+helm package charts/demo-app --version 1.0.1 --app-version 1.1.0 --destination labs/work
+ls labs/work/*.tgz
+---
+Successfully packaged chart and saved it to: labs\work\demo-app-1.0.1.tgz
+labs/work/demo-app-1.0.0.tgz
+labs/work/demo-app-1.0.1.tgz
+# exit 0

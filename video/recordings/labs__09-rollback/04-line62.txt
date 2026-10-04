@@ -1,0 +1,10 @@
+helm upgrade demo charts/demo-app --namespace demo-rollback \
+  -f charts/demo-app/values-dev.yaml --set 'ingress.hosts[0].host=demo-rollback.localhost' \
+  --set config.adminUrl=http://admin.example.com \
+  --set image.tag=1.0.1-hotfix \
+  --wait --timeout 60s
+---
+level=WARN msg="upgrade failed" name=demo error="resource Deployment/demo-rollback/demo-demo-app not ready. status: InProgress, message: Pending termination: 1\ncontext deadline exceeded"
+Error: UPGRADE FAILED: resource Deployment/demo-rollback/demo-demo-app not ready. status: InProgress, message: Pending termination: 1
+context deadline exceeded
+# exit 1

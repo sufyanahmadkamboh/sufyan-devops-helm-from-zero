@@ -63,7 +63,7 @@ kubectl get pods --namespace trouble
 
 ```text
 NAME                             READY   STATUS    RESTARTS   AGE
-demo-demo-app-68d8b4d8dc-7hzcz   1/1     Running   0          3s
+demo-demo-app-68d8b4d8dc-4xz6t   1/1     Running   0          5s
 ```
 
 The Pod is `Running` and `1/1` Ready. The application is healthy; the traffic does not reach it.
@@ -83,7 +83,7 @@ kubectl get endpointslices --namespace trouble -l kubernetes.io/service-name=dem
 
 ```text
 NAME                  ENDPOINTS
-demo-demo-app-2zlwv   <none>
+demo-demo-app-k6rzq   <none>
 ```
 
 No endpoints. Compare the Service's selector with the Pod's labels:
@@ -97,7 +97,7 @@ kubectl get pods --namespace trouble --show-labels
 ```text
 {"app.kubernetes.io/component":"web","app.kubernetes.io/instance":"demo","app.kubernetes.io/name":"demo-app"}
 NAME                             READY   STATUS    RESTARTS   AGE   LABELS
-demo-demo-app-68d8b4d8dc-7hzcz   1/1     Running   0          3s    app.kubernetes.io/instance=demo,app.kubernetes.io/managed-by=Helm,app.kubernetes.io/name=demo-app,app.kubernetes.io/part-of=bookshop,app.kubernetes.io/version=1.0.0,environment=dev,helm.sh/chart=demo-app-1.0.0,pod-template-hash=68d8b4d8dc
+demo-demo-app-68d8b4d8dc-4xz6t   1/1     Running   0          5s    app.kubernetes.io/instance=demo,app.kubernetes.io/managed-by=Helm,app.kubernetes.io/name=demo-app,app.kubernetes.io/part-of=bookshop,app.kubernetes.io/version=1.0.0,environment=dev,helm.sh/chart=demo-app-1.0.0,pod-template-hash=68d8b4d8dc
 ```
 
 And what did the failed upgrade do?
@@ -109,8 +109,8 @@ helm history demo --namespace trouble
 
 ```text
 REVISION	UPDATED                 	STATUS  	CHART         	APP VERSION	DESCRIPTION                                                                                                                                                                                                                                                                                                                           
-1       	Mon Oct  5 00:05:37 2026	deployed	demo-app-1.0.0	1.0.0      	Install complete                                                                                                                                                                                                                                                                                                                      
-2       	Mon Oct  5 00:05:39 2026	failed  	demo-app-1.0.0	1.0.0      	Upgrade "demo" failed: server-side apply failed for object trouble/demo-demo-app apps/v1, Kind=Deployment: Deployment.apps "demo-demo-app" is invalid: spec.selector: Invalid value: {"matchLabels":{"app.kubernetes.io/component":"web","app.kubernetes.io/instance":"demo","app.kubernetes.io/name":"demo-app"}}: field is immutable
+1       	Mon Oct  5 01:08:18 2026	deployed	demo-app-1.0.0	1.0.0      	Install complete                                                                                                                                                                                                                                                                                                                      
+2       	Mon Oct  5 01:08:21 2026	failed  	demo-app-1.0.0	1.0.0      	Upgrade "demo" failed: server-side apply failed for object trouble/demo-demo-app apps/v1, Kind=Deployment: Deployment.apps "demo-demo-app" is invalid: spec.selector: Invalid value: {"matchLabels":{"app.kubernetes.io/component":"web","app.kubernetes.io/instance":"demo","app.kubernetes.io/name":"demo-app"}}: field is immutable
 ```
 
 ## Output Interpretation
@@ -152,10 +152,10 @@ helm history demo --namespace trouble | tail -1
 
 ```text
 NAME                  ENDPOINTS
-demo-demo-app-2zlwv   10.244.1.227
+demo-demo-app-k6rzq   10.244.1.98
 window.APP_CONFIG = { ADMIN_URL: "", APP_ENV: "dev" };
 
-3       	Mon Oct  5 00:05:40 2026	deployed  	demo-app-1.0.0	1.0.0      	Rollback to 1                                                                                                                                                                                                                                                                                                                         
+3       	Mon Oct  5 01:08:25 2026	deployed  	demo-app-1.0.0	1.0.0      	Rollback to 1                                                                                                                                                                                                                                                                                                                         
 ```
 
 <!-- test: timeout=300 -->

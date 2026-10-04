@@ -1,0 +1,7 @@
+sed -i.bak '/{{- end }}/d' labs/work/tpl/templates/configmap.yaml
+helm template web labs/work/tpl
+---
+Error: parse error at (basic-chart/templates/configmap.yaml:11): unexpected EOF
+
+Use --debug flag to render out invalid YAML
+# exit 1

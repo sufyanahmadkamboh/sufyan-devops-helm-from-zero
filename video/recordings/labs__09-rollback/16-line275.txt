@@ -1,0 +1,5 @@
+helm history demo --namespace demo-rollback | tail -2
+---
+6       	Mon Oct  5 01:03:07 2026	deployed       	demo-app-1.0.0	1.0.0      	Rollback to 4                                                                                                                        
+7       	Mon Oct  5 01:03:07 2026	pending-upgrade	demo-app-1.0.0	1.0.0      	Preparing upgrade                                                                                                                    
+# exit 0

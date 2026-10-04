@@ -1,0 +1,13 @@
+helm test hello --namespace lab-02
+---
+NAME: hello
+LAST DEPLOYED: Mon Oct  5 00:59:08 2026
+NAMESPACE: lab-02
+STATUS: deployed
+REVISION: 1
+DESCRIPTION: Install complete
+TEST SUITE:     hello-test-connection
+Last Started:   Mon Oct  5 00:59:14 2026
+Last Completed: Mon Oct  5 00:59:19 2026
+Phase:          Succeeded
+# exit 0

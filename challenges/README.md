@@ -396,16 +396,16 @@ kubectl get deploy,svc,configmap,ingress --namespace challenges -l app.kubernete
 
 ```text
 NAME                  READY   UP-TO-DATE   AVAILABLE   AGE
-deployment.apps/web   1/1     1            1           5s
+deployment.apps/web   1/1     1            1           7s
 
-NAME          TYPE        CLUSTER-IP    EXTERNAL-IP   PORT(S)    AGE
-service/web   ClusterIP   10.96.2.145   <none>        8080/TCP   5s
+NAME          TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
+service/web   ClusterIP   10.96.221.246   <none>        8080/TCP   7s
 
 NAME                   DATA   AGE
-configmap/web-config   1      5s
+configmap/web-config   1      7s
 
 NAME                            CLASS     HOSTS                 ADDRESS   PORTS   AGE
-ingress.networking.k8s.io/web   traefik   challenge.localhost             80      5s
+ingress.networking.k8s.io/web   traefik   challenge.localhost             80      7s
 ```
 
 </details>
@@ -452,9 +452,9 @@ helm history web --namespace challenges
 
 ```text
 REVISION	UPDATED                 	STATUS    	CHART          	APP VERSION	DESCRIPTION     
-1       	Mon Oct  5 00:43:35 2026	superseded	shopfront-0.1.0	1.0.0      	Install complete
-2       	Mon Oct  5 00:43:39 2026	superseded	shopfront-0.1.0	1.0.0      	Upgrade complete
-3       	Mon Oct  5 00:43:41 2026	deployed  	shopfront-0.1.0	1.0.0      	Upgrade complete
+1       	Mon Oct  5 01:25:19 2026	superseded	shopfront-0.1.0	1.0.0      	Install complete
+2       	Mon Oct  5 01:25:23 2026	superseded	shopfront-0.1.0	1.0.0      	Upgrade complete
+3       	Mon Oct  5 01:25:26 2026	deployed  	shopfront-0.1.0	1.0.0      	Upgrade complete
 ```
 
 </details>
@@ -490,11 +490,11 @@ helm history web --namespace challenges | cut -c1-110
 
 ```text
 REVISION	UPDATED                 	STATUS    	CHART          	APP VERSION	DESCRIPTION                          
-1       	Mon Oct  5 00:43:35 2026	superseded	shopfront-0.1.0	1.0.0      	Install complete                     
-2       	Mon Oct  5 00:43:39 2026	superseded	shopfront-0.1.0	1.0.0      	Upgrade complete                     
-3       	Mon Oct  5 00:43:41 2026	superseded	shopfront-0.1.0	1.0.0      	Upgrade complete                     
-4       	Mon Oct  5 00:43:42 2026	failed    	shopfront-0.1.0	1.0.0      	Upgrade "web" failed: resource Deploy
-5       	Mon Oct  5 00:44:43 2026	deployed  	shopfront-0.1.0	1.0.0      	Rollback to 3                        
+1       	Mon Oct  5 01:25:19 2026	superseded	shopfront-0.1.0	1.0.0      	Install complete                     
+2       	Mon Oct  5 01:25:23 2026	superseded	shopfront-0.1.0	1.0.0      	Upgrade complete                     
+3       	Mon Oct  5 01:25:26 2026	superseded	shopfront-0.1.0	1.0.0      	Upgrade complete                     
+4       	Mon Oct  5 01:25:28 2026	failed    	shopfront-0.1.0	1.0.0      	Upgrade "web" failed: resource Deploy
+5       	Mon Oct  5 01:26:28 2026	deployed  	shopfront-0.1.0	1.0.0      	Rollback to 3                        
 ```
 
 </details>
@@ -544,8 +544,8 @@ kubectl get deployments --namespace challenges
 
 ```text
 NAME         READY   UP-TO-DATE   AVAILABLE   AGE
-web          2/2     2            2           81s
-web-status   1/1     1            1           12s
+web          2/2     2            2           83s
+web-status   1/1     1            1           13s
 ```
 
 </details>
@@ -609,8 +609,8 @@ helm test web --namespace challenges --filter name=web-test-health --logs
 
 ```text
 ...
-Last Started:   Mon Oct  5 00:44:57 2026
-Last Completed: Mon Oct  5 00:44:59 2026
+Last Started:   Mon Oct  5 01:26:42 2026
+Last Completed: Mon Oct  5 01:26:45 2026
 Phase:          Succeeded
 
 POD LOGS: web-test-health (check)

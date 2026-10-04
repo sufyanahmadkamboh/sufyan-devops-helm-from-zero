@@ -1,0 +1,9 @@
+curl -s http://basic.localhost:8080/config.js; echo
+kubectl get pods -n lab-05 -L environment,team
+---
+window.APP_CONFIG = { ADMIN_URL: "", APP_ENV: "dev" };
+
+NAME                   READY   STATUS    RESTARTS   AGE   ENVIRONMENT   TEAM
+web-56c77bb496-dwstk   1/1     Running   0          4s    dev           web
+web-56c77bb496-glqg8   1/1     Running   0          4s    dev           web
+# exit 0

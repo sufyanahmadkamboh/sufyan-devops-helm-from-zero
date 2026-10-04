@@ -15,7 +15,7 @@ helm install demo charts/demo-app --namespace trouble --create-namespace \
 
 ```text
 NAME: demo
-LAST DEPLOYED: Mon Oct  5 00:03:46 2026
+LAST DEPLOYED: Mon Oct  5 01:07:58 2026
 NAMESPACE: trouble
 STATUS: deployed
 REVISION: 1
@@ -61,7 +61,7 @@ kubectl get pods --namespace trouble
 
 ```text
 NAME                             READY   STATUS             RESTARTS   AGE
-demo-demo-app-5b8d98bbf6-r4f44   0/1     ImagePullBackOff   0          39s
+demo-demo-app-5b8d98bbf6-62tg8   0/1     ImagePullBackOff   0          16s
 ```
 
 <!-- test: contains=bookshop-frontnd; output -->
@@ -71,10 +71,10 @@ kubectl describe pod --namespace trouble -l app.kubernetes.io/instance=demo | gr
 
 ```text
     Image:          ghcr.io/sufyanahmadkamboh/bookshop-frontnd:1.0.0
-  Normal   BackOff    12s (x2 over 37s)  kubelet            spec.containers{demo-app}: Back-off pulling image "ghcr.io/sufyanahmadkamboh/bookshop-frontnd:1.0.0"
-  Warning  Failed     0s (x3 over 38s)   kubelet            spec.containers{demo-app}: Error: ErrImagePull
-  Warning  Failed     0s (x3 over 38s)   kubelet            spec.containers{demo-app}: Failed to pull image "ghcr.io/sufyanahmadkamboh/bookshop-frontnd:1.0.0": failed to pull and unpack image "ghcr.io/sufyanahmadkamboh/bookshop-frontnd:1.0.0": failed to resolve reference "ghcr.io/sufyanahmadkamboh/bookshop-frontnd:1.0.0": failed to authorize: failed to fetch anonymous token: unexpected status from GET request to https://ghcr.io/token?scope=repository%3Asufyanahmadkamboh%2Fbookshop-frontnd%3Apull&service=ghcr.io: 403 Forbidden
-  Warning  Failed     12s (x2 over 37s)  kubelet            spec.containers{demo-app}: Error: ImagePullBackOff
+  Normal   BackOff    15s               kubelet            spec.containers{demo-app}: Back-off pulling image "ghcr.io/sufyanahmadkamboh/bookshop-frontnd:1.0.0"
+  Warning  Failed     15s               kubelet            spec.containers{demo-app}: Error: ImagePullBackOff
+  Warning  Failed     1s (x2 over 15s)  kubelet            spec.containers{demo-app}: Error: ErrImagePull
+  Warning  Failed     1s (x2 over 15s)  kubelet            spec.containers{demo-app}: Failed to pull image "ghcr.io/sufyanahmadkamboh/bookshop-frontnd:1.0.0": failed to pull and unpack image "ghcr.io/sufyanahmadkamboh/bookshop-frontnd:1.0.0": failed to resolve reference "ghcr.io/sufyanahmadkamboh/bookshop-frontnd:1.0.0": failed to authorize: failed to fetch anonymous token: unexpected status from GET request to https://ghcr.io/token?scope=repository%3Asufyanahmadkamboh%2Fbookshop-frontnd%3Apull&service=ghcr.io: 403 Forbidden
 ```
 
 <!-- test: fail; contains=waiting to start; output -->
@@ -83,7 +83,7 @@ kubectl logs --namespace trouble -l app.kubernetes.io/instance=demo
 ```
 
 ```text
-Error from server (BadRequest): container "demo-app" in pod "demo-demo-app-5b8d98bbf6-r4f44" is waiting to start: trying and failing to pull image
+Error from server (BadRequest): container "demo-app" in pod "demo-demo-app-5b8d98bbf6-62tg8" is waiting to start: trying and failing to pull image
 ```
 
 ## Output Interpretation
@@ -117,9 +117,8 @@ curl -s http://trouble.localhost:8080/config.js; echo
 ```
 
 ```text
-NAME                             READY   STATUS        RESTARTS   AGE
-demo-demo-app-5b8d98bbf6-r4f44   0/1     Terminating   0          41s
-demo-demo-app-68d8b4d8dc-8gxdr   1/1     Running       0          1s
+NAME                             READY   STATUS    RESTARTS   AGE
+demo-demo-app-68d8b4d8dc-7hf9j   1/1     Running   0          4s
 window.APP_CONFIG = { ADMIN_URL: "", APP_ENV: "dev" };
 ```
 

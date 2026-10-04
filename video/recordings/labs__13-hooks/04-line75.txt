@@ -1,0 +1,9 @@
+for job in $(kubectl get jobs --namespace lab-13 --sort-by=.metadata.creationTimestamp -o name); do
+  kubectl logs --namespace lab-13 "$job"
+done
+---
+pre-install hook · release hooks · revision 1 · 23:05:17
+post-install hook · release hooks · revision 1 · 23:05:20
+pre-upgrade hook · release hooks · revision 2 · 23:05:24
+post-upgrade hook · release hooks · revision 2 · 23:05:27
+# exit 0

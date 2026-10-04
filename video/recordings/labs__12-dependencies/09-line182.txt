@@ -1,0 +1,11 @@
+helm dependency build charts/bookshop
+ls charts/bookshop/charts/
+---
+Hang tight while we grab the latest from your chart repositories...
+...Successfully got an update from the "traefik" chart repository
+...Successfully got an update from the "podinfo" chart repository
+Update Complete. ⎈Happy Helming!⎈
+Saving 1 charts
+Deleting outdated charts
+postgres-0.1.1.tgz
+# exit 0

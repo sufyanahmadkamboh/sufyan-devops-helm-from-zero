@@ -1,0 +1,5 @@
+grep -n -A1 "stringData" environments/dev/secret.yaml
+---
+10:stringData:
+11-  DB_PASSWORD: example-only-dev-password
+# exit 0

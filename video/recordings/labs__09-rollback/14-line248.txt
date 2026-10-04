@@ -1,0 +1,6 @@
+timeout 5 helm upgrade demo charts/demo-app --namespace demo-rollback \
+  -f charts/demo-app/values-dev.yaml --set 'ingress.hosts[0].host=demo-rollback.localhost' \
+  --set image.tag=1.0.1-hotfix --wait --timeout 5m
+---
+
+# exit 124

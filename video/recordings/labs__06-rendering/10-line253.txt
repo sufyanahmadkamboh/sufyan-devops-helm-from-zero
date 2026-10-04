@@ -1,0 +1,8 @@
+sed -i 's/{{ .Values.containerPort }$/{{ .Values.containerPort }}/' labs/work/lint-me/templates/deployment.yaml
+helm lint labs/work/lint-me -f labs/work/lint-me/values-dev.yaml
+---
+==> Linting labs/work/lint-me
+[INFO] Chart.yaml: icon is recommended
+
+1 chart(s) linted, 0 chart(s) failed
+# exit 0

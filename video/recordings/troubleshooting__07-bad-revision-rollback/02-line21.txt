@@ -1,0 +1,5 @@
+helm upgrade demo charts/demo-app --namespace trouble -f troubleshooting/values-trouble.yaml \
+  --set ingress.enabled=false --wait --timeout 3m | grep STATUS
+---
+STATUS: deployed
+# exit 0

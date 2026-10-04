@@ -1,0 +1,6 @@
+helm version --short
+helm version --template '{{ .Version }}'; echo
+---
+v4.3.0+gbec5b06
+v4.3.0
+# exit 0

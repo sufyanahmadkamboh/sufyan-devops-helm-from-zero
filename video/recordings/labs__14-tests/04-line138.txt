@@ -1,0 +1,14 @@
+helm install preview charts/demo-app --namespace default --dry-run=client --set ingress.enabled=false | sed -n '/^NOTES:/,$p'
+---
+NOTES:
+demo-app 1.0.0 (chart 1.0.0) is deployed as release "preview" in namespace "default".
+Environment: local · revision 1
+
+No Ingress (ingress.enabled=false). Reach it with a port-forward:
+  kubectl --namespace default port-forward service/preview-demo-app 8080:8080
+  then open http://localhost:8080/
+
+Check it:
+  kubectl --namespace default get pods -l app.kubernetes.io/instance=preview
+  helm test preview --namespace default
+# exit 0

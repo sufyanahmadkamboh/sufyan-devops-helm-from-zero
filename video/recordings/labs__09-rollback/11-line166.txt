@@ -1,0 +1,9 @@
+kubectl rollout status deployment/demo-demo-app --namespace demo-rollback
+kubectl get pods --namespace demo-rollback
+curl -s http://demo-rollback.localhost:8080/config.js; echo
+---
+deployment "demo-demo-app" successfully rolled out
+NAME                             READY   STATUS    RESTARTS   AGE
+demo-demo-app-56457858d8-5plb6   1/1     Running   0          68s
+window.APP_CONFIG = { ADMIN_URL: "http://admin.example.com", APP_ENV: "dev" };
+# exit 0

@@ -1,0 +1,4 @@
+helm upgrade catalog podinfo/podinfo --version 6.99.0 --namespace lab-11 -f labs/work/podinfo-values.yaml
+---
+Error: chart "podinfo" matching 6.99.0 not found in podinfo index. (try 'helm repo update'): no chart version found for podinfo-6.99.0
+# exit 1

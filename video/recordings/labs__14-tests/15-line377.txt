@@ -1,0 +1,11 @@
+helm test shop --namespace bookshop-dev | grep -A3 'TEST SUITE'
+---
+TEST SUITE:     shop-test-services
+Last Started:   Mon Oct  5 01:06:41 2026
+Last Completed: Mon Oct  5 01:06:43 2026
+Phase:          Succeeded
+TEST SUITE:     shop-test-books
+Last Started:   Mon Oct  5 01:06:39 2026
+Last Completed: Mon Oct  5 01:06:41 2026
+Phase:          Succeeded
+# exit 0

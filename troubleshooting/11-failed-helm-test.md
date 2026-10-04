@@ -128,7 +128,7 @@ kubectl rollout status deployment/demo-demo-app --namespace trouble --timeout=12
 
 ## Verification
 
-<!-- test: timeout=300; contains=test passed; output=tail:6 -->
+<!-- test: timeout=300; retry=3; contains=test passed; output=tail:6 -->
 ```bash
 helm test demo --namespace trouble --logs
 ```

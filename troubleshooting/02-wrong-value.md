@@ -40,7 +40,7 @@ kubectl get pods --namespace trouble
 
 ```text
 NAME                             READY   STATUS    RESTARTS      AGE
-demo-demo-app-7fcd775c55-zz5w8   0/1     Running   1 (30s ago)   60s
+demo-demo-app-7fcd775c55-89hsc   0/1     Running   1 (30s ago)   60s
 ```
 
 The Pod is `Running` but `0/1` (not Ready), and it keeps restarting.
@@ -62,8 +62,8 @@ kubectl describe pod --namespace trouble -l app.kubernetes.io/instance=demo | gr
     Host Port:      0/TCP (http)
     Liveness:   http-get http://:http/health delay=0s timeout=1s period=10s successThreshold=1 failureThreshold=3
     Readiness:  http-get http://:http/health delay=0s timeout=1s period=5s successThreshold=1 failureThreshold=3
-  Warning  Unhealthy  0s (x17 over 59s)  kubelet            spec.containers{demo-app}: Readiness probe failed: Get "http://10.244.1.221:80/health": dial tcp 10.244.1.221:80: connect: connection refused
-  Warning  Unhealthy  0s (x6 over 50s)   kubelet            spec.containers{demo-app}: Liveness probe failed: Get "http://10.244.1.221:80/health": dial tcp 10.244.1.221:80: connect: connection refused
+  Warning  Unhealthy  0s (x16 over 60s)  kubelet            spec.containers{demo-app}: Readiness probe failed: Get "http://10.244.1.94:80/health": dial tcp 10.244.1.94:80: connect: connection refused
+  Warning  Unhealthy  0s (x6 over 50s)   kubelet            spec.containers{demo-app}: Liveness probe failed: Get "http://10.244.1.94:80/health": dial tcp 10.244.1.94:80: connect: connection refused
 ```
 
 The probes call port 80, and nothing listens there. Where does 80 come from? Compare what was asked for with what Helm
@@ -126,14 +126,13 @@ helm history demo --namespace trouble
 ```
 
 ```text
-NAME                             READY   STATUS        RESTARTS     AGE
-demo-demo-app-68d8b4d8dc-6kj4r   1/1     Running       0            6s
-demo-demo-app-7fcd775c55-zz5w8   0/1     Terminating   2 (7s ago)   67s
+NAME                             READY   STATUS    RESTARTS   AGE
+demo-demo-app-68d8b4d8dc-nq6wl   1/1     Running   0          4s
 window.APP_CONFIG = { ADMIN_URL: "", APP_ENV: "dev" };
 
 REVISION	UPDATED                 	STATUS    	CHART         	APP VERSION	DESCRIPTION                                                                                                            
-1       	Mon Oct  5 00:02:38 2026	superseded	demo-app-1.0.0	1.0.0      	Release "demo" failed: resource Deployment/trouble/demo-demo-app not ready. status: InProgress, message: Available: ...
-2       	Mon Oct  5 00:03:39 2026	deployed  	demo-app-1.0.0	1.0.0      	Upgrade complete                                                                                                       
+1       	Mon Oct  5 01:06:51 2026	superseded	demo-app-1.0.0	1.0.0      	Release "demo" failed: resource Deployment/trouble/demo-demo-app not ready. status: InProgress, message: Available: ...
+2       	Mon Oct  5 01:07:52 2026	deployed  	demo-app-1.0.0	1.0.0      	Upgrade complete                                                                                                       
 ```
 
 Revision 2 `deployed`; revision 1 is now `superseded`, and its description still records the failed install. An

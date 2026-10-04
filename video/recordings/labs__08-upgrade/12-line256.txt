@@ -1,0 +1,4 @@
+curl -s http://demo-dev.localhost:8080/config.js; echo
+---
+window.APP_CONFIG = { ADMIN_URL: "", APP_ENV: "dev" };
+# exit 0

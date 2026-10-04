@@ -1,0 +1,7 @@
+helm version --short
+helm status traefik -n traefik | grep STATUS
+---
+v4.3.0+gbec5b06
+STATUS: deployed
+NAME                       READY   STATUS    RESTARTS   AGE
+# exit 0

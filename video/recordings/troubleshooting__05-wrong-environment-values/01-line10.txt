@@ -1,0 +1,19 @@
+mkdir -p labs/work
+cat > labs/work/values-trouble-staging.yaml <<'EOF'
+# staging on trouble.localhost
+environment: staging
+replicaCount: 2
+config:
+  adminUrl: http://admin-staging.example.com
+ingress:
+  enabled: true
+  hosts:
+    - host: trouble.localhost
+      paths:
+        - path: /
+          pathType: Prefix
+EOF
+grep environment labs/work/values-trouble-staging.yaml
+---
+environment: staging
+# exit 0

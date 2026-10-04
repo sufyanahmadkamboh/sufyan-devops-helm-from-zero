@@ -191,7 +191,7 @@ helm install web examples/basic-chart --namespace lab-05 --dry-run=server --set 
 
 ```text
 NAME: web
-LAST DEPLOYED: Sun Oct  4 23:23:34 2026
+LAST DEPLOYED: Mon Oct  5 00:59:30 2026
 NAMESPACE: lab-05
 STATUS: pending-install
 REVISION: 1
@@ -392,8 +392,8 @@ kubectl get pods -n lab-05 -L environment,team
 window.APP_CONFIG = { ADMIN_URL: "", APP_ENV: "dev" };
 
 NAME                   READY   STATUS    RESTARTS   AGE   ENVIRONMENT   TEAM
-web-56c77bb496-cb7vw   1/1     Running   0          3s    dev           web
-web-56c77bb496-jqcjc   1/1     Running   0          3s    dev           web
+web-56c77bb496-dwstk   1/1     Running   0          4s    dev           web
+web-56c77bb496-glqg8   1/1     Running   0          4s    dev           web
 ```
 
 ## Cleanup

@@ -27,6 +27,10 @@ kind create cluster --config kubernetes/cluster/kind-config.yaml 2>&1
 ```
 
 ```text
+...
+kubectl cluster-info --context kind-helm-lab
+
+Have a question, bug, or feature request? Let us know! https://kind.sigs.k8s.io/#community 🙂
 ```
 
 <!-- test: retry=30; contains=helm-lab-worker; absent=NotReady; output -->
@@ -36,6 +40,10 @@ kubectl get nodes
 ```
 
 ```text
+kind-helm-lab
+NAME                     STATUS   ROLES           AGE   VERSION
+helm-lab-control-plane   Ready    control-plane   26s   v1.37.0
+helm-lab-worker          Ready    <none>          15s   v1.37.0
 ```
 
 ## Step 2 · An ingress controller
@@ -54,6 +62,10 @@ helm install traefik traefik/traefik --version 41.6.1 --namespace traefik --crea
 ```
 
 ```text
+...
+TEST SUITE: None
+NOTES:
+traefik with docker.io/traefik:v3.7.13 has been deployed successfully on traefik namespace!
 ```
 
 The settings it used are in [kubernetes/cluster/traefik-values.yaml](../kubernetes/cluster/traefik-values.yaml): a
@@ -65,6 +77,7 @@ curl -s http://anything.localhost:8080/
 ```
 
 ```text
+404 page not found
 ```
 
 Traefik answers `404 page not found`: requests reach it, and nothing is deployed yet. (`*.localhost` names point to

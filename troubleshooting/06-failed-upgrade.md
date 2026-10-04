@@ -43,8 +43,8 @@ helm history demo --namespace trouble
 STATUS: failed
 REVISION: 2
 REVISION	UPDATED                 	STATUS  	CHART         	APP VERSION	DESCRIPTION                                                                                                                    
-1       	Mon Oct  5 00:06:42 2026	deployed	demo-app-1.0.0	1.0.0      	Install complete                                                                                                               
-2       	Mon Oct  5 00:06:43 2026	failed  	demo-app-1.0.0	1.0.0      	Upgrade "demo" failed: resource Deployment/trouble/demo-demo-app not ready. status: InProgress, message: Pending termination...
+1       	Mon Oct  5 01:08:35 2026	deployed	demo-app-1.0.0	1.0.0      	Install complete                                                                                                               
+2       	Mon Oct  5 01:08:37 2026	failed  	demo-app-1.0.0	1.0.0      	Upgrade "demo" failed: resource Deployment/trouble/demo-demo-app not ready. status: InProgress, message: Pending termination...
 ```
 
 <!-- test: retry=20; contains=APP_ENV: "dev"; output -->
@@ -72,8 +72,8 @@ kubectl get pods --namespace trouble
 
 ```text
 NAME                             READY   STATUS             RESTARTS      AGE
-demo-demo-app-5965f57d7f-tfmcw   0/1     CrashLoopBackOff   3 (23s ago)   60s
-demo-demo-app-68d8b4d8dc-bbjcv   1/1     Running            0             62s
+demo-demo-app-5965f57d7f-4n4zj   0/1     CrashLoopBackOff   3 (21s ago)   60s
+demo-demo-app-68d8b4d8dc-f5fjt   1/1     Running            0             62s
 ```
 
 <!-- test: contains=OOMKilled; output -->
@@ -99,11 +99,11 @@ kubectl get events --namespace trouble --sort-by=.lastTimestamp | tail -6
 
 ```text
 61s         Normal    ScalingReplicaSet   deployment/demo-demo-app              Scaled up replica set demo-demo-app-5965f57d7f from 0 to 1
-25s         Normal    Pulled              pod/demo-demo-app-5965f57d7f-tfmcw    Container image "ghcr.io/sufyanahmadkamboh/bookshop-frontend:1.0.0" already present on machine and can be accessed by the pod
-25s         Normal    Created             pod/demo-demo-app-5965f57d7f-tfmcw    Container created
-24s         Normal    Started             pod/demo-demo-app-5965f57d7f-tfmcw    Container started
-24s         Warning   Unhealthy           pod/demo-demo-app-5965f57d7f-tfmcw    Readiness probe failed: Get "http://10.244.1.233:8080/health": dial tcp 10.244.1.233:8080: connect: connection refused
-21s         Warning   BackOff             pod/demo-demo-app-5965f57d7f-tfmcw    Back-off restarting failed container demo-app in pod demo-demo-app-5965f57d7f-tfmcw_trouble(c6ac3917-164a-42b8-b4b5-9de2c5079469)
+23s         Normal    Pulled              pod/demo-demo-app-5965f57d7f-4n4zj    Container image "ghcr.io/sufyanahmadkamboh/bookshop-frontend:1.0.0" already present on machine and can be accessed by the pod
+23s         Normal    Created             pod/demo-demo-app-5965f57d7f-4n4zj    Container created
+23s         Normal    Started             pod/demo-demo-app-5965f57d7f-4n4zj    Container started
+23s         Warning   Unhealthy           pod/demo-demo-app-5965f57d7f-4n4zj    Readiness probe failed: Get "http://10.244.1.104:8080/health": dial tcp 10.244.1.104:8080: connect: connection refused
+21s         Warning   BackOff             pod/demo-demo-app-5965f57d7f-4n4zj    Back-off restarting failed container demo-app in pod demo-demo-app-5965f57d7f-4n4zj_trouble(97871a35-bfda-4fac-9f6d-54464c33253c)
 ```
 
 ## Output Interpretation
@@ -152,10 +152,10 @@ helm history demo --namespace trouble | tail -2
 
 ```text
 NAME                             READY   STATUS    RESTARTS   AGE
-demo-demo-app-67df7fc4f5-gg2q4   1/1     Running   0          4s
+demo-demo-app-67df7fc4f5-xng57   1/1     Running   0          4s
 {"limits":{"cpu":"200m","memory":"96Mi"},"requests":{"cpu":"10m","memory":"32Mi"}}
-2       	Mon Oct  5 00:06:43 2026	failed    	demo-app-1.0.0	1.0.0      	Upgrade "demo" failed: resource Deployment/trouble/demo-demo-app not ready. status: InProgress, message: Pending termination...
-3       	Mon Oct  5 00:07:45 2026	deployed  	demo-app-1.0.0	1.0.0      	Upgrade complete                                                                                                               
+2       	Mon Oct  5 01:08:37 2026	failed    	demo-app-1.0.0	1.0.0      	Upgrade "demo" failed: resource Deployment/trouble/demo-demo-app not ready. status: InProgress, message: Pending termination...
+3       	Mon Oct  5 01:09:39 2026	deployed  	demo-app-1.0.0	1.0.0      	Upgrade complete                                                                                                               
 ```
 
 <!-- test: timeout=300 -->

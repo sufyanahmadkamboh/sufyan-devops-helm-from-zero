@@ -1,0 +1,6 @@
+helm upgrade shop charts/bookshop --namespace bookshop-dev -f charts/bookshop/values-dev.yaml --wait --timeout 5m | grep STATUS
+kubectl delete pod shop-test-books --namespace bookshop-dev --ignore-not-found > /dev/null
+rm -rf labs/work/bookshop-tests
+---
+STATUS: deployed
+# exit 0

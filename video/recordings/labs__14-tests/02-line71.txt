@@ -1,0 +1,22 @@
+helm test shop --namespace bookshop-dev --logs
+---
+NAME: shop
+LAST DEPLOYED: Mon Oct  5 01:05:35 2026
+NAMESPACE: bookshop-dev
+STATUS: deployed
+REVISION: 2
+DESCRIPTION: Upgrade complete
+TEST SUITE:     shop-test-services
+Last Started:   Mon Oct  5 01:06:10 2026
+Last Completed: Mon Oct  5 01:06:12 2026
+Phase:          Succeeded
+
+POD LOGS: shop-test-services (check)
+frontend: {"status":"ok","service":"frontend","version":"1.0.0"}
+go-status: {"service":"go-status","status":"ok","version":"1.0.0"}
+java-api: {"status":"ready","service":"java-api","version":"1.0.0"}
+node-api: {"status":"ready","service":"node-api","version":"1.0.0"}
+python-api: {"status":"ready","service":"python-api","version":"1.0.0"}
+frontend environment: dev
+all checks passed
+# exit 0

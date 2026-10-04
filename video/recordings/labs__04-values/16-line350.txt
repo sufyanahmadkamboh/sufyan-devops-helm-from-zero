@@ -1,0 +1,7 @@
+helm lint labs/work/schema-demo --set replicaCount=2
+---
+==> Linting labs/work/schema-demo
+[INFO] Chart.yaml: icon is recommended
+
+1 chart(s) linted, 0 chart(s) failed
+# exit 0

@@ -1,0 +1,4 @@
+helm uninstall demo --namespace trouble --wait > /dev/null
+---
+
+# exit 0

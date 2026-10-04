@@ -1,0 +1,10 @@
+helm get hooks shop --namespace bookshop-dev | grep -E '^kind:|helm.sh/hook'
+---
+kind: Pod
+    "helm.sh/hook": test
+    "helm.sh/hook-delete-policy": before-hook-creation
+kind: Job
+    "helm.sh/hook": post-install,post-upgrade
+    "helm.sh/hook-weight": "0"
+    "helm.sh/hook-delete-policy": before-hook-creation
+# exit 0

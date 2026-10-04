@@ -1,0 +1,8 @@
+curl -s http://trouble.localhost:8080/config.js; echo
+kubectl get deployment demo-demo-app --namespace trouble -L environment
+---
+window.APP_CONFIG = { ADMIN_URL: "", APP_ENV: "dev" };
+
+NAME            READY   UP-TO-DATE   AVAILABLE   AGE   ENVIRONMENT
+demo-demo-app   1/1     1            1           3s    dev
+# exit 0

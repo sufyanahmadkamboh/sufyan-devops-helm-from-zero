@@ -1,0 +1,4 @@
+curl -s http://trouble.localhost:8080/; echo
+---
+no available server
+# exit 0

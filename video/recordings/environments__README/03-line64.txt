@@ -1,0 +1,17 @@
+kubectl -n bookshop-dev get deployments
+kubectl -n bookshop-dev get pods
+---
+NAME         READY   UP-TO-DATE   AVAILABLE   AGE
+frontend     1/1     1            1           26s
+go-status    1/1     1            1           26s
+java-api     1/1     1            1           26s
+node-api     1/1     1            1           26s
+python-api   1/1     1            1           26s
+NAME                          READY   STATUS    RESTARTS   AGE
+frontend-56687b87df-rkhxq     1/1     Running   0          26s
+go-status-65f4db8dbf-fl8n5    1/1     Running   0          26s
+java-api-7849f88465-pfchk     1/1     Running   0          26s
+node-api-547688d4-nv7km       1/1     Running   0          26s
+postgres-0                    1/1     Running   0          26s
+python-api-755bf48f77-tvrkf   1/1     Running   0          26s
+# exit 0

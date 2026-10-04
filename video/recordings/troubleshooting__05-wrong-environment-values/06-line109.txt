@@ -1,0 +1,4 @@
+helm upgrade demo charts/demo-app --namespace trouble -f labs/work/values-trouble-staging.yaml --wait --timeout 3m | grep STATUS
+---
+STATUS: deployed
+# exit 0

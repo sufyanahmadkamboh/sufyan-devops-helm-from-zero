@@ -1,0 +1,5 @@
+helm uninstall demo --namespace trouble --wait > /dev/null
+rm -f labs/work/values-trouble-staging.yaml
+---
+
+# exit 0

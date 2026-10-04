@@ -1,0 +1,4 @@
+rm -rf labs/work/rendered labs/work/lint-me labs/work/prod-manifests
+---
+
+# exit 0

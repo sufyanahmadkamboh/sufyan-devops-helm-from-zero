@@ -1,0 +1,23 @@
+mkdir -p labs/work/scaffold
+helm create labs/work/scaffold/demo-app > /dev/null
+diff labs/work/scaffold/demo-app/templates/deployment.yaml charts/demo-app/templates/deployment.yaml || true
+---
+16d15
+<       {{- with .Values.podAnnotations }}
+17a17,19
+>         # a hash of the ConfigMap: when the configuration changes, the Pod template changes, so the Pods are replaced
+>         checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+>         {{- with .Values.podAnnotations }}
+19c21
+<       {{- end }}
+---
+>         {{- end }}
+45c47
+<               containerPort: {{ .Values.service.port }}
+---
+>               containerPort: {{ .Values.containerPort }}
+46a49,51
+>           envFrom:
+>             - configMapRef:
+>                 name: {{ include "demo-app.fullname" . }}
+# exit 0

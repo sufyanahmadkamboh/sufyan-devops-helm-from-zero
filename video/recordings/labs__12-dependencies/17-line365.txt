@@ -1,0 +1,6 @@
+helm uninstall shopfront --namespace lab-12 --wait
+kubectl delete namespace lab-12 --wait=false > /dev/null
+rm -rf labs/work/fresh-clone
+---
+release "shopfront" uninstalled
+# exit 0

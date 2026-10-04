@@ -1,0 +1,15 @@
+mkdir -p labs/work
+cat > labs/work/blue.yaml <<'EOF'
+environment: blue
+ingress:
+  enabled: true
+  hosts:
+    - host: demo-blue.localhost
+      paths:
+        - path: /
+          pathType: Prefix
+EOF
+helm install blue charts/demo-app --namespace demo-dev -f labs/work/blue.yaml --wait | grep STATUS
+---
+STATUS: deployed
+# exit 0

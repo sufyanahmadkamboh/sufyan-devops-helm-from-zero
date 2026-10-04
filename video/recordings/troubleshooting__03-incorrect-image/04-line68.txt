@@ -1,0 +1,8 @@
+kubectl describe pod --namespace trouble -l app.kubernetes.io/instance=demo | grep -E 'Image:|Failed|Back-off' | sort -u | head -5
+---
+    Image:          ghcr.io/sufyanahmadkamboh/bookshop-frontnd:1.0.0
+  Normal   BackOff    15s               kubelet            spec.containers{demo-app}: Back-off pulling image "ghcr.io/sufyanahmadkamboh/bookshop-frontnd:1.0.0"
+  Warning  Failed     15s               kubelet            spec.containers{demo-app}: Error: ImagePullBackOff
+  Warning  Failed     1s (x2 over 15s)  kubelet            spec.containers{demo-app}: Error: ErrImagePull
+  Warning  Failed     1s (x2 over 15s)  kubelet            spec.containers{demo-app}: Failed to pull image "ghcr.io/sufyanahmadkamboh/bookshop-frontnd:1.0.0": failed to pull and unpack image "ghcr.io/sufyanahmadkamboh/bookshop-frontnd:1.0.0": failed to resolve reference "ghcr.io/sufyanahmadkamboh/bookshop-frontnd:1.0.0": failed to authorize: failed to fetch anonymous token: unexpected status from GET request to https://ghcr.io/token?scope=repository%3Asufyanahmadkamboh%2Fbookshop-frontnd%3Apull&service=ghcr.io: 403 Forbidden
+# exit 0

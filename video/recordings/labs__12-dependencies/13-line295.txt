@@ -1,0 +1,4 @@
+helm install broken labs/work/fresh-clone --namespace lab-12 --dry-run=client
+---
+Error: INSTALLATION FAILED: an error occurred while checking for chart dependencies. You may need to run 'helm dependency build' to fetch missing dependencies: found in Chart.yaml, but missing in charts/ directory: podinfo
+# exit 1

@@ -1,0 +1,5 @@
+helm uninstall demo --namespace trouble --wait > /dev/null
+rm -f labs/work/ts02-values.yaml
+---
+
+# exit 0

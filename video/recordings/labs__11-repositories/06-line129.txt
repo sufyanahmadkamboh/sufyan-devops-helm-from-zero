@@ -1,0 +1,14 @@
+helm show chart podinfo/podinfo --version 6.14.1 | grep -v email
+---
+apiVersion: v1
+appVersion: 6.14.1
+description: Podinfo Helm chart for Kubernetes
+home: https://github.com/stefanprodan/podinfo
+kubeVersion: '>=1.23.0-0'
+maintainers:
+  name: stefanprodan
+name: podinfo
+sources:
+- https://github.com/stefanprodan/podinfo
+version: 6.14.1
+# exit 0

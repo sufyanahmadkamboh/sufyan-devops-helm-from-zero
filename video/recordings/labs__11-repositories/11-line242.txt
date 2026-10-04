@@ -1,0 +1,6 @@
+curl -s http://podinfo.localhost:8080/ | grep -E '"(hostname|version|message)"'
+---
+  "hostname": "catalog-podinfo-7756f557ff-gjwjz",
+  "version": "6.14.1",
+  "message": "Bookshop catalog, installed from a public chart",
+# exit 0

@@ -1,0 +1,5 @@
+Helm From Zero: Charts, Values, Upgrades, Rollbacks and 12 Real Failures (Helm 4, Hands-On)
+
+Alternatives (A/B test with YouTube "Test & compare"):
+Helm Tutorial for Kubernetes: From Copied YAML to One Chart (Every Command Real)
+Learn Helm by Breaking It: Install, Upgrade, Roll Back, Troubleshoot (Helm 4)

@@ -1,0 +1,5 @@
+kubectl logs --namespace lab-13 job/hooks-pre-upgrade
+---
+pre-upgrade hook · release hooks · revision 2 · 23:05:46
+pre-upgrade: simulated failure (failAt=pre-upgrade)
+# exit 0

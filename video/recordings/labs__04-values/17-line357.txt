@@ -1,0 +1,4 @@
+rm -rf labs/work/schema-demo labs/work/my-values.yaml
+---
+
+# exit 0

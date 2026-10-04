@@ -1,0 +1,7 @@
+helm install leaky examples/values-example --namespace sec-demo --create-namespace \
+  --set apiToken=example-not-a-real-token > /dev/null
+helm get values leaky --namespace sec-demo
+---
+USER-SUPPLIED VALUES:
+apiToken: example-not-a-real-token
+# exit 0

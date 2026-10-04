@@ -1,0 +1,9 @@
+helm list --namespace demo-tmp
+kubectl get all,configmap,secret,serviceaccount --namespace demo-tmp -l app.kubernetes.io/instance=tmp 2>&1
+kubectl get namespace demo-tmp
+---
+NAME	NAMESPACE	REVISION	UPDATED	STATUS	CHART	APP VERSION
+No resources found in demo-tmp namespace.
+NAME       STATUS   AGE
+demo-tmp   Active   6s
+# exit 0

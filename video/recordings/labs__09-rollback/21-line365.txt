@@ -1,0 +1,6 @@
+helm uninstall demo --namespace demo-rollback --wait
+kubectl delete namespace demo-rollback --wait=false
+---
+release "demo" uninstalled
+namespace "demo-rollback" deleted
+# exit 0

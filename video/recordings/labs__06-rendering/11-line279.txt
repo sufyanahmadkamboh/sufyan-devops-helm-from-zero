@@ -1,0 +1,10 @@
+set -e
+for env in dev staging prod; do
+  helm lint charts/demo-app -f charts/demo-app/values-$env.yaml --strict --quiet
+  helm template demo charts/demo-app -f charts/demo-app/values-$env.yaml > /dev/null
+done
+helm template demo charts/demo-app -f charts/demo-app/values-prod.yaml --output-dir labs/work/prod-manifests > /dev/null
+echo "render check passed"
+---
+render check passed
+# exit 0

@@ -1,0 +1,4 @@
+helm status shop --namespace bookshop-dev | grep '^STATUS:'
+---
+STATUS: deployed
+# exit 0

@@ -1,0 +1,8 @@
+sed -i 's/^appVersion: 1.10/appVersion: "1.10"/' labs/work/broken/Chart.yaml
+helm lint labs/work/broken
+---
+==> Linting labs/work/broken
+[INFO] Chart.yaml: icon is recommended
+
+1 chart(s) linted, 0 chart(s) failed
+# exit 0

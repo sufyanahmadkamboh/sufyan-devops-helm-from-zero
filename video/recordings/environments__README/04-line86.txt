@@ -1,0 +1,13 @@
+kubectl -n bookshop-dev get services
+kubectl -n bookshop-dev get ingress
+---
+NAME         TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
+frontend     ClusterIP   10.96.78.177    <none>        8080/TCP   26s
+go-status    ClusterIP   10.96.126.88    <none>        8080/TCP   26s
+java-api     ClusterIP   10.96.198.120   <none>        8080/TCP   26s
+node-api     ClusterIP   10.96.35.229    <none>        3000/TCP   26s
+postgres     ClusterIP   None            <none>        5432/TCP   26s
+python-api   ClusterIP   10.96.249.1     <none>        8000/TCP   26s
+NAME       CLASS     HOSTS                    ADDRESS   PORTS   AGE
+bookshop   traefik   dev.bookshop.localhost             80      26s
+# exit 0

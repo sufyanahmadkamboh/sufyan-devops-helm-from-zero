@@ -1,0 +1,11 @@
+kubectl describe pod --namespace trouble -l app.kubernetes.io/instance=demo | grep -E 'Limits:|memory:|Reason|Exit Code' | head -8
+---
+      Reason:       CrashLoopBackOff
+      Reason:       OOMKilled
+      Exit Code:    137
+    Limits:
+      memory:  6Mi
+      memory:   6Mi
+    Limits:
+      memory:  128Mi
+# exit 0

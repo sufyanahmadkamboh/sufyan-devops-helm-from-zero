@@ -1,0 +1,5 @@
+helm upgrade hooks examples/hooks-example --namespace lab-13 --set message="new message" --wait > /dev/null
+kubectl get configmap hooks-settings --namespace lab-13 -o jsonpath='{.data.MESSAGE}'; echo
+---
+new message
+# exit 0

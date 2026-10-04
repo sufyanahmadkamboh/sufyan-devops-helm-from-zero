@@ -33,7 +33,7 @@ helm install demo charts/demo-app \
 
 ```text
 NAME: demo
-LAST DEPLOYED: Sun Oct  4 23:30:20 2026
+LAST DEPLOYED: Mon Oct  5 00:59:39 2026
 NAMESPACE: demo-dev
 STATUS: deployed
 REVISION: 1
@@ -66,10 +66,10 @@ kubectl get pods,svc,ingress --namespace demo-dev
 
 ```text
 NAME                                 READY   STATUS    RESTARTS   AGE
-pod/demo-demo-app-68d8b4d8dc-rlvzj   1/1     Running   0          1s
+pod/demo-demo-app-68d8b4d8dc-slxhf   1/1     Running   0          1s
 
-NAME                    TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
-service/demo-demo-app   ClusterIP   10.96.213.161   <none>        8080/TCP   1s
+NAME                    TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)    AGE
+service/demo-demo-app   ClusterIP   10.96.82.185   <none>        8080/TCP   1s
 
 NAME                                      CLASS     HOSTS                ADDRESS   PORTS   AGE
 ingress.networking.k8s.io/demo-demo-app   traefik   demo-dev.localhost             80      1s
@@ -96,7 +96,7 @@ kubectl get pods --namespace demo-dev -L app.kubernetes.io/instance,app.kubernet
 
 ```text
 NAME                             READY   STATUS    RESTARTS   AGE   INSTANCE   VERSION   ENVIRONMENT
-demo-demo-app-68d8b4d8dc-rlvzj   1/1     Running   0          4s    demo       1.0.0     dev
+demo-demo-app-68d8b4d8dc-slxhf   1/1     Running   0          4s    demo       1.0.0     dev
 ```
 
 ### 3 · The Helm side
@@ -109,9 +109,9 @@ helm status demo --namespace demo-dev | head -7
 
 ```text
 NAME	NAMESPACE	REVISION	UPDATED                               	STATUS  	CHART         	APP VERSION
-demo	demo-dev 	1       	2026-10-04 23:30:20.3041473 +0200 CEST	deployed	demo-app-1.0.0	1.0.0      
+demo	demo-dev 	1       	2026-10-05 00:59:39.9280312 +0200 CEST	deployed	demo-app-1.0.0	1.0.0      
 NAME: demo
-LAST DEPLOYED: Sun Oct  4 23:30:20 2026
+LAST DEPLOYED: Mon Oct  5 00:59:39 2026
 NAMESPACE: demo-dev
 STATUS: deployed
 REVISION: 1
@@ -178,12 +178,12 @@ CHART: demo-app
 VERSION: 1.0.0
 APP_VERSION: 1.0.0
 ANNOTATIONS: 
-LABELS: modifiedAt=1791149421,name=demo,owner=helm,status=deployed,version=1
+LABELS: modifiedAt=1791154781,name=demo,owner=helm,status=deployed,version=1
 DEPENDENCIES: 
 NAMESPACE: demo-dev
 REVISION: 1
 STATUS: deployed
-DEPLOYED_AT: 2026-10-04T23:30:20+02:00
+DEPLOYED_AT: 2026-10-05T00:59:39+02:00
 APPLY_METHOD: server-side apply
 ```
 
@@ -196,7 +196,7 @@ kubectl get secrets --namespace demo-dev -l owner=helm --show-labels
 
 ```text
 NAME                         TYPE                 DATA   AGE   LABELS
-sh.helm.release.v1.demo.v1   helm.sh/release.v1   1      5s    modifiedAt=1791149421,name=demo,owner=helm,status=deployed,version=1
+sh.helm.release.v1.demo.v1   helm.sh/release.v1   1      4s    modifiedAt=1791154781,name=demo,owner=helm,status=deployed,version=1
 ```
 
 One Secret per **revision**, in the release's namespace, of type `helm.sh/release.v1`: it holds the chart, the values
@@ -360,8 +360,8 @@ window.APP_CONFIG = { ADMIN_URL: "", APP_ENV: "blue" };
 window.APP_CONFIG = { ADMIN_URL: "", APP_ENV: "dev" };
 
 NAME	NAMESPACE	REVISION	UPDATED                               	STATUS  	CHART         	APP VERSION
-blue	demo-dev 	1       	2026-10-04 23:30:38.0954753 +0200 CEST	deployed	demo-app-1.0.0	1.0.0      
-demo	demo-dev 	2       	2026-10-04 23:30:37.5118824 +0200 CEST	deployed	demo-app-1.0.0	1.0.0      
+blue	demo-dev 	1       	2026-10-05 00:59:57.7210722 +0200 CEST	deployed	demo-app-1.0.0	1.0.0      
+demo	demo-dev 	2       	2026-10-05 00:59:57.1303129 +0200 CEST	deployed	demo-app-1.0.0	1.0.0      
 ```
 
 Two releases of one chart, in one namespace: the release name keeps their objects (`blue-demo-app`,

@@ -1,0 +1,5 @@
+helm dependency list examples/dependency-example
+---
+NAME   	VERSION	REPOSITORY                            	STATUS 
+podinfo	6.15.0 	https://stefanprodan.github.io/podinfo	missing
+# exit 0

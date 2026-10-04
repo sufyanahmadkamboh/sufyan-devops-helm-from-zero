@@ -12,6 +12,8 @@ helm list --all-namespaces
 ```
 
 ```text
+NAME   	NAMESPACE	REVISION	UPDATED                              	STATUS  	CHART         	APP VERSION
+traefik	traefik  	1       	2026-10-05 00:55:58.745498 +0200 CEST	deployed	traefik-41.6.1	v3.7.13    
 ```
 
 ## Level 1 · Remove Traefik, keep the cluster

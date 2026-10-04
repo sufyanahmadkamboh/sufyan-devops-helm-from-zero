@@ -1,0 +1,21 @@
+helm show chart charts/demo-app
+---
+apiVersion: v2
+appVersion: 1.0.0
+description: The Bookshop frontend (React, served by nginx), packaged as a Helm chart.
+  The chart of the Helm lessons.
+home: https://github.com/sufyanahmadkamboh/sufyan-devops-helm-from-zero
+keywords:
+- bookshop
+- frontend
+- react
+- nginx
+- example
+maintainers:
+- name: Sufyan Ahmad
+name: demo-app
+sources:
+- https://github.com/sufyanahmadkamboh/sufyan-devops-multi-stack-kubernetes/tree/main/applications/frontend
+type: application
+version: 1.0.0
+# exit 0

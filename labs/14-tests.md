@@ -74,14 +74,14 @@ helm test shop --namespace bookshop-dev --logs
 
 ```text
 NAME: shop
-LAST DEPLOYED: Sun Oct  4 23:52:53 2026
+LAST DEPLOYED: Mon Oct  5 01:05:35 2026
 NAMESPACE: bookshop-dev
 STATUS: deployed
-REVISION: 9
+REVISION: 2
 DESCRIPTION: Upgrade complete
 TEST SUITE:     shop-test-services
-Last Started:   Sun Oct  4 23:53:24 2026
-Last Completed: Sun Oct  4 23:53:25 2026
+Last Started:   Mon Oct  5 01:06:10 2026
+Last Completed: Mon Oct  5 01:06:12 2026
 Phase:          Succeeded
 
 POD LOGS: shop-test-services (check)
@@ -113,7 +113,7 @@ helm get notes shop --namespace bookshop-dev
 
 ```text
 NOTES:
-Bookshop 1.0.0 (chart 1.2.0) · release "shop" · namespace "bookshop-dev" · environment dev · revision 9
+Bookshop 1.0.0 (chart 1.2.0) · release "shop" · namespace "bookshop-dev" · environment dev · revision 2
 
 Services:
   frontend    ghcr.io/sufyanahmadkamboh/bookshop-frontend:1.0.0 × 1
@@ -169,23 +169,23 @@ kubectl get deploy,statefulset,svc --namespace bookshop-dev -l app.kubernetes.io
 ```
 
 ```text
-NAME                              READY   UP-TO-DATE   AVAILABLE   AGE     NAME         VERSION   ENVIRONMENT
-deployment.apps/shop-frontend     1/1     1            1           8m23s   frontend     1.0.0     dev
-deployment.apps/shop-go-status    1/1     1            1           8m23s   go-status    1.0.0     dev
-deployment.apps/shop-java-api     1/1     1            1           8m23s   java-api     1.0.0     dev
-deployment.apps/shop-node-api     1/1     1            1           8m23s   node-api     1.0.0     dev
-deployment.apps/shop-python-api   1/1     1            1           8m23s   python-api   1.0.0     dev
+NAME                              READY   UP-TO-DATE   AVAILABLE   AGE    NAME         VERSION   ENVIRONMENT
+deployment.apps/shop-frontend     1/1     1            1           103s   frontend     1.0.0     dev
+deployment.apps/shop-go-status    1/1     1            1           103s   go-status    1.0.0     dev
+deployment.apps/shop-java-api     1/1     1            1           103s   java-api     1.0.0     dev
+deployment.apps/shop-node-api     1/1     1            1           103s   node-api     1.0.0     dev
+deployment.apps/shop-python-api   1/1     1            1           103s   python-api   1.0.0     dev
 
-NAME                             READY   AGE     NAME       VERSION   ENVIRONMENT
-statefulset.apps/shop-postgres   1/1     8m23s   postgres   18.6      
+NAME                             READY   AGE    NAME       VERSION   ENVIRONMENT
+statefulset.apps/shop-postgres   1/1     103s   postgres   18.6      
 
-NAME                      TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE     NAME         VERSION   ENVIRONMENT
-service/shop-frontend     ClusterIP   10.96.162.163   <none>        8080/TCP   8m23s   frontend     1.0.0     dev
-service/shop-go-status    ClusterIP   10.96.253.8     <none>        8080/TCP   8m23s   go-status    1.0.0     dev
-service/shop-java-api     ClusterIP   10.96.5.136     <none>        8080/TCP   8m23s   java-api     1.0.0     dev
-service/shop-node-api     ClusterIP   10.96.53.27     <none>        3000/TCP   8m23s   node-api     1.0.0     dev
-service/shop-postgres     ClusterIP   None            <none>        5432/TCP   8m23s   postgres     18.6      
-service/shop-python-api   ClusterIP   10.96.125.171   <none>        8000/TCP   8m23s   python-api   1.0.0     dev
+NAME                      TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE    NAME         VERSION   ENVIRONMENT
+service/shop-frontend     ClusterIP   10.96.78.182    <none>        8080/TCP   103s   frontend     1.0.0     dev
+service/shop-go-status    ClusterIP   10.96.32.51     <none>        8080/TCP   103s   go-status    1.0.0     dev
+service/shop-java-api     ClusterIP   10.96.116.132   <none>        8080/TCP   103s   java-api     1.0.0     dev
+service/shop-node-api     ClusterIP   10.96.154.170   <none>        3000/TCP   103s   node-api     1.0.0     dev
+service/shop-postgres     ClusterIP   None            <none>        5432/TCP   103s   postgres     18.6      
+service/shop-python-api   ClusterIP   10.96.245.223   <none>        8000/TCP   103s   python-api   1.0.0     dev
 ```
 
 | Label | Value | Used by |
@@ -247,13 +247,13 @@ helm test shop --namespace bookshop-dev --logs
 
 ```text
 ...
-Last Completed: Sun Oct  4 23:55:42 2026
+Last Completed: Mon Oct  5 01:06:16 2026
 Phase:          Failed
 
 POD LOGS: shop-test-services (check)
 frontend: {"status":"ok","service":"frontend","version":"1.0.0"}
 go-status: {"service":"go-status","status":"ok","version":"1.0.0"}
-wget: can't connect to remote host (10.96.5.136): Connection timed out
+wget: can't connect to remote host (10.96.116.132): Connection refused
 
 Error: resource Pod/bookshop-dev/shop-test-services not ready. status: Failed, message: pod shop-test-services failed
 ```
@@ -269,7 +269,7 @@ kubectl get deployment shop-java-api --namespace bookshop-dev
 
 ```text
 NAME            READY   UP-TO-DATE   AVAILABLE   AGE
-shop-java-api   0/0     0            0           10m
+shop-java-api   0/0     0            0           107s
 ```
 
 Did a Helm change do this? Compare what Helm applied (the release's manifest) with what is live, using the

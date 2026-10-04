@@ -1,0 +1,38 @@
+cat > labs/work/bookshop-tests/templates/tests/test-books.yaml <<'EOF'
+# The catalogue is not empty: /api/books returns at least one book.
+apiVersion: v1
+kind: Pod
+metadata:
+  name: {{ .Release.Name }}-test-books
+  labels:
+    {{- include "bookshop.labels" (dict "root" $ "name" "test") | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+    "helm.sh/hook-delete-policy": before-hook-creation
+spec:
+  restartPolicy: Never
+  automountServiceAccountToken: false
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 65534
+    seccompProfile:
+      type: RuntimeDefault
+  containers:
+    - name: check
+      image: busybox:1.37
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop: ["ALL"]
+      command: ["sh", "-c"]
+      args:
+        - |
+          set -e
+          books=$(wget -qO- http://{{ .Release.Name }}-java-api:{{ (index .Values.services "java-api").port }}/api/books)
+          echo "$books" | grep -q '"title"'
+          echo "books found: $(echo "$books" | grep -o '"title"' | wc -l)"
+EOF
+helm upgrade shop labs/work/bookshop-tests --namespace bookshop-dev -f charts/bookshop/values-dev.yaml --wait --timeout 5m | grep STATUS
+---
+STATUS: deployed
+# exit 0

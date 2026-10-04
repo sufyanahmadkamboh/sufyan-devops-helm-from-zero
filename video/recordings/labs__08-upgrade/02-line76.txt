@@ -1,0 +1,22 @@
+helm upgrade demo charts/demo-app --namespace demo-dev \
+  -f charts/demo-app/values-dev.yaml \
+  --set replicaCount=2 --set config.adminUrl=http://admin.example.com \
+  --wait --timeout 3m
+---
+Release "demo" has been upgraded. Happy Helming!
+NAME: demo
+LAST DEPLOYED: Mon Oct  5 01:00:03 2026
+NAMESPACE: demo-dev
+STATUS: deployed
+REVISION: 3
+DESCRIPTION: Upgrade complete
+NOTES:
+demo-app 1.0.0 (chart 1.0.0) is deployed as release "demo" in namespace "demo-dev".
+Environment: dev · revision 3
+
+Open:  http://demo-dev.localhost:8080/
+
+Check it:
+  kubectl --namespace demo-dev get pods -l app.kubernetes.io/instance=demo
+  helm test demo --namespace demo-dev
+# exit 0

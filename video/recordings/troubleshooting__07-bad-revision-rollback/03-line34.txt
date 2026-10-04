@@ -1,0 +1,8 @@
+curl -s http://trouble.localhost:8080/; echo
+helm status demo --namespace trouble | grep -E '^(STATUS|REVISION):'
+---
+404 page not found
+
+STATUS: deployed
+REVISION: 3
+# exit 0

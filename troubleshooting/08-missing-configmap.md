@@ -30,9 +30,9 @@ kubectl get pods --namespace bookshop-dev -l app.kubernetes.io/name=node-api
 ```
 
 ```text
-NAME                             READY   STATUS                       RESTARTS   AGE
-shop-node-api-5c688d66c6-s8xbm   1/1     Running                      0          30s
-shop-node-api-7b995d94bd-qhhss   0/1     CreateContainerConfigError   0          2s
+NAME                            READY   STATUS                       RESTARTS   AGE
+shop-node-api-899845bc5-klcd4   0/1     CreateContainerConfigError   0          2s
+shop-node-api-fbb58c4c4-7hgsh   1/1     Running                      0          5m39s
 ```
 
 ## Investigation
@@ -49,8 +49,7 @@ kubectl get events --namespace bookshop-dev --field-selector reason=Failed \
 ```
 
 ```text
-shop-node-api-7b995d94bd-qhhss   Error: configmap "shop-config" not found
-shop-node-api-97dc495b7-27kg9    Error: configmap "shop-config" not found
+shop-node-api-899845bc5-klcd4   Error: configmap "shop-config" not found
 ```
 
 Is that ConfigMap supposed to exist? The release's manifest says yes:
@@ -100,9 +99,9 @@ kubectl get pods --namespace bookshop-dev -l app.kubernetes.io/name=node-api
 
 ```text
 NAME          DATA   AGE
-shop-config   9      15s
-NAME                             READY   STATUS    RESTARTS   AGE
-shop-node-api-7b995d94bd-qhhss   1/1     Running   0          18s
+shop-config   9      18s
+NAME                            READY   STATUS    RESTARTS   AGE
+shop-node-api-899845bc5-klcd4   1/1     Running   0          22s
 ```
 
 <!-- test: timeout=300; contains=all checks passed -->

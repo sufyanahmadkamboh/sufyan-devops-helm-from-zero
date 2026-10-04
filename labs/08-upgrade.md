@@ -83,7 +83,7 @@ helm upgrade demo charts/demo-app --namespace demo-dev \
 ```text
 Release "demo" has been upgraded. Happy Helming!
 NAME: demo
-LAST DEPLOYED: Sun Oct  4 23:30:43 2026
+LAST DEPLOYED: Mon Oct  5 01:00:03 2026
 NAMESPACE: demo-dev
 STATUS: deployed
 REVISION: 3
@@ -122,8 +122,8 @@ curl -s http://demo-dev.localhost:8080/config.js; echo
 
 ```text
 NAME                             READY   STATUS    RESTARTS   AGE
-demo-demo-app-56457858d8-d9grw   1/1     Running   0          34s
-demo-demo-app-56457858d8-x2758   1/1     Running   0          40s
+demo-demo-app-56457858d8-2l24x   1/1     Running   0          4s
+demo-demo-app-56457858d8-cl459   1/1     Running   0          5s
 window.APP_CONFIG = { ADMIN_URL: "http://admin.example.com", APP_ENV: "dev" };
 ```
 
@@ -136,9 +136,9 @@ helm history demo --namespace demo-dev
 
 ```text
 REVISION	UPDATED                 	STATUS    	CHART         	APP VERSION	DESCRIPTION     
-1       	Sun Oct  4 23:30:20 2026	superseded	demo-app-1.0.0	1.0.0      	Install complete
-2       	Sun Oct  4 23:30:37 2026	superseded	demo-app-1.0.0	1.0.0      	Upgrade complete
-3       	Sun Oct  4 23:30:43 2026	deployed  	demo-app-1.0.0	1.0.0      	Upgrade complete
+1       	Mon Oct  5 00:59:39 2026	superseded	demo-app-1.0.0	1.0.0      	Install complete
+2       	Mon Oct  5 00:59:57 2026	superseded	demo-app-1.0.0	1.0.0      	Upgrade complete
+3       	Mon Oct  5 01:00:03 2026	deployed  	demo-app-1.0.0	1.0.0      	Upgrade complete
 ```
 
 Each line is a revision: when, which chart and app version, its status. The values of any revision are kept:
@@ -222,8 +222,8 @@ helm get values demo --namespace demo-dev
 ```
 
 ```text
-3       	Sun Oct  4 23:30:43 2026	superseded	demo-app-1.0.0	1.0.0      	Upgrade complete
-4       	Sun Oct  4 23:31:24 2026	deployed  	demo-app-1.0.0	1.0.0      	Upgrade complete
+3       	Mon Oct  5 01:00:03 2026	superseded	demo-app-1.0.0	1.0.0      	Upgrade complete
+4       	Mon Oct  5 01:00:09 2026	deployed  	demo-app-1.0.0	1.0.0      	Upgrade complete
 USER-SUPPLIED VALUES:
 replicaCount: 3
 ```
@@ -305,8 +305,8 @@ curl -s http://demo-dev.localhost:8080/config.js; echo
 ```
 
 ```text
-NAME            TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)   AGE
-demo-demo-app   ClusterIP   10.96.213.161   <none>        80/TCP    112s
+NAME            TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)   AGE
+demo-demo-app   ClusterIP   10.96.82.185   <none>        80/TCP    76s
 window.APP_CONFIG = { ADMIN_URL: "", APP_ENV: "dev" };
 ```
 

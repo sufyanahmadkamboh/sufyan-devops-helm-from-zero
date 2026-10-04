@@ -1,0 +1,9 @@
+sed -i.bak 's/^appVersion: "1.0.0"/appVersion: 1.10/' labs/work/broken/Chart.yaml
+helm lint labs/work/broken
+---
+==> Linting labs/work/broken
+[ERROR] Chart.yaml: appVersion should be of type string but it's of type float64
+[INFO] Chart.yaml: icon is recommended
+
+Error: 1 chart(s) linted, 1 chart(s) failed
+# exit 1

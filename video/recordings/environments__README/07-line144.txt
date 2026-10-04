@@ -1,0 +1,67 @@
+diff environments/dev/deployments.yaml environments/staging/deployments.yaml || true
+---
+1c1
+< # Bookshop, environment: dev. Deployed WITHOUT Helm: kubectl apply -f environments/dev/namespace.yaml -f environments/dev/
+---
+> # Bookshop, environment: staging. Deployed WITHOUT Helm: kubectl apply -f environments/staging/namespace.yaml -f environments/staging/
+6c6
+<   namespace: bookshop-dev
+---
+>   namespace: bookshop-staging
+9c9
+<   replicas: 1
+---
+>   replicas: 2
+31c31
+<               value: dev
+---
+>               value: staging
+37c37
+<               value: http://node-api.bookshop-dev.svc.cluster.local:3000
+---
+>               value: http://node-api.bookshop-staging.svc.cluster.local:3000
+39c39
+<               value: http://java-api.bookshop-dev.svc.cluster.local:8080
+---
+>               value: http://java-api.bookshop-staging.svc.cluster.local:8080
+41c41
+<               value: http://python-api.bookshop-dev.svc.cluster.local:8000
+---
+>               value: http://python-api.bookshop-staging.svc.cluster.local:8000
+43c43
+<               value: http://go-status.bookshop-dev.svc.cluster.local:8080
+---
+>               value: http://go-status.bookshop-staging.svc.cluster.local:8080
+63c63
+<   namespace: bookshop-dev
+---
+>   namespace: bookshop-staging
+66c66
+<   replicas: 1
+---
+>   replicas: 2
+114c114
+<   namespace: bookshop-dev
+---
+>   namespace: bookshop-staging
+117c117
+<   replicas: 1
+---
+>   replicas: 2
+165c165
+<   namespace: bookshop-dev
+---
+>   namespace: bookshop-staging
+168c168
+<   replicas: 1
+---
+>   replicas: 2
+208c208
+<   namespace: bookshop-dev
+---
+>   namespace: bookshop-staging
+211c211
+<   replicas: 1
+---
+>   replicas: 2
+# exit 0

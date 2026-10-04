@@ -1,0 +1,9 @@
+sed -i 's/^version: latest/version: 1.0.0/' labs/work/lint-me/Chart.yaml
+helm lint labs/work/lint-me -f labs/work/lint-me/values-dev.yaml
+---
+==> Linting labs/work/lint-me
+[INFO] Chart.yaml: icon is recommended
+[ERROR] templates/: parse error at (demo-app/templates/deployment.yaml:47): unexpected "}" in operand
+
+Error: 1 chart(s) linted, 1 chart(s) failed
+# exit 1

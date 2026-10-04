@@ -1,0 +1,7 @@
+helm uninstall hooks tidy --namespace lab-13 --wait
+kubectl delete namespace lab-13 --wait=false > /dev/null
+rm -f labs/work/hooks-tidy.yaml
+---
+release "hooks" uninstalled
+release "tidy" uninstalled
+# exit 0

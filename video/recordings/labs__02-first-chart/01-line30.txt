@@ -1,0 +1,5 @@
+mkdir -p labs/work
+helm create labs/work/hello
+---
+Creating labs/work/hello
+# exit 0

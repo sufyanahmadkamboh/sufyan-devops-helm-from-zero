@@ -1,0 +1,8 @@
+helm upgrade demo charts/demo-app --namespace demo-rollback \
+  -f charts/demo-app/values-dev.yaml --set 'ingress.hosts[0].host=demo-rollback.localhost' \
+  --set config.adminUrl=http://admin.example.com \
+  --wait --timeout 3m | grep -E 'STATUS|REVISION'
+---
+STATUS: deployed
+REVISION: 2
+# exit 0

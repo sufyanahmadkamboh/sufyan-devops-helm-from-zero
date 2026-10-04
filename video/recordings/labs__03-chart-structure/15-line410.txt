@@ -1,0 +1,23 @@
+cp -r charts/demo-app labs/work/pkg
+echo 'README.md' >> labs/work/pkg/.helmignore
+helm package labs/work/pkg --version 2.0.0 --destination labs/work
+tar -tzf labs/work/demo-app-2.0.0.tgz | sort
+---
+Successfully packaged chart and saved it to: labs\work\demo-app-2.0.0.tgz
+demo-app/.helmignore
+demo-app/Chart.yaml
+demo-app/templates/NOTES.txt
+demo-app/templates/_helpers.tpl
+demo-app/templates/configmap.yaml
+demo-app/templates/deployment.yaml
+demo-app/templates/hpa.yaml
+demo-app/templates/httproute.yaml
+demo-app/templates/ingress.yaml
+demo-app/templates/service.yaml
+demo-app/templates/serviceaccount.yaml
+demo-app/templates/tests/test-connection.yaml
+demo-app/values-dev.yaml
+demo-app/values-prod.yaml
+demo-app/values-staging.yaml
+demo-app/values.yaml
+# exit 0

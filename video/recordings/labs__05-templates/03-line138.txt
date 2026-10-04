@@ -1,0 +1,21 @@
+helm template web examples/basic-chart --set config.CACHE_TTL=300 --show-only templates/configmap.yaml
+---
+---
+# Source: basic-chart/templates/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: web-config
+  labels:
+    app.kubernetes.io/name: basic-chart
+    app.kubernetes.io/instance: web
+    app.kubernetes.io/version: "1.0.0"
+    app.kubernetes.io/managed-by: Helm
+    helm.sh/chart: basic-chart-0.1.0
+    environment: "dev"
+    team: web
+data:
+  CACHE_TTL: "300"
+  FEATURE_REVIEWS: "true"
+  LOG_LEVEL: "info"
+# exit 0

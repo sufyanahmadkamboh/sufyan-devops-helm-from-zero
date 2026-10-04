@@ -1,0 +1,7 @@
+helm uninstall web --namespace lab-05 --wait
+kubectl delete namespace lab-05 --wait=false
+rm -rf labs/work/tpl
+---
+release "web" uninstalled
+namespace "lab-05" deleted
+# exit 0

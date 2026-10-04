@@ -1,0 +1,9 @@
+helm get manifest traefik --namespace traefik | grep -E '^kind:' | sort | uniq -c
+---
+      1 kind: ClusterRole
+      1 kind: ClusterRoleBinding
+      1 kind: Deployment
+      1 kind: IngressClass
+      1 kind: Service
+      1 kind: ServiceAccount
+# exit 0

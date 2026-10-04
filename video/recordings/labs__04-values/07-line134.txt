@@ -1,0 +1,19 @@
+helm template demo examples/values-example \
+  -f examples/values-example/team-defaults.yaml \
+  -f examples/values-example/values-prod.yaml \
+  --set replicaCount=5
+---
+---
+# Source: values-example/templates/configmap.yaml
+# The final values, after Helm merged: values.yaml < -f file1 < -f file2 < --set
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: demo-values
+data:
+  environment: "prod"
+  replicaCount: "5"
+  logLevel: "error"
+  imageTag: "1.0.0"
+  features: "{\"recommendations\":true,\"reviews\":true}"
+# exit 0

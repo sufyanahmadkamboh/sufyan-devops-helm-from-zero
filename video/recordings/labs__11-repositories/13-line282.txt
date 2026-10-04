@@ -1,0 +1,9 @@
+docker pull -q registry:3 > /dev/null
+docker run -d --name helm-registry -p 127.0.0.1:5001:5000 registry:3 > /dev/null
+sleep 2
+helm package charts/demo-app --destination labs/work > /dev/null
+helm push labs/work/demo-app-1.0.0.tgz oci://localhost:5001/charts --plain-http
+---
+Pushed: localhost:5001/charts/demo-app:1.0.0
+Digest: sha256:78805d9c750318d528305bda5c6fcb2c5eaf09d558c201cc5547358a74ecf8a9
+# exit 0

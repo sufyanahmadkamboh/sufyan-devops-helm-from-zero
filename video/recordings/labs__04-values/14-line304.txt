@@ -1,0 +1,23 @@
+cp -r charts/demo-app labs/work/schema-demo
+cat > labs/work/schema-demo/values.schema.json <<'EOF'
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "replicaCount": { "type": "integer", "minimum": 1 }
+  }
+}
+EOF
+helm lint labs/work/schema-demo --set replicaCount=two
+---
+==> Linting labs/work/schema-demo
+[INFO] Chart.yaml: icon is recommended
+[ERROR] values.yaml: - at '/replicaCount': got string, want integer
+
+[ERROR] templates/: values don't meet the specifications of the schema(s) in the following chart(s):
+demo-app:
+- at '/replicaCount': got string, want integer
+
+
+Error: 1 chart(s) linted, 1 chart(s) failed
+# exit 1

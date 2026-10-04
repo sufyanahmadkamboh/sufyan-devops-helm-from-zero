@@ -1,0 +1,6 @@
+kubectl get pods --namespace demo-rollback
+---
+NAME                             READY   STATUS         RESTARTS   AGE
+demo-demo-app-56457858d8-5plb6   1/1     Running        0          64s
+demo-demo-app-6dc6b54f46-jl4tj   0/1     ErrImagePull   0          60s
+# exit 0

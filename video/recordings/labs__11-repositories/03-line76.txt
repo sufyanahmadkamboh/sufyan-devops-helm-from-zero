@@ -1,0 +1,8 @@
+helm repo add podinfo https://stefanprodan.github.io/podinfo
+helm repo update podinfo
+---
+"podinfo" has been added to your repositories
+Hang tight while we grab the latest from your chart repositories...
+...Successfully got an update from the "podinfo" chart repository
+Update Complete. ⎈Happy Helming!⎈
+# exit 0

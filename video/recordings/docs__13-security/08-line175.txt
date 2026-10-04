@@ -1,0 +1,5 @@
+helm uninstall leaky --namespace sec-demo --wait
+kubectl delete namespace sec-demo --wait=false > /dev/null
+---
+release "leaky" uninstalled
+# exit 0

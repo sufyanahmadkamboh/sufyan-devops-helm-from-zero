@@ -1,0 +1,11 @@
+kubectl get pods,svc,ingress --namespace demo-dev
+---
+NAME                                 READY   STATUS    RESTARTS   AGE
+pod/demo-demo-app-68d8b4d8dc-slxhf   1/1     Running   0          1s
+
+NAME                    TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)    AGE
+service/demo-demo-app   ClusterIP   10.96.82.185   <none>        8080/TCP   1s
+
+NAME                                      CLASS     HOSTS                ADDRESS   PORTS   AGE
+ingress.networking.k8s.io/demo-demo-app   traefik   demo-dev.localhost             80      1s
+# exit 0

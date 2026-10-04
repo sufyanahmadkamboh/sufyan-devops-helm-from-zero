@@ -1,0 +1,19 @@
+helm template hooks examples/hooks-example --show-only templates/hooks.yaml | sed -n '1,/^spec:/p' | head -16
+---
+---
+# Source: hooks-example/templates/hooks.yaml
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: hooks-pre-install
+  labels:
+    app.kubernetes.io/instance: hooks
+    hook: pre-install
+  annotations:
+    "helm.sh/hook": pre-install
+    "helm.sh/hook-weight": "-5"
+    # Default before-hook-creation: delete the previous Job of this hook only when it runs again. The finished Job
+    # stays, so you can read its log. (hook-succeeded would delete it right after it succeeds.)
+    "helm.sh/hook-delete-policy": before-hook-creation
+spec:
+# exit 0

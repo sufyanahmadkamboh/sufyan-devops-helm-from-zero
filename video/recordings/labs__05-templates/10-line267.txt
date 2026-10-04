@@ -1,0 +1,16 @@
+helm template web labs/work/tpl --show-only templates/deployment.yaml | sed -n '/^metadata:/,/^spec:/p'
+---
+metadata:
+  # include: insert a named template from _helpers.tpl
+  name: web
+  labels:
+    # nindent 4: a new line, then indent every line by 4 spaces (YAML is indentation-sensitive)
+  app.kubernetes.io/name: basic-chart
+  app.kubernetes.io/instance: web
+  app.kubernetes.io/version: "1.0.0"
+  app.kubernetes.io/managed-by: Helm
+  helm.sh/chart: basic-chart-0.1.0
+  environment: "dev"
+  team: web
+spec:
+# exit 0

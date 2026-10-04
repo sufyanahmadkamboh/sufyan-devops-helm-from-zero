@@ -1,0 +1,5 @@
+kubectl logs --namespace bookshop-dev job/shop-report
+---
+2026-10-04T23:05:36.359Z report-worker version 1.0.0 starting: stats from http://shop-python-api:8000/api/stats, status from http://shop-go-status:8080/api/status
+2026-10-04T23:05:36.778Z report-worker report #2 saved: users=3 books=5 reviews=0 services up=5/5
+# exit 0

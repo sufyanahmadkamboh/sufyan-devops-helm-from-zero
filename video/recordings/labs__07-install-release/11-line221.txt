@@ -1,0 +1,4 @@
+helm uninstall tmp --namespace demo-tmp --wait
+---
+release "tmp" uninstalled
+# exit 0

@@ -1,0 +1,5 @@
+rm -rf labs/work/scaffold labs/work/broken labs/work/pkg labs/work/*.tgz
+ls labs/work/
+---
+
+# exit 0

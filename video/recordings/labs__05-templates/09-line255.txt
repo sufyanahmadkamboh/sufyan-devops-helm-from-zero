@@ -1,0 +1,4 @@
+helm install web labs/work/tpl --namespace lab-05 --dry-run=server | grep STATUS
+---
+STATUS: pending-install
+# exit 0

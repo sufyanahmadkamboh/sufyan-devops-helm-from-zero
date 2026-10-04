@@ -1,0 +1,7 @@
+kubectl get service demo-demo-app --namespace demo-dev
+curl -s http://demo-dev.localhost:8080/config.js; echo
+---
+NAME            TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)   AGE
+demo-demo-app   ClusterIP   10.96.82.185   <none>        80/TCP    76s
+window.APP_CONFIG = { ADMIN_URL: "", APP_ENV: "dev" };
+# exit 0

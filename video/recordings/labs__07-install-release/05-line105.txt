@@ -1,0 +1,13 @@
+helm list --namespace demo-dev
+helm status demo --namespace demo-dev | head -7
+---
+NAME	NAMESPACE	REVISION	UPDATED                               	STATUS  	CHART         	APP VERSION
+demo	demo-dev 	1       	2026-10-05 00:59:39.9280312 +0200 CEST	deployed	demo-app-1.0.0	1.0.0      
+NAME: demo
+LAST DEPLOYED: Mon Oct  5 00:59:39 2026
+NAMESPACE: demo-dev
+STATUS: deployed
+REVISION: 1
+DESCRIPTION: Install complete
+RESOURCES:
+# exit 0

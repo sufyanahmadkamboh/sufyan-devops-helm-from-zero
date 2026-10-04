@@ -1,0 +1,6 @@
+helm test hello --namespace lab-02 | grep Phase
+kubectl get deployment hello --namespace lab-02 -o jsonpath='{.spec.template.spec.containers[0].image}'; echo
+---
+Phase:          Succeeded
+ghcr.io/sufyanahmadkamboh/bookshop-frontend:1.0.0
+# exit 0

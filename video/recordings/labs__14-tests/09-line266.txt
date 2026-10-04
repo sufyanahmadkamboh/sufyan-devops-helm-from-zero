@@ -1,0 +1,5 @@
+kubectl get deployment shop-java-api --namespace bookshop-dev
+---
+NAME            READY   UP-TO-DATE   AVAILABLE   AGE
+shop-java-api   0/0     0            0           107s
+# exit 0

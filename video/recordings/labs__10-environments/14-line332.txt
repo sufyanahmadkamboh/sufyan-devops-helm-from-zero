@@ -1,0 +1,19 @@
+cat > labs/work/values-qa.yaml <<'EOF'
+# qa: like dev, with the admin link switched on for the testers.
+environment: qa
+replicaCount: 1
+config:
+  adminUrl: http://admin-qa.example.com
+ingress:
+  enabled: true
+  hosts:
+    - host: demo-qa.localhost
+      paths:
+        - path: /
+          pathType: Prefix
+EOF
+helm upgrade --install demo charts/demo-app --namespace demo-qa --create-namespace \
+  -f labs/work/values-qa.yaml --wait --timeout 3m | grep STATUS
+---
+STATUS: deployed
+# exit 0

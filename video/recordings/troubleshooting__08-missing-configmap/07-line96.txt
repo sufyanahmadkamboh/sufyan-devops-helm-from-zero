@@ -1,0 +1,8 @@
+kubectl get configmap shop-config --namespace bookshop-dev
+kubectl get pods --namespace bookshop-dev -l app.kubernetes.io/name=node-api
+---
+NAME          DATA   AGE
+shop-config   9      18s
+NAME                            READY   STATUS    RESTARTS   AGE
+shop-node-api-899845bc5-klcd4   1/1     Running   0          22s
+# exit 0

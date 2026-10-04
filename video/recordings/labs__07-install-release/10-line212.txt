@@ -1,0 +1,4 @@
+helm install tmp charts/demo-app --namespace demo-tmp --create-namespace --wait --timeout 3m | grep STATUS
+---
+STATUS: deployed
+# exit 0

@@ -1,0 +1,5 @@
+helm upgrade demo charts/demo-app --namespace demo-staging \
+  -f charts/demo-app/values-staging.yaml -f charts/demo-app/values.yaml --wait | grep STATUS
+---
+STATUS: deployed
+# exit 0

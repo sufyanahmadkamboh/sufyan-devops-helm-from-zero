@@ -1,0 +1,7 @@
+grep -nE 'replicas|image:|value:' examples/basic-chart/raw/deployment.yaml
+---
+1:# BEFORE Helm: a hard-coded Deployment. Every value below is fixed: to run 3 replicas in production, or another
+10:  replicas: 2
+21:          image: ghcr.io/sufyanahmadkamboh/bookshop-frontend:1.0.0
+26:              value: dev
+# exit 0

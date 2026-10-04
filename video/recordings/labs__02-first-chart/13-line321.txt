@@ -1,0 +1,7 @@
+helm uninstall hello --namespace lab-02 --wait
+kubectl delete namespace lab-02 --wait=false
+rm -rf labs/work/hello
+---
+release "hello" uninstalled
+namespace "lab-02" deleted
+# exit 0

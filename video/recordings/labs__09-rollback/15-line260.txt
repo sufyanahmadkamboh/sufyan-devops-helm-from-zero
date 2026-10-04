@@ -1,0 +1,5 @@
+helm upgrade demo charts/demo-app --namespace demo-rollback \
+  -f charts/demo-app/values-dev.yaml --set 'ingress.hosts[0].host=demo-rollback.localhost'
+---
+Error: UPGRADE FAILED: another operation (install/upgrade/rollback) is in progress
+# exit 1

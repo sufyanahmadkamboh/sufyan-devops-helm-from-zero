@@ -1,0 +1,11 @@
+curl -s http://trouble.localhost:8080/config.js; echo
+kubectl get ingress --namespace trouble
+helm history demo --namespace trouble | tail -2
+---
+window.APP_CONFIG = { ADMIN_URL: "http://admin.example.com", APP_ENV: "dev" };
+
+NAME            CLASS     HOSTS               ADDRESS   PORTS   AGE
+demo-demo-app   traefik   trouble.localhost             80      6s
+3       	Mon Oct  5 01:09:51 2026	superseded	demo-app-1.0.0	1.0.0      	Upgrade complete
+4       	Mon Oct  5 01:09:59 2026	deployed  	demo-app-1.0.0	1.0.0      	Rollback to 2   
+# exit 0

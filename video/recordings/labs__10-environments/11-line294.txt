@@ -1,0 +1,7 @@
+helm get values demo --namespace demo-staging | grep -E '^(environment|replicaCount):'
+kubectl get ingress --namespace demo-staging 2>&1
+---
+environment: local
+replicaCount: 1
+No resources found in demo-staging namespace.
+# exit 0

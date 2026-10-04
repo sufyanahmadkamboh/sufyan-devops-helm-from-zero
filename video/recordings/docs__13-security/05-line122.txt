@@ -1,0 +1,16 @@
+grep -rniE 'password|token|secret' charts/*/values*.yaml
+---
+charts/bookshop/values-prod.yaml:2:# In a real production cluster also set database.existingSecret (and postgres.auth.existingSecret) to a Secret
+charts/bookshop/values.yaml:2:# Never put real secrets here: see database.existingSecret.
+charts/bookshop/values.yaml:87:  # Production: create the Secret yourself (or with an external secret manager) and name it here.
+charts/bookshop/values.yaml:88:  # Empty: the chart creates "<release>-db" with a random password on first install and KEEPS it on upgrades.
+charts/bookshop/values.yaml:89:  existingSecret: ""
+charts/bookshop/values.yaml:94:  enabled: true                    # false = use an external database (set database.host and database.existingSecret)
+charts/bookshop/values.yaml:98:    existingSecret: ""             # same as database.existingSecret
+charts/demo-app/values.yaml:2:# (-f my-values.yaml, --set key=value). Values files hold configuration, NEVER real secrets.
+charts/demo-app/values.yaml:80:  automount: false             # the app never calls the Kubernetes API: don't give it a token
+charts/demo-app/values.yaml:94:imagePullSecrets: []
+charts/postgres/values.yaml:10:  # Name of an existing Secret with the key below. Empty = "<release name>-db" (the parent chart creates it).
+charts/postgres/values.yaml:11:  existingSecret: ""
+charts/postgres/values.yaml:12:  passwordKey: DB_PASSWORD
+# exit 0

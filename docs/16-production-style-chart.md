@@ -192,14 +192,14 @@ kubectl get hpa,pdb --namespace bookshop-prod
 
 ```text
 NAME                                                REFERENCE                  TARGETS              MINPODS   MAXPODS   REPLICAS   AGE
-horizontalpodautoscaler.autoscaling/shop-node-api   Deployment/shop-node-api   cpu: <unknown>/70%   2         6         2          37s
+horizontalpodautoscaler.autoscaling/shop-node-api   Deployment/shop-node-api   cpu: <unknown>/70%   2         6         2          36s
 
 NAME                                         MIN AVAILABLE   MAX UNAVAILABLE   ALLOWED DISRUPTIONS   AGE
-poddisruptionbudget.policy/shop-frontend     1               N/A               1                     37s
-poddisruptionbudget.policy/shop-go-status    1               N/A               1                     37s
-poddisruptionbudget.policy/shop-java-api     1               N/A               1                     37s
-poddisruptionbudget.policy/shop-node-api     1               N/A               1                     37s
-poddisruptionbudget.policy/shop-python-api   1               N/A               1                     37s
+poddisruptionbudget.policy/shop-frontend     1               N/A               1                     36s
+poddisruptionbudget.policy/shop-go-status    1               N/A               1                     36s
+poddisruptionbudget.policy/shop-java-api     1               N/A               1                     36s
+poddisruptionbudget.policy/shop-node-api     1               N/A               1                     36s
+poddisruptionbudget.policy/shop-python-api   1               N/A               1                     36s
 ```
 
 - The HPA owns node-api's replica count (2–6); the Deployment template omits `replicas` for it.

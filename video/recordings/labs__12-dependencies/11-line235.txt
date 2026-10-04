@@ -1,0 +1,11 @@
+kubectl get pods --namespace bookshop-dev
+---
+NAME                              READY   STATUS      RESTARTS   AGE
+shop-frontend-5d865884c8-bxc5k    1/1     Running     0          29s
+shop-go-status-6dc7845b99-tpns7   1/1     Running     0          29s
+shop-java-api-7ff96666d4-p2th7    1/1     Running     0          29s
+shop-node-api-fbb58c4c4-7hgsh     1/1     Running     0          29s
+shop-postgres-0                   1/1     Running     0          29s
+shop-python-api-9f4bcbc58-wr65p   1/1     Running     0          29s
+shop-report-bsl85                 0/1     Completed   0          5s
+# exit 0

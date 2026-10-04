@@ -1,0 +1,9 @@
+kubectl get events --namespace trouble --sort-by=.lastTimestamp | tail -6
+---
+61s         Normal    ScalingReplicaSet   deployment/demo-demo-app              Scaled up replica set demo-demo-app-5965f57d7f from 0 to 1
+23s         Normal    Pulled              pod/demo-demo-app-5965f57d7f-4n4zj    Container image "ghcr.io/sufyanahmadkamboh/bookshop-frontend:1.0.0" already present on machine and can be accessed by the pod
+23s         Normal    Created             pod/demo-demo-app-5965f57d7f-4n4zj    Container created
+23s         Normal    Started             pod/demo-demo-app-5965f57d7f-4n4zj    Container started
+23s         Warning   Unhealthy           pod/demo-demo-app-5965f57d7f-4n4zj    Readiness probe failed: Get "http://10.244.1.104:8080/health": dial tcp 10.244.1.104:8080: connect: connection refused
+21s         Warning   BackOff             pod/demo-demo-app-5965f57d7f-4n4zj    Back-off restarting failed container demo-app in pod demo-demo-app-5965f57d7f-4n4zj_trouble(97871a35-bfda-4fac-9f6d-54464c33253c)
+# exit 0

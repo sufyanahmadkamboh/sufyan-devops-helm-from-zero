@@ -1,0 +1,8 @@
+helm list --namespace lab-11
+curl -s http://podinfo.localhost:8080/ | grep '"version"'
+---
+NAME     	NAMESPACE	REVISION	UPDATED                               	STATUS  	CHART         	APP VERSION
+catalog  	lab-11   	2       	2026-10-05 01:03:56.5387845 +0200 CEST	deployed	podinfo-6.15.0	6.15.0     
+shopfront	lab-11   	1       	2026-10-05 01:03:54.8159911 +0200 CEST	deployed	demo-app-1.0.0	1.0.0      
+  "version": "6.15.0",
+# exit 0

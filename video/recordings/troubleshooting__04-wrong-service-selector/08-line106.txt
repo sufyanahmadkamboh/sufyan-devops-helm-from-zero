@@ -1,0 +1,6 @@
+helm history demo --namespace trouble
+---
+REVISION	UPDATED                 	STATUS  	CHART         	APP VERSION	DESCRIPTION                                                                                                                                                                                                                                                                                                                           
+1       	Mon Oct  5 01:08:18 2026	deployed	demo-app-1.0.0	1.0.0      	Install complete                                                                                                                                                                                                                                                                                                                      
+2       	Mon Oct  5 01:08:21 2026	failed  	demo-app-1.0.0	1.0.0      	Upgrade "demo" failed: server-side apply failed for object trouble/demo-demo-app apps/v1, Kind=Deployment: Deployment.apps "demo-demo-app" is invalid: spec.selector: Invalid value: {"matchLabels":{"app.kubernetes.io/component":"web","app.kubernetes.io/instance":"demo","app.kubernetes.io/name":"demo-app"}}: field is immutable
+# exit 0

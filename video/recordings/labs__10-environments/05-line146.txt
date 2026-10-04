@@ -1,0 +1,10 @@
+kubectl get deployments --all-namespaces -l app.kubernetes.io/name=demo-app -L environment
+kubectl get hpa --all-namespaces
+---
+NAMESPACE      NAME            READY   UP-TO-DATE   AVAILABLE   AGE     ENVIRONMENT
+demo-dev       demo-demo-app   1/1     1            1           3m38s   dev
+demo-prod      demo-demo-app   3/3     3            3           2s      prod
+demo-staging   demo-demo-app   2/2     2            2           3s      staging
+NAMESPACE   NAME            REFERENCE                  TARGETS              MINPODS   MAXPODS   REPLICAS   AGE
+demo-prod   demo-demo-app   Deployment/demo-demo-app   cpu: <unknown>/70%   3         6         1          2s
+# exit 0

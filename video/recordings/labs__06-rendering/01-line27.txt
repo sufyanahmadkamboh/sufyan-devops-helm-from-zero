@@ -1,0 +1,15 @@
+helm template demo charts/demo-app -f charts/demo-app/values-dev.yaml --namespace demo-dev | grep -E '^(# Source|kind):'
+---
+# Source: demo-app/templates/serviceaccount.yaml
+kind: ServiceAccount
+# Source: demo-app/templates/configmap.yaml
+kind: ConfigMap
+# Source: demo-app/templates/service.yaml
+kind: Service
+# Source: demo-app/templates/deployment.yaml
+kind: Deployment
+# Source: demo-app/templates/ingress.yaml
+kind: Ingress
+# Source: demo-app/templates/tests/test-connection.yaml
+kind: Pod
+# exit 0

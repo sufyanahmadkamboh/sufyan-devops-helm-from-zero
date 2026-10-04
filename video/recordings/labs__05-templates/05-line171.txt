@@ -1,0 +1,4 @@
+helm template web examples/basic-chart --show-only templates/ingress.yaml
+---
+Error: could not find template templates/ingress.yaml in chart
+# exit 1

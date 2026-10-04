@@ -1,0 +1,11 @@
+for ns in demo-dev demo-staging demo-prod demo-qa; do
+  helm uninstall demo --namespace $ns --wait
+  kubectl delete namespace $ns --wait=false > /dev/null
+done
+rm -f labs/work/values-qa.yaml
+---
+release "demo" uninstalled
+release "demo" uninstalled
+release "demo" uninstalled
+release "demo" uninstalled
+# exit 0

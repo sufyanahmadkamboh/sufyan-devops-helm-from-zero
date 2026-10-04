@@ -1,0 +1,7 @@
+printf 'service:\n\tport: 8080\n' >> labs/work/lint-me/values-dev.yaml
+sed -i 's/^version: 1.0.0/version: latest/' labs/work/lint-me/Chart.yaml
+sed -i 's/{{ .Values.containerPort }}/{{ .Values.containerPort }/' labs/work/lint-me/templates/deployment.yaml
+helm lint labs/work/lint-me -f labs/work/lint-me/values-dev.yaml
+---
+Error: failed to parse labs/work/lint-me/values-dev.yaml: cannot unmarshal yaml document: error converting YAML to JSON: yaml: line 12: found character that cannot start any token
+# exit 1

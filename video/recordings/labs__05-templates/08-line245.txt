@@ -1,0 +1,10 @@
+mv labs/work/tpl/templates/configmap.yaml.bak labs/work/tpl/templates/configmap.yaml
+sed -i 's/include "basic.labels" . | nindent 4/include "basic.labels" . | nindent 2/' labs/work/tpl/templates/deployment.yaml
+helm lint labs/work/tpl | tail -1
+helm template web labs/work/tpl | grep kind:
+---
+1 chart(s) linted, 0 chart(s) failed
+kind: ConfigMap
+kind: Service
+kind: Deployment
+# exit 0

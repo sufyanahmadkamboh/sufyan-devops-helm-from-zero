@@ -1,0 +1,8 @@
+helm upgrade demo charts/demo-app --namespace trouble -f troubleshooting/values-trouble.yaml \
+  --set resources.requests.memory=6Mi --set resources.limits.memory=6Mi \
+  --wait --timeout 60s
+---
+level=WARN msg="upgrade failed" name=demo error="resource Deployment/trouble/demo-demo-app not ready. status: InProgress, message: Pending termination: 1\ncontext deadline exceeded"
+Error: UPGRADE FAILED: resource Deployment/trouble/demo-demo-app not ready. status: InProgress, message: Pending termination: 1
+context deadline exceeded
+# exit 1

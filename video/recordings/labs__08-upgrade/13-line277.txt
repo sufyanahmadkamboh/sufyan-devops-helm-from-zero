@@ -1,0 +1,10 @@
+helm template demo charts/demo-app --namespace demo-dev --skip-tests -f charts/demo-app/values-dev.yaml \
+  --set replicaCount=3 --set service.port=80 \
+  | kubectl diff --server-side --field-manager=helm --namespace demo-dev -f - \
+  | grep -E '^[-+] ' | grep -vE 'generation:|meta\.helm\.sh/|^-\s+annotations:$' || true
+---
+-              number: 8080
++              number: 80
+-    port: 8080
++    port: 80
+# exit 0

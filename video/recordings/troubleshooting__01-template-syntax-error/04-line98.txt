@@ -1,0 +1,6 @@
+echo "opened: $(grep -cE '\{\{-? *(if|range|with|define) ' labs/work/ts01/templates/ingress.yaml)"
+echo "closed: $(grep -cE '\{\{-? *end' labs/work/ts01/templates/ingress.yaml)"
+---
+opened: 7
+closed: 6
+# exit 0

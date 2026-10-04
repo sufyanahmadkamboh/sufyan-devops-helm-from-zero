@@ -51,7 +51,7 @@ kubectl get deployment demo-demo-app --namespace trouble -L environment
 window.APP_CONFIG = { ADMIN_URL: "", APP_ENV: "dev" };
 
 NAME            READY   UP-TO-DATE   AVAILABLE   AGE   ENVIRONMENT
-demo-demo-app   1/1     1            1           4s    dev
+demo-demo-app   1/1     1            1           3s    dev
 ```
 
 ## Investigation
@@ -85,7 +85,7 @@ kubectl get all --namespace trouble -l app.kubernetes.io/instance=demo -L enviro
 ```
 
 ```text
-pod/demo-demo-app-68d8b4d8dc-875vs dev
+pod/demo-demo-app-68d8b4d8dc-k4tt5 dev
 service/demo-demo-app dev
 deployment.apps/demo-demo-app dev
 replicaset.apps/demo-demo-app-68d8b4d8dc dev
@@ -122,7 +122,7 @@ kubectl get deployment demo-demo-app --namespace trouble -L environment
 window.APP_CONFIG = { ADMIN_URL: "http://admin-staging.example.com", APP_ENV: "staging" };
 
 NAME            READY   UP-TO-DATE   AVAILABLE   AGE   ENVIRONMENT
-demo-demo-app   2/2     2            2           8s    staging
+demo-demo-app   2/2     2            2           7s    staging
 ```
 
 <!-- test: timeout=300 -->

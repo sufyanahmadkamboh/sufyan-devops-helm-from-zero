@@ -1,0 +1,7 @@
+kubectl get deploy shopfront-catalog --namespace lab-12
+curl -s http://catalog.localhost:8080/ | grep '"message"'
+---
+NAME                READY   UP-TO-DATE   AVAILABLE   AGE
+shopfront-catalog   2/2     2            2           12s
+  "message": "catalog v2",
+# exit 0

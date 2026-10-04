@@ -1,0 +1,12 @@
+cat > labs/work/hooks-tidy.yaml <<'EOF'
+hooks:
+  - { event: pre-install, weight: -5 }
+  - { event: post-install, weight: 0, deletePolicy: hook-succeeded }
+  - { event: pre-upgrade, weight: 0 }
+  - { event: post-upgrade, weight: 0 }
+  - { event: pre-delete, weight: 0 }
+EOF
+helm install tidy examples/hooks-example --namespace lab-13 -f labs/work/hooks-tidy.yaml --wait | grep STATUS
+---
+STATUS: deployed
+# exit 0

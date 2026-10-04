@@ -1,0 +1,5 @@
+helm upgrade demo charts/demo-app --namespace demo-dev \
+  -f charts/demo-app/values-dev.yaml --set replicaCount=3 --wait | grep STATUS
+---
+STATUS: deployed
+# exit 0

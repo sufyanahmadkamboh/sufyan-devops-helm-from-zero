@@ -1,0 +1,6 @@
+helm template web examples/basic-chart --set replicaCount=3 --set environment=prod \
+  --show-only templates/deployment.yaml | grep -E 'replicas|value: "prod"'
+---
+  replicas: 3
+              value: "prod"
+# exit 0

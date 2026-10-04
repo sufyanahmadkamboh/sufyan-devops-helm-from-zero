@@ -79,10 +79,10 @@ done
 ```
 
 ```text
-pre-install hook · release hooks · revision 1 · 21:47:15
-post-install hook · release hooks · revision 1 · 21:47:18
-pre-upgrade hook · release hooks · revision 2 · 21:47:21
-post-upgrade hook · release hooks · revision 2 · 21:47:24
+pre-install hook · release hooks · revision 1 · 23:05:17
+post-install hook · release hooks · revision 1 · 23:05:20
+pre-upgrade hook · release hooks · revision 2 · 23:05:24
+post-upgrade hook · release hooks · revision 2 · 23:05:27
 ```
 
 ```text
@@ -108,16 +108,16 @@ kubectl get jobs,configmaps --namespace lab-13
 ```
 
 ```text
-pre-delete hook · release hooks · revision 2 · 21:47:28
+pre-delete hook · release hooks · revision 2 · 23:05:31
 NAME                           STATUS     COMPLETIONS   DURATION   AGE
 job.batch/hooks-post-install   Complete   1/1           3s         14s
 job.batch/hooks-post-upgrade   Complete   1/1           3s         7s
 job.batch/hooks-pre-delete     Complete   1/1           3s         3s
-job.batch/hooks-pre-install    Complete   1/1           3s         17s
-job.batch/hooks-pre-upgrade    Complete   1/1           3s         10s
+job.batch/hooks-pre-install    Complete   1/1           6s         20s
+job.batch/hooks-pre-upgrade    Complete   1/1           3s         11s
 
 NAME                         DATA   AGE
-configmap/kube-root-ca.crt   1      17s
+configmap/kube-root-ca.crt   1      20s
 ```
 
 The `pre-delete` Job ran before the release's objects were deleted; the ConfigMap is gone. But all five hook Jobs are
@@ -152,8 +152,8 @@ kubectl logs --namespace bookshop-dev job/shop-report
 ```
 
 ```text
-2026-10-04T21:45:27.714Z report-worker version 1.0.0 starting: stats from http://shop-python-api:8000/api/stats, status from http://shop-go-status:8080/api/status
-2026-10-04T21:45:28.200Z report-worker report #1 saved: users=3 books=5 reviews=0 services up=5/5
+2026-10-04T23:04:55.741Z report-worker version 1.0.0 starting: stats from http://shop-python-api:8000/api/stats, status from http://shop-go-status:8080/api/status
+2026-10-04T23:04:56.190Z report-worker report #1 saved: users=3 books=5 reviews=0 services up=5/5
 ```
 
 An upgrade runs it again; `before-hook-creation` replaced the previous Job:
@@ -169,8 +169,8 @@ kubectl logs --namespace bookshop-dev job/shop-report
 ```
 
 ```text
-2026-10-04T21:47:33.259Z report-worker version 1.0.0 starting: stats from http://shop-python-api:8000/api/stats, status from http://shop-go-status:8080/api/status
-2026-10-04T21:47:33.766Z report-worker report #2 saved: users=3 books=5 reviews=0 services up=5/5
+2026-10-04T23:05:36.359Z report-worker version 1.0.0 starting: stats from http://shop-python-api:8000/api/stats, status from http://shop-go-status:8080/api/status
+2026-10-04T23:05:36.778Z report-worker report #2 saved: users=3 books=5 reviews=0 services up=5/5
 ```
 
 Report #2: one report per deployment, written after the release was ready.
@@ -232,7 +232,7 @@ kubectl logs --namespace lab-13 job/hooks-pre-upgrade
 ```
 
 ```text
-pre-upgrade hook · release hooks · revision 2 · 21:47:44
+pre-upgrade hook · release hooks · revision 2 · 23:05:46
 pre-upgrade: simulated failure (failAt=pre-upgrade)
 ```
 
@@ -246,8 +246,8 @@ kubectl get configmap hooks-settings --namespace lab-13 -o jsonpath='{.data.MESS
 
 ```text
 REVISION	UPDATED                 	STATUS  	CHART              	APP VERSION	DESCRIPTION                                                                                                                                        
-1       	Sun Oct  4 23:47:37 2026	deployed	hooks-example-0.1.0	1.0.0      	Install complete                                                                                                                                   
-2       	Sun Oct  4 23:47:43 2026	failed  	hooks-example-0.1.0	1.0.0      	Upgrade "hooks" failed: pre-upgrade hooks failed: resource Job/lab-13/hooks-pre-upgrade not ready. status: Failed, message: Job Failed. failed: 1/1
+1       	Mon Oct  5 01:05:39 2026	deployed	hooks-example-0.1.0	1.0.0      	Install complete                                                                                                                                   
+2       	Mon Oct  5 01:05:45 2026	failed  	hooks-example-0.1.0	1.0.0      	Upgrade "hooks" failed: pre-upgrade hooks failed: resource Job/lab-13/hooks-pre-upgrade not ready. status: Failed, message: Job Failed. failed: 1/1
 hello from the hooks example
 ```
 

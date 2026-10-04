@@ -1,0 +1,10 @@
+helm template demo charts/demo-app -f charts/demo-app/values-dev.yaml --output-dir labs/work/rendered > /dev/null
+find labs/work/rendered -type f | sort
+---
+labs/work/rendered/demo-app/templates/configmap.yaml
+labs/work/rendered/demo-app/templates/deployment.yaml
+labs/work/rendered/demo-app/templates/ingress.yaml
+labs/work/rendered/demo-app/templates/service.yaml
+labs/work/rendered/demo-app/templates/serviceaccount.yaml
+labs/work/rendered/demo-app/templates/tests/test-connection.yaml
+# exit 0

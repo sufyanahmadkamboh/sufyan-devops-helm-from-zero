@@ -136,10 +136,10 @@ kubectl get hpa,deployment --namespace trouble
 
 ```text
 NAME                                                REFERENCE                  TARGETS              MINPODS   MAXPODS   REPLICAS   AGE
-horizontalpodautoscaler.autoscaling/demo-demo-app   Deployment/demo-demo-app   cpu: <unknown>/70%   5         6         3          10s
+horizontalpodautoscaler.autoscaling/demo-demo-app   Deployment/demo-demo-app   cpu: <unknown>/70%   5         6         3          5s
 
 NAME                            READY   UP-TO-DATE   AVAILABLE   AGE
-deployment.apps/demo-demo-app   5/5     5            5           10s
+deployment.apps/demo-demo-app   5/5     5            5           5s
 ```
 
 <!-- test: timeout=300 -->

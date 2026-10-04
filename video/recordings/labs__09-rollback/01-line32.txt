@@ -1,0 +1,7 @@
+helm install demo charts/demo-app --namespace demo-rollback --create-namespace \
+  -f charts/demo-app/values-dev.yaml --set 'ingress.hosts[0].host=demo-rollback.localhost' \
+  --wait --timeout 3m | grep -E 'STATUS|REVISION'
+---
+STATUS: deployed
+REVISION: 1
+# exit 0

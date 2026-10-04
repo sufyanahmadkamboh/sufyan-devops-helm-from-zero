@@ -164,7 +164,7 @@ helm install hello labs/work/hello --namespace lab-02 --create-namespace --wait 
 
 ```text
 NAME: hello
-LAST DEPLOYED: Sun Oct  4 23:18:57 2026
+LAST DEPLOYED: Mon Oct  5 00:59:08 2026
 NAMESPACE: lab-02
 STATUS: deployed
 REVISION: 1
@@ -188,12 +188,12 @@ kubectl get pods,svc --namespace lab-02
 
 ```text
 NAME 	NAMESPACE	REVISION	UPDATED                               	STATUS  	CHART      	APP VERSION
-hello	lab-02   	1       	2026-10-04 23:18:57.8006954 +0200 CEST	deployed	hello-0.1.0	1.16.0     
+hello	lab-02   	1       	2026-10-05 00:59:08.0602663 +0200 CEST	deployed	hello-0.1.0	1.16.0     
 NAME                         READY   STATUS    RESTARTS   AGE
-pod/hello-5d65b49b89-gr6n4   1/1     Running   0          6s
+pod/hello-5d65b49b89-jg7ns   1/1     Running   0          6s
 
 NAME            TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)   AGE
-service/hello   ClusterIP   10.96.159.180   <none>        80/TCP    6s
+service/hello   ClusterIP   10.96.121.176   <none>        80/TCP    6s
 ```
 
 ### 3 · Test
@@ -205,14 +205,14 @@ helm test hello --namespace lab-02
 
 ```text
 NAME: hello
-LAST DEPLOYED: Sun Oct  4 23:18:57 2026
+LAST DEPLOYED: Mon Oct  5 00:59:08 2026
 NAMESPACE: lab-02
 STATUS: deployed
 REVISION: 1
 DESCRIPTION: Install complete
 TEST SUITE:     hello-test-connection
-Last Started:   Sun Oct  4 23:19:04 2026
-Last Completed: Sun Oct  4 23:19:08 2026
+Last Started:   Mon Oct  5 00:59:14 2026
+Last Completed: Mon Oct  5 00:59:19 2026
 Phase:          Succeeded
 ```
 

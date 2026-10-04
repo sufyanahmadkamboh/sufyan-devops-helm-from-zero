@@ -1,0 +1,8 @@
+helm history demo --namespace demo-dev | tail -2
+helm get values demo --namespace demo-dev
+---
+3       	Mon Oct  5 01:00:03 2026	superseded	demo-app-1.0.0	1.0.0      	Upgrade complete
+4       	Mon Oct  5 01:00:09 2026	deployed  	demo-app-1.0.0	1.0.0      	Upgrade complete
+USER-SUPPLIED VALUES:
+replicaCount: 3
+# exit 0

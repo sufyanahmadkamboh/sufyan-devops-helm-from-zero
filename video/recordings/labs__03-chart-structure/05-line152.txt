@@ -1,0 +1,28 @@
+ls -A charts/demo-app charts/demo-app/templates charts/demo-app/templates/tests
+---
+charts/demo-app:
+.helmignore
+Chart.yaml
+README.md
+charts
+templates
+values-dev.yaml
+values-prod.yaml
+values-staging.yaml
+values.yaml
+
+charts/demo-app/templates:
+NOTES.txt
+_helpers.tpl
+configmap.yaml
+deployment.yaml
+hpa.yaml
+httproute.yaml
+ingress.yaml
+service.yaml
+serviceaccount.yaml
+tests
+
+charts/demo-app/templates/tests:
+test-connection.yaml
+# exit 0

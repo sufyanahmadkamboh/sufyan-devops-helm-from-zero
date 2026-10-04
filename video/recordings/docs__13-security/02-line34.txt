@@ -1,0 +1,11 @@
+kubectl get clusterrole traefik-traefik -o jsonpath='{range .rules[*]}{.resources}{"  "}{.verbs}{"\n"}{end}'
+---
+["configmaps","nodes","services"]  ["get","list","watch"]
+["endpointslices"]  ["list","watch"]
+["pods"]  ["get"]
+["secrets"]  ["get","list","watch"]
+["ingressclasses","ingresses"]  ["get","list","watch"]
+["ingresses/status"]  ["update"]
+["namespaces"]  ["list","watch"]
+["ingressroutes","ingressroutetcps","ingressrouteudps","middlewares","middlewaretcps","serverstransports","serverstransporttcps","tlsoptions","tlsstores","traefikservices"]  ["get","list","watch"]
+# exit 0

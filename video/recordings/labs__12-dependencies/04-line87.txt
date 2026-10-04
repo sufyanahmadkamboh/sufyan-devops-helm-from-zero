@@ -1,0 +1,15 @@
+ls examples/dependency-example/charts/
+helm dependency list examples/dependency-example
+cat examples/dependency-example/Chart.lock
+---
+podinfo-6.15.0.tgz
+NAME   	VERSION	REPOSITORY                            	STATUS
+podinfo	6.15.0 	https://stefanprodan.github.io/podinfo	ok    
+
+dependencies:
+- name: podinfo
+  repository: https://stefanprodan.github.io/podinfo
+  version: 6.15.0
+digest: sha256:4db004e2ef9fcf6bc9b31b8e78f026d003127f371e820cc4f620f1104b204554
+generated: "2026-10-04T23:13:45.2821502+02:00"
+# exit 0

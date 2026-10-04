@@ -1,0 +1,8 @@
+helm dependency list labs/work/fresh-clone | tail -2
+helm dependency build labs/work/fresh-clone > /dev/null
+helm dependency list labs/work/fresh-clone | tail -2
+---
+podinfo	6.15.0 	https://stefanprodan.github.io/podinfo	missing
+
+podinfo	6.15.0 	https://stefanprodan.github.io/podinfo	ok    
+# exit 0

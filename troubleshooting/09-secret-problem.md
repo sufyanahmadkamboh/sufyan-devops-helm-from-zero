@@ -34,12 +34,12 @@ kubectl get pods --namespace bookshop-dev | grep -E 'NAME|api'
 
 ```text
 NAME                              READY   STATUS                       RESTARTS   AGE
-shop-java-api-6659d799c4-mmxq6    0/1     CreateContainerConfigError   0          90s
-shop-java-api-7ff96666d4-wgr4t    1/1     Running                      0          116s
-shop-node-api-689546865d-fmn4f    0/1     CreateContainerConfigError   0          90s
-shop-node-api-7b995d94bd-pgfqz    1/1     Running                      0          116s
-shop-python-api-57cf464-xlmz4     0/1     CreateContainerConfigError   0          90s
-shop-python-api-9f4bcbc58-vjkjj   1/1     Running                      0          116s
+shop-java-api-6659d799c4-sg9xb    0/1     CreateContainerConfigError   0          90s
+shop-java-api-7ff96666d4-7znv8    1/1     Running                      0          5m44s
+shop-node-api-7cddbc795-mvbst     0/1     CreateContainerConfigError   0          90s
+shop-node-api-899845bc5-klcd4     1/1     Running                      0          115s
+shop-python-api-57cf464-p8wsq     0/1     CreateContainerConfigError   0          90s
+shop-python-api-9f4bcbc58-wr65p   1/1     Running                      0          7m32s
 ```
 
 ## Investigation
@@ -56,8 +56,7 @@ kubectl get events --namespace bookshop-dev --field-selector reason=Failed \
 ```
 
 ```text
-shop-node-api-7667b6b56b-bqm4j   Error: secret "shop-db-prod" not found
-shop-node-api-784c76b5dc-56l7m   Error: secret "shop-db-prod" not found
+shop-node-api-7cddbc795-mvbst    Error: secret "shop-db-prod" not found
 ```
 
 <!-- test: contains=shop-db; output -->
@@ -68,7 +67,7 @@ helm get values shop --namespace bookshop-dev | grep -A1 database
 
 ```text
 NAME      TYPE     DATA   AGE
-shop-db   Opaque   1      34m
+shop-db   Opaque   1      7m33s
 database:
   existingSecret: shop-db-prod
 ```

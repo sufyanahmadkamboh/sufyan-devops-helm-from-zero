@@ -1,0 +1,10 @@
+for host in demo-dev demo-staging demo; do
+  printf '%-14s ' "$host"; curl -s "http://$host.localhost:8080/config.js"; echo
+done
+---
+demo-dev       window.APP_CONFIG = { ADMIN_URL: "", APP_ENV: "dev" };
+
+demo-staging   window.APP_CONFIG = { ADMIN_URL: "", APP_ENV: "staging" };
+
+demo           window.APP_CONFIG = { ADMIN_URL: "", APP_ENV: "prod" };
+# exit 0

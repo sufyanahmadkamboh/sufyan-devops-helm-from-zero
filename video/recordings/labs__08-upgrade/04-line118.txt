@@ -1,0 +1,8 @@
+kubectl get pods --namespace demo-dev -l app.kubernetes.io/instance=demo
+curl -s http://demo-dev.localhost:8080/config.js; echo
+---
+NAME                             READY   STATUS    RESTARTS   AGE
+demo-demo-app-56457858d8-2l24x   1/1     Running   0          4s
+demo-demo-app-56457858d8-cl459   1/1     Running   0          5s
+window.APP_CONFIG = { ADMIN_URL: "http://admin.example.com", APP_ENV: "dev" };
+# exit 0

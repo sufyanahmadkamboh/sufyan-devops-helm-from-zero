@@ -1,0 +1,4 @@
+kubectl top pod --namespace trouble 2>/dev/null || echo "MEMORY: no metrics-server in kind; in a real cluster, measure with kubectl top or your monitoring"
+---
+MEMORY: no metrics-server in kind; in a real cluster, measure with kubectl top or your monitoring
+# exit 0

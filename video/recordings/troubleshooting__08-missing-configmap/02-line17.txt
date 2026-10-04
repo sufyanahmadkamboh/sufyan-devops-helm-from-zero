@@ -1,0 +1,4 @@
+kubectl rollout restart deployment/shop-node-api --namespace bookshop-dev
+---
+deployment.apps/shop-node-api restarted
+# exit 0

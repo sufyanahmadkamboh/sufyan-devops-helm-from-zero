@@ -1,0 +1,38 @@
+cat > labs/work/tpl/templates/pdb.yaml <<'EOF'
+{{- if gt (int .Values.replicaCount) 1 }}
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: {{ include "basic.fullname" . }}
+  labels:
+    {{- include "basic.labels" . | nindent 4 }}
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      {{- include "basic.selectorLabels" . | nindent 6 }}
+{{- end }}
+EOF
+helm template web labs/work/tpl --set replicaCount=3 --show-only templates/pdb.yaml
+---
+---
+# Source: basic-chart/templates/pdb.yaml
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: web
+  labels:
+    app.kubernetes.io/name: basic-chart
+    app.kubernetes.io/instance: web
+    app.kubernetes.io/version: "1.0.0"
+    app.kubernetes.io/managed-by: Helm
+    helm.sh/chart: basic-chart-0.1.0
+    environment: "dev"
+    team: web
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: basic-chart
+      app.kubernetes.io/instance: web
+# exit 0

@@ -15,16 +15,18 @@ folders.
 ## Watch for
 
 ```text
-1374 total            (three environments)
-74                    (diff lines between dev and staging)
+  458 total            (dev)
+  458 total            (staging)
+  458 total            (prod)
+74                     (diff lines between dev and staging; each changed line counts twice)
 ```
 
 and the routine change:
 
 ```text
-environments/dev/deployments.yaml:79:      image: ghcr.io/sufyanahmadkamboh/bookshop-node-api:1.0.0
-environments/prod/deployments.yaml:79:     image: ghcr.io/sufyanahmadkamboh/bookshop-node-api:1.0.0
-environments/staging/deployments.yaml:79:  image: ghcr.io/sufyanahmadkamboh/bookshop-node-api:1.0.0
+environments/dev/deployments.yaml:79:          image: ghcr.io/sufyanahmadkamboh/bookshop-node-api:1.0.0
+environments/prod/deployments.yaml:79:          image: ghcr.io/sufyanahmadkamboh/bookshop-node-api:1.0.0
+environments/staging/deployments.yaml:79:          image: ghcr.io/sufyanahmadkamboh/bookshop-node-api:1.0.0
 ```
 
 ## Think like an engineer

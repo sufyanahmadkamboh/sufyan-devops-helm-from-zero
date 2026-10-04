@@ -1,0 +1,20 @@
+helm install demo charts/demo-app --namespace trouble --create-namespace \
+  -f troubleshooting/values-trouble.yaml \
+  --set image.repository=ghcr.io/sufyanahmadkamboh/bookshop-frontnd
+---
+NAME: demo
+LAST DEPLOYED: Mon Oct  5 01:07:58 2026
+NAMESPACE: trouble
+STATUS: deployed
+REVISION: 1
+DESCRIPTION: Install complete
+NOTES:
+demo-app 1.0.0 (chart 1.0.0) is deployed as release "demo" in namespace "trouble".
+Environment: dev · revision 1
+
+Open:  http://trouble.localhost:8080/
+
+Check it:
+  kubectl --namespace trouble get pods -l app.kubernetes.io/instance=demo
+  helm test demo --namespace trouble
+# exit 0

@@ -1,0 +1,7 @@
+helm dependency build charts/bookshop > /dev/null
+first=$(helm template shop charts/bookshop --show-only templates/secret.yaml | grep DB_PASSWORD)
+second=$(helm template shop charts/bookshop --show-only templates/secret.yaml | grep DB_PASSWORD)
+[ "$first" != "$second" ] && echo "two renders, two different passwords"
+---
+two renders, two different passwords
+# exit 0

@@ -1,0 +1,9 @@
+sed -n '/^dependencies:/,$p' examples/dependency-example/Chart.yaml
+---
+dependencies:
+  - name: podinfo                                      # the chart's name in the repository
+    version: 6.15.0                                    # pinned: an exact version, never a floating range in production
+    repository: https://stefanprodan.github.io/podinfo # where "helm dependency update" downloads it from
+    alias: catalog                                     # the name inside this chart: values live under "catalog:"
+    condition: catalog.enabled                         # catalog.enabled=false leaves it out entirely
+# exit 0

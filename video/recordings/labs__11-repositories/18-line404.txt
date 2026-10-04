@@ -1,0 +1,5 @@
+helm upgrade catalog podinfo/podinfo --version 6.15.0 --namespace lab-11 \
+  -f labs/work/podinfo-values.yaml --wait --timeout 3m | grep STATUS
+---
+STATUS: deployed
+# exit 0

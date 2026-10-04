@@ -1,0 +1,14 @@
+helm lint charts/demo-app
+ls labs/work/
+---
+==> Linting charts/demo-app
+[INFO] Chart.yaml: icon is recommended
+
+1 chart(s) linted, 0 chart(s) failed
+broken
+demo-app-1.0.0.tgz
+demo-app-1.0.1.tgz
+demo-app-2.0.0.tgz
+pkg
+scaffold
+# exit 0

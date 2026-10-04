@@ -1,0 +1,6 @@
+helm template demo labs/work/schema-demo --set replicaCount=0
+---
+Error: values don't meet the specifications of the schema(s) in the following chart(s):
+demo-app:
+- at '/replicaCount': minimum: got 0, want 1
+# exit 1

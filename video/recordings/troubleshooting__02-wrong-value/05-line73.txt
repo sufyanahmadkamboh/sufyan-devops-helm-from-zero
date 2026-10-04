@@ -1,0 +1,19 @@
+helm get values demo --namespace trouble
+helm get manifest demo --namespace trouble | grep -nE 'containerPort|port: http|targetPort'
+---
+USER-SUPPLIED VALUES:
+containerPort: 80
+environment: dev
+ingress:
+  enabled: true
+  hosts:
+  - host: trouble.localhost
+    paths:
+    - path: /
+      pathType: Prefix
+replicaCount: 1
+54:      targetPort: http
+112:              containerPort: 80
+120:              port: http
+125:              port: http
+# exit 0

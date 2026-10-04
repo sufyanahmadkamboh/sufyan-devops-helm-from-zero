@@ -1,0 +1,4 @@
+kubectl delete configmap shop-config --namespace bookshop-dev
+---
+configmap "shop-config" deleted from bookshop-dev namespace
+# exit 0

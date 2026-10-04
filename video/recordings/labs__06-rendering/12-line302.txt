@@ -1,0 +1,10 @@
+ls labs/work/prod-manifests/demo-app/templates/
+---
+configmap.yaml
+deployment.yaml
+hpa.yaml
+ingress.yaml
+service.yaml
+serviceaccount.yaml
+tests
+# exit 0

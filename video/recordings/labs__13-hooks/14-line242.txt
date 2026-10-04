@@ -1,0 +1,8 @@
+helm history hooks --namespace lab-13
+kubectl get configmap hooks-settings --namespace lab-13 -o jsonpath='{.data.MESSAGE}'; echo
+---
+REVISION	UPDATED                 	STATUS  	CHART              	APP VERSION	DESCRIPTION                                                                                                                                        
+1       	Mon Oct  5 01:05:39 2026	deployed	hooks-example-0.1.0	1.0.0      	Install complete                                                                                                                                   
+2       	Mon Oct  5 01:05:45 2026	failed  	hooks-example-0.1.0	1.0.0      	Upgrade "hooks" failed: pre-upgrade hooks failed: resource Job/lab-13/hooks-pre-upgrade not ready. status: Failed, message: Job Failed. failed: 1/1
+hello from the hooks example
+# exit 0

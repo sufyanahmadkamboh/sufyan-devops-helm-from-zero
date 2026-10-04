@@ -1,0 +1,23 @@
+mkdir -p labs/work
+cat > labs/work/podinfo-values.yaml <<'EOF'
+# Our settings for the podinfo chart (keys from: helm show values podinfo/podinfo)
+replicaCount: 2
+ui:
+  message: "Bookshop catalog, installed from a public chart"
+  color: "#1f6f50"
+ingress:
+  enabled: true
+  className: traefik
+  hosts:
+    - host: podinfo.localhost
+      paths:
+        - path: /
+          pathType: Prefix
+resources:
+  requests: { cpu: 10m, memory: 32Mi }
+  limits: { memory: 64Mi }
+EOF
+grep host: labs/work/podinfo-values.yaml
+---
+    - host: podinfo.localhost
+# exit 0

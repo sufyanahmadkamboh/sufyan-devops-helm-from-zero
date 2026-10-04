@@ -1,0 +1,9 @@
+helm env | grep -E '^HELM_(CACHE_HOME|CONFIG_HOME|DATA_HOME|REPOSITORY_CONFIG|NAMESPACE|KUBECONTEXT)='
+---
+HELM_CACHE_HOME="~\AppData\Local\Temp\helm"
+HELM_CONFIG_HOME="~\AppData\Roaming\helm"
+HELM_DATA_HOME="~\AppData\Roaming\helm"
+HELM_KUBECONTEXT=""
+HELM_NAMESPACE="default"
+HELM_REPOSITORY_CONFIG="~\AppData\Roaming\helm\repositories.yaml"
+# exit 0

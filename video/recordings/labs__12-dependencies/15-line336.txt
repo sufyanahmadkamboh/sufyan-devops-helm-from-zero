@@ -1,0 +1,6 @@
+helm upgrade shopfront examples/dependency-example --namespace lab-12 \
+  --set catalog.enabled=true --set catalog.replicaCount=2 --set catalog.ui.message="catalog v2" \
+  --wait --timeout 3m | grep STATUS
+---
+STATUS: deployed
+# exit 0

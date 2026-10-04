@@ -1,0 +1,6 @@
+helm get metadata shopfront --namespace lab-12 | grep -E '^(CHART|VERSION|DEPENDENCIES)'
+---
+CHART: storefront
+VERSION: 0.1.0
+DEPENDENCIES: catalog
+# exit 0

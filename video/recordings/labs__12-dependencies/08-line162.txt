@@ -1,0 +1,7 @@
+helm upgrade shopfront examples/dependency-example --namespace lab-12 --set catalog.enabled=false --wait > /dev/null
+kubectl get deploy --namespace lab-12 2>&1
+echo "CATALOG_URL=$(kubectl get configmap shopfront-storefront --namespace lab-12 -o jsonpath='{.data.CATALOG_URL}')"
+---
+No resources found in lab-12 namespace.
+CATALOG_URL=
+# exit 0

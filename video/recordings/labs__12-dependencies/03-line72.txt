@@ -1,0 +1,10 @@
+helm dependency update examples/dependency-example
+---
+Hang tight while we grab the latest from your chart repositories...
+...Successfully got an update from the "podinfo" chart repository
+...Successfully got an update from the "traefik" chart repository
+Update Complete. ⎈Happy Helming!⎈
+Saving 1 charts
+Downloading podinfo from repo https://stefanprodan.github.io/podinfo
+Deleting outdated charts
+# exit 0

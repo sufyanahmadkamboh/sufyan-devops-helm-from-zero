@@ -1,0 +1,6 @@
+kubectl get pods --namespace bookshop-dev -l app.kubernetes.io/name=node-api
+---
+NAME                            READY   STATUS                       RESTARTS   AGE
+shop-node-api-899845bc5-klcd4   0/1     CreateContainerConfigError   0          2s
+shop-node-api-fbb58c4c4-7hgsh   1/1     Running                      0          5m39s
+# exit 0

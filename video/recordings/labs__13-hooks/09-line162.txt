@@ -1,0 +1,4 @@
+helm upgrade shop charts/bookshop --namespace bookshop-dev -f charts/bookshop/values-dev.yaml --wait --timeout 5m | grep STATUS
+---
+STATUS: deployed
+# exit 0

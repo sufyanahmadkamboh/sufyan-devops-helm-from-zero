@@ -1,0 +1,11 @@
+grep -nE 'replicas|image:|value: \{\{ .Values' examples/basic-chart/templates/deployment.yaml
+grep -nE '^replicaCount|^  repository|^  tag|^environment' examples/basic-chart/values.yaml
+---
+11:  replicas: {{ .Values.replicaCount }}
+25:          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+31:              value: {{ .Values.environment | quote }}
+2:replicaCount: 2
+5:  repository: ghcr.io/sufyanahmadkamboh/bookshop-frontend
+6:  tag: ""                      # empty: "default" falls back to the chart's appVersion
+8:environment: dev
+# exit 0

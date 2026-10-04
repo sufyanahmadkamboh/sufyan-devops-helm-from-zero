@@ -1,0 +1,13 @@
+helm upgrade hello labs/work/hello --namespace lab-02 \
+  --set image.repository=ghcr.io/sufyanahmadkamboh/bookshop-frontend \
+  --set image.tag=1.0.0 \
+  --set service.port=8080 \
+  --wait --timeout 3m | head -6
+---
+Release "hello" has been upgraded. Happy Helming!
+NAME: hello
+LAST DEPLOYED: Mon Oct  5 00:59:19 2026
+NAMESPACE: lab-02
+STATUS: deployed
+REVISION: 2
+# exit 0

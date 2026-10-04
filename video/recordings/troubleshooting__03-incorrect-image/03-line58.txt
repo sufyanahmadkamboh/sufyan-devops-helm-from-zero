@@ -1,0 +1,5 @@
+kubectl get pods --namespace trouble
+---
+NAME                             READY   STATUS             RESTARTS   AGE
+demo-demo-app-5b8d98bbf6-62tg8   0/1     ImagePullBackOff   0          16s
+# exit 0

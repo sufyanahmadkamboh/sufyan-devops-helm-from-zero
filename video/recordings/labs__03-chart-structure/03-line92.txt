@@ -1,0 +1,106 @@
+helm show values charts/demo-app
+---
+# Default values for demo-app. Every value can be overridden per environment (values-dev.yaml, ...) or per install
+# (-f my-values.yaml, --set key=value). Values files hold configuration, NEVER real secrets.
+
+# How many Pods. Ignored when autoscaling.enabled is true (the HorizontalPodAutoscaler decides then).
+replicaCount: 1
+
+image:
+  repository: ghcr.io/sufyanahmadkamboh/bookshop-frontend
+  # Empty = use the chart's appVersion (Chart.yaml). Set it to deploy another application version.
+  tag: ""
+  pullPolicy: IfNotPresent
+
+# Which environment this release is. Shown in the UI footer, added as a label to every resource.
+environment: local
+
+# Application configuration, rendered into a ConfigMap (templates/configmap.yaml).
+config:
+  adminUrl: ""                 # the "Reviews admin" link of the UI (empty = hidden)
+
+# The port the container listens on (the nginx inside the image listens on 8080).
+containerPort: 8080
+
+service:
+  type: ClusterIP
+  port: 8080                   # the port of the Service (what other Pods and the Ingress call)
+
+ingress:
+  enabled: false
+  className: traefik
+  annotations: {}
+  hosts:
+    - host: demo.localhost
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: []
+
+# Gateway API route (the successor of Ingress). Disabled: the lab cluster uses an Ingress controller.
+httpRoute:
+  enabled: false
+  annotations: {}
+  parentRefs:
+    - name: gateway
+      sectionName: http
+  hostnames:
+    - demo.localhost
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+
+livenessProbe:
+  httpGet:
+    path: /health
+    port: http
+  periodSeconds: 10
+readinessProbe:
+  httpGet:
+    path: /health
+    port: http
+  periodSeconds: 5
+
+resources:
+  requests:
+    cpu: 10m
+    memory: 32Mi
+  limits:
+    cpu: 200m
+    memory: 128Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 2
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 80
+
+serviceAccount:
+  create: true
+  automount: false             # the app never calls the Kubernetes API: don't give it a token
+  annotations: {}
+  name: ""
+
+podSecurityContext:
+  runAsNonRoot: true
+  runAsUser: 101               # the nginx user of nginx-unprivileged
+  seccompProfile:
+    type: RuntimeDefault
+securityContext:
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop: ["ALL"]
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+podAnnotations: {}
+podLabels: {}
+volumes: []
+volumeMounts: []
+nodeSelector: {}
+tolerations: []
+affinity: {}
+# exit 0

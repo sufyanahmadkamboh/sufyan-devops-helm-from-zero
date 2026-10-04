@@ -1,0 +1,9 @@
+grep -n 'define' charts/demo-app/templates/_helpers.tpl
+---
+4:{{- define "demo-app.name" -}}
+13:{{- define "demo-app.fullname" -}}
+29:{{- define "demo-app.chart" -}}
+36:{{- define "demo-app.labels" -}}
+50:{{- define "demo-app.selectorLabels" -}}
+58:{{- define "demo-app.serviceAccountName" -}}
+# exit 0

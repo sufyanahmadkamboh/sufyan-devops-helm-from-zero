@@ -1,0 +1,12 @@
+kubectl get deploy,svc --namespace lab-12
+kubectl get configmap shopfront-storefront --namespace lab-12 -o jsonpath='{.data.CATALOG_URL}'; echo
+curl -s http://catalog.localhost:8080/ | grep '"message"'
+---
+NAME                                READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/shopfront-catalog   1/1     1            1           12s
+
+NAME                        TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)             AGE
+service/shopfront-catalog   ClusterIP   10.96.195.40   <none>        9898/TCP,9999/TCP   12s
+http://shopfront-catalog:9898
+  "message": "catalog service, deployed as a dependency of storefront",
+# exit 0

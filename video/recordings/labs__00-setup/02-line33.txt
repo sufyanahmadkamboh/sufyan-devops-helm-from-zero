@@ -1,0 +1,8 @@
+kubectl config current-context
+kubectl get nodes
+---
+kind-helm-lab
+NAME                     STATUS   ROLES           AGE   VERSION
+helm-lab-control-plane   Ready    control-plane   26s   v1.37.0
+helm-lab-worker          Ready    <none>          15s   v1.37.0
+# exit 0

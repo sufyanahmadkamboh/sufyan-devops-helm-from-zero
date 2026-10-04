@@ -1,0 +1,4 @@
+helm uninstall hooks --namespace lab-13 --wait
+---
+release "hooks" uninstalled
+# exit 0

@@ -72,8 +72,8 @@ helm list --all-namespaces
 
 ```text
 kind-helm-lab
-NAME   	NAMESPACE	REVISION	UPDATED                               	STATUS  	CHART         	APP VERSION
-traefik	traefik  	1       	2026-10-04 22:21:36.5148655 +0200 CEST	deployed	traefik-41.6.1	v3.7.13    
+NAME   	NAMESPACE	REVISION	UPDATED                              	STATUS  	CHART         	APP VERSION
+traefik	traefik  	1       	2026-10-05 00:55:58.745498 +0200 CEST	deployed	traefik-41.6.1	v3.7.13    
 ```
 
 `helm list` shows **releases**: installed charts. The one in the list is Traefik, installed in lab 00.
@@ -192,8 +192,8 @@ HELM_NAMESPACE=traefik helm list
 ```
 
 ```text
-NAME   	NAMESPACE	REVISION	UPDATED                               	STATUS  	CHART         	APP VERSION
-traefik	traefik  	1       	2026-10-04 22:21:36.5148655 +0200 CEST	deployed	traefik-41.6.1	v3.7.13    
+NAME   	NAMESPACE	REVISION	UPDATED                              	STATUS  	CHART         	APP VERSION
+traefik	traefik  	1       	2026-10-05 00:55:58.745498 +0200 CEST	deployed	traefik-41.6.1	v3.7.13    
 ```
 
 Every global flag has an environment variable (`--namespace` ↔ `HELM_NAMESPACE`, `--kube-context` ↔

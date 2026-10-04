@@ -67,9 +67,8 @@ helm repo list
 ```
 
 ```text
-NAME   	URL                                   
-traefik	https://traefik.github.io/charts      
-podinfo	https://stefanprodan.github.io/podinfo
+NAME   	URL                             
+traefik	https://traefik.github.io/charts
 ```
 
 <!-- test: timeout=120; contains=podinfo; output -->
@@ -79,7 +78,7 @@ helm repo update podinfo
 ```
 
 ```text
-"podinfo" already exists with the same configuration, skipping
+"podinfo" has been added to your repositories
 Hang tight while we grab the latest from your chart repositories...
 ...Successfully got an update from the "podinfo" chart repository
 Update Complete. ⎈Happy Helming!⎈
@@ -230,7 +229,7 @@ helm install catalog podinfo/podinfo --version 6.14.1 \
 
 ```text
 NAME: catalog
-LAST DEPLOYED: Sun Oct  4 23:42:41 2026
+LAST DEPLOYED: Mon Oct  5 01:03:32 2026
 NAMESPACE: lab-11
 STATUS: deployed
 REVISION: 1
@@ -244,7 +243,7 @@ curl -s http://podinfo.localhost:8080/ | grep -E '"(hostname|version|message)"'
 ```
 
 ```text
-  "hostname": "catalog-podinfo-7756f557ff-68txd",
+  "hostname": "catalog-podinfo-7756f557ff-gjwjz",
   "version": "6.14.1",
   "message": "Bookshop catalog, installed from a public chart",
 ```
@@ -289,7 +288,7 @@ helm push labs/work/demo-app-1.0.0.tgz oci://localhost:5001/charts --plain-http
 
 ```text
 Pushed: localhost:5001/charts/demo-app:1.0.0
-Digest: sha256:4b88bdb2ba1d3cf0b8c0c7b987152c7b7b56246cb1d2f4f4d46bd3fd7b44da09
+Digest: sha256:78805d9c750318d528305bda5c6fcb2c5eaf09d558c201cc5547358a74ecf8a9
 ```
 
 (`--plain-http` because this local registry has no TLS; never for a real registry.) Anyone with access can now
@@ -303,9 +302,9 @@ helm install shopfront oci://localhost:5001/charts/demo-app --version 1.0.0 --pl
 
 ```text
 Pulled: localhost:5001/charts/demo-app:1.0.0
-Digest: sha256:4b88bdb2ba1d3cf0b8c0c7b987152c7b7b56246cb1d2f4f4d46bd3fd7b44da09
+Digest: sha256:78805d9c750318d528305bda5c6fcb2c5eaf09d558c201cc5547358a74ecf8a9
 NAME: shopfront
-LAST DEPLOYED: Sun Oct  4 23:43:00 2026
+LAST DEPLOYED: Mon Oct  5 01:03:54 2026
 NAMESPACE: lab-11
 STATUS: deployed
 REVISION: 1
@@ -421,8 +420,8 @@ curl -s http://podinfo.localhost:8080/ | grep '"version"'
 
 ```text
 NAME     	NAMESPACE	REVISION	UPDATED                               	STATUS  	CHART         	APP VERSION
-catalog  	lab-11   	2       	2026-10-04 23:43:01.9692972 +0200 CEST	deployed	podinfo-6.15.0	6.15.0     
-shopfront	lab-11   	1       	2026-10-04 23:43:00.13753 +0200 CEST  	deployed	demo-app-1.0.0	1.0.0      
+catalog  	lab-11   	2       	2026-10-05 01:03:56.5387845 +0200 CEST	deployed	podinfo-6.15.0	6.15.0     
+shopfront	lab-11   	1       	2026-10-05 01:03:54.8159911 +0200 CEST	deployed	demo-app-1.0.0	1.0.0      
   "version": "6.15.0",
 ```
 

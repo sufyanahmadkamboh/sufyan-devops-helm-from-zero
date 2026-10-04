@@ -1,0 +1,6 @@
+helm template web examples/basic-chart --show-only templates/deployment.yaml | grep -E 'replicas|image:|value: "dev"'
+---
+  replicas: 2
+          image: "ghcr.io/sufyanahmadkamboh/bookshop-frontend:1.0.0"
+              value: "dev"
+# exit 0

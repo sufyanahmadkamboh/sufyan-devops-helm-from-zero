@@ -1,0 +1,30 @@
+helm template web examples/basic-chart --set ingress.enabled=true --show-only templates/ingress.yaml
+---
+---
+# Source: basic-chart/templates/ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: web
+  labels:
+    app.kubernetes.io/name: basic-chart
+    app.kubernetes.io/instance: web
+    app.kubernetes.io/version: "1.0.0"
+    app.kubernetes.io/managed-by: Helm
+    helm.sh/chart: basic-chart-0.1.0
+    environment: "dev"
+    team: web
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: web
+                port:
+                  number: 8080
+      # with: if the value is set, run the block with "." = that value. No host = a rule for every host name.
+      host: "basic.localhost"
+# exit 0

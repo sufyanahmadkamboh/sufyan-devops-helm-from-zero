@@ -1,0 +1,6 @@
+helm status demo --namespace demo-rollback | grep '^STATUS:'
+curl -s http://demo-rollback.localhost:8080/config.js; echo
+---
+STATUS: deployed
+window.APP_CONFIG = { ADMIN_URL: "http://admin.example.com", APP_ENV: "dev" };
+# exit 0

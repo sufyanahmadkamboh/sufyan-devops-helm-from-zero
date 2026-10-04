@@ -42,6 +42,13 @@ kubectl apply -f environments/dev/
 ```
 
 ```text
+...
+secret/db-credentials created
+service/frontend created
+service/node-api created
+service/python-api created
+service/go-status created
+service/java-api created
 ```
 
 <!-- test: timeout=400; contains=successfully rolled out -->
@@ -60,6 +67,19 @@ kubectl -n bookshop-dev get pods
 ```
 
 ```text
+NAME         READY   UP-TO-DATE   AVAILABLE   AGE
+frontend     1/1     1            1           24s
+go-status    1/1     1            1           24s
+java-api     1/1     1            1           24s
+node-api     1/1     1            1           24s
+python-api   1/1     1            1           24s
+NAME                          READY   STATUS    RESTARTS   AGE
+frontend-56687b87df-fx5lb     1/1     Running   0          24s
+go-status-65f4db8dbf-ds7z2    1/1     Running   0          24s
+java-api-7849f88465-b2sqb     1/1     Running   0          24s
+node-api-547688d4-j9rt5       1/1     Running   0          24s
+postgres-0                    1/1     Running   0          24s
+python-api-755bf48f77-2q6mf   1/1     Running   0          24s
 ```
 
 <!-- test: contains=dev.bookshop.localhost; output -->
@@ -69,6 +89,15 @@ kubectl -n bookshop-dev get ingress
 ```
 
 ```text
+NAME         TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
+frontend     ClusterIP   10.96.3.155     <none>        8080/TCP   24s
+go-status    ClusterIP   10.96.105.96    <none>        8080/TCP   24s
+java-api     ClusterIP   10.96.127.78    <none>        8080/TCP   24s
+node-api     ClusterIP   10.96.67.10     <none>        3000/TCP   24s
+postgres     ClusterIP   None            <none>        5432/TCP   24s
+python-api   ClusterIP   10.96.195.177   <none>        8000/TCP   24s
+NAME       CLASS     HOSTS                    ADDRESS   PORTS   AGE
+bookshop   traefik   dev.bookshop.localhost             80      24s
 ```
 
 <!-- test: retry=20; contains=APP_ENV: "dev"; contains=Ada Lovelace; output -->
@@ -78,6 +107,9 @@ curl -s http://dev.bookshop.localhost:8080/api/users | head -c 120; echo
 ```
 
 ```text
+window.APP_CONFIG = { ADMIN_URL: "", APP_ENV: "dev" };
+
+[{"id":1,"name":"Ada Lovelace","email":"ada@example.com","created_at":"2026-10-04T23:27:03.935Z"},{"id":2,"name":"Grace 
 ```
 
 Open <http://dev.bookshop.localhost:8080/> in a browser: the Bookshop, with `dev` in its footer.
@@ -99,6 +131,10 @@ diff -r environments/dev environments/staging | grep -c '^[<>]'
 ```
 
 ```text
+  458 total
+  458 total
+  458 total
+74
 ```
 
 About 460 lines per environment; the `diff` counts the lines that differ between dev and staging (each changed
@@ -106,10 +142,51 @@ line counts twice: once `<`, once `>`). Everything else is a copy. What differs?
 
 <!-- test: contains=replicas; output=head:40 -->
 ```bash
-diff environments/dev/deployments.yaml environments/staging/deployments.yaml
+diff environments/dev/deployments.yaml environments/staging/deployments.yaml || true
 ```
 
 ```text
+1c1
+< # Bookshop, environment: dev. Deployed WITHOUT Helm: kubectl apply -f environments/dev/namespace.yaml -f environments/dev/
+---
+> # Bookshop, environment: staging. Deployed WITHOUT Helm: kubectl apply -f environments/staging/namespace.yaml -f environments/staging/
+6c6
+<   namespace: bookshop-dev
+---
+>   namespace: bookshop-staging
+9c9
+<   replicas: 1
+---
+>   replicas: 2
+31c31
+<               value: dev
+---
+>               value: staging
+37c37
+<               value: http://node-api.bookshop-dev.svc.cluster.local:3000
+---
+>               value: http://node-api.bookshop-staging.svc.cluster.local:3000
+39c39
+<               value: http://java-api.bookshop-dev.svc.cluster.local:8080
+---
+>               value: http://java-api.bookshop-staging.svc.cluster.local:8080
+41c41
+<               value: http://python-api.bookshop-dev.svc.cluster.local:8000
+---
+>               value: http://python-api.bookshop-staging.svc.cluster.local:8000
+43c43
+<               value: http://go-status.bookshop-dev.svc.cluster.local:8080
+---
+>               value: http://go-status.bookshop-staging.svc.cluster.local:8080
+63c63
+<   namespace: bookshop-dev
+---
+>   namespace: bookshop-staging
+66c66
+<   replicas: 1
+---
+>   replicas: 2
+...
 ```
 
 The namespace, the replica counts, the `APP_ENV` value and the namespace inside every service URL. In
@@ -121,10 +198,13 @@ The node-api team released version `1.1.0`. Where do you change the image tag?
 
 <!-- test: contains=environments/prod/deployments.yaml; output -->
 ```bash
-grep -rn "bookshop-node-api:" environments/
+grep -rn --include="*.yaml" "bookshop-node-api:" environments/ | sed 's/ *#.*//'
 ```
 
 ```text
+environments/dev/deployments.yaml:79:          image: ghcr.io/sufyanahmadkamboh/bookshop-node-api:1.0.0
+environments/prod/deployments.yaml:79:          image: ghcr.io/sufyanahmadkamboh/bookshop-node-api:1.0.0
+environments/staging/deployments.yaml:79:          image: ghcr.io/sufyanahmadkamboh/bookshop-node-api:1.0.0
 ```
 
 Three files, one per environment, and you must not forget one. The same is true for every probe setting, every
@@ -139,6 +219,8 @@ grep -n -A1 "stringData" environments/dev/secret.yaml
 ```
 
 ```text
+10:stringData:
+11-  DB_PASSWORD: example-only-dev-password
 ```
 
 To make the folder applicable as-is, the password is written in a file. In a Git repository, that file is readable by

@@ -1,0 +1,8 @@
+helm uninstall catalog shopfront --namespace lab-11 --wait
+kubectl delete namespace lab-11 --wait=false > /dev/null
+docker rm -f helm-registry > /dev/null
+rm -f labs/work/podinfo-values.yaml labs/work/demo-app-1.0.0.tgz
+---
+release "catalog" uninstalled
+release "shopfront" uninstalled
+# exit 0

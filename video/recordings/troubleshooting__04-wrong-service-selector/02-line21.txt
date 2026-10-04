@@ -1,0 +1,9 @@
+sed -i 's#^app.kubernetes.io/instance: {{ .Release.Name }}#&\napp.kubernetes.io/component: web#' labs/work/ts04/templates/_helpers.tpl
+sed -n '/define "demo-app.selectorLabels"/,/end/p' labs/work/ts04/templates/_helpers.tpl
+---
+{{- define "demo-app.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "demo-app.name" . }}
+app.kubernetes.io/instance: {{ .Release.Name }}
+app.kubernetes.io/component: web
+{{- end }}
+# exit 0

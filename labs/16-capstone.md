@@ -64,11 +64,11 @@ kubectl get deployments --namespace bookshop-staging
 window.APP_CONFIG = { ADMIN_URL: "", APP_ENV: "staging" };
 
 NAME         READY   UP-TO-DATE   AVAILABLE   AGE
-frontend     2/2     2            2           26s
-go-status    2/2     2            2           26s
-java-api     2/2     2            2           26s
-node-api     2/2     2            2           26s
-python-api   2/2     2            2           26s
+frontend     2/2     2            2           27s
+go-status    2/2     2            2           27s
+java-api     2/2     2            2           27s
+node-api     2/2     2            2           27s
+python-api   2/2     2            2           27s
 ```
 
 ### 2 · Identify configuration duplication
@@ -235,7 +235,7 @@ helm upgrade --install shop charts/bookshop --namespace bookshop-staging --creat
 ```text
 Release "shop" does not exist. Installing it now.
 NAME: shop
-LAST DEPLOYED: Mon Oct  5 00:35:13 2026
+LAST DEPLOYED: Mon Oct  5 01:22:30 2026
 NAMESPACE: bookshop-staging
 STATUS: deployed
 REVISION: 1
@@ -262,19 +262,19 @@ kubectl logs --namespace bookshop-staging job/shop-report | tail -1
 
 ```text
 NAME                               READY   STATUS      RESTARTS   AGE
-shop-frontend-5c9fb4cb45-ss82j     1/1     Running     0          27s
-shop-go-status-59cc574b9d-qrqx9    1/1     Running     0          27s
-shop-java-api-f7bcdfdd7-9ffn5      1/1     Running     0          27s
-shop-node-api-64f4cb4bcf-d4h9w     1/1     Running     0          27s
-shop-node-api-64f4cb4bcf-ms4j6     1/1     Running     0          27s
-shop-postgres-0                    1/1     Running     0          27s
-shop-python-api-5b48d98bf9-h2gxw   1/1     Running     0          27s
-shop-python-api-5b48d98bf9-kd8vt   1/1     Running     0          27s
-shop-report-4dbvs                  0/1     Completed   0          4s
+shop-frontend-5c9fb4cb45-sn77b     1/1     Running     0          26s
+shop-go-status-59cc574b9d-zwlzh    1/1     Running     0          26s
+shop-java-api-f7bcdfdd7-ljbxn      1/1     Running     0          26s
+shop-node-api-64f4cb4bcf-7kmmr     1/1     Running     0          26s
+shop-node-api-64f4cb4bcf-rvr9c     1/1     Running     0          26s
+shop-postgres-0                    1/1     Running     0          26s
+shop-python-api-5b48d98bf9-dtnxx   1/1     Running     0          26s
+shop-python-api-5b48d98bf9-xx8c2   1/1     Running     0          26s
+shop-report-rfsvk                  0/1     Completed   0          3s
 window.APP_CONFIG = { ADMIN_URL: "", APP_ENV: "staging" };
 
-[{"id":1,"name":"Ada Lovelace","email":"ada@example.com","created_at":"2026-10-04T22:35:29.145Z"},{"
-2026-10-04T22:35:37.976Z report-worker report #1 saved: users=3 books=5 reviews=0 services up=5/5
+[{"id":1,"name":"Ada Lovelace","email":"ada@example.com","created_at":"2026-10-04T23:22:41.956Z"},{"
+2026-10-04T23:22:55.849Z report-worker report #1 saved: users=3 books=5 reviews=0 services up=5/5
 ```
 
 ### 13 · Upgrade the application
@@ -378,20 +378,20 @@ bash troubleshooting/triage.sh shop bookshop-staging | sed -n '/== helm history/
 ```text
 == helm history (last 3)
 REVISION	UPDATED                 	STATUS    	CHART         	APP VERSION	DESCRIPTION                                                         
-1       	Mon Oct  5 00:35:13 2026	superseded	bookshop-1.2.0	1.0.0      	Install complete                                                    
-2       	Mon Oct  5 00:35:41 2026	deployed  	bookshop-1.2.0	1.0.0      	Upgrade complete                                                    
-3       	Mon Oct  5 00:35:54 2026	failed    	bookshop-1.2.0	1.0.0      	Upgrade "shop" failed: resource Deployment/bookshop-staging/shop-jav
+1       	Mon Oct  5 01:22:30 2026	superseded	bookshop-1.2.0	1.0.0      	Install complete                                                    
+2       	Mon Oct  5 01:22:59 2026	deployed  	bookshop-1.2.0	1.0.0      	Upgrade complete                                                    
+3       	Mon Oct  5 01:23:09 2026	failed    	bookshop-1.2.0	1.0.0      	Upgrade "shop" failed: resource Deployment/bookshop-staging/shop-jav
 
 == values supplied by the user
 == warning events of the release's objects (last 8)
-shop-node-api-64f4cb4bcf-ms4j6     Unhealthy   Readiness probe failed: Get "http://10.244.1.135:3000/ready": context deadline exceeded (Client.Timeout exceeded 
-shop-node-api-64f4cb4bcf-d4h9w     Unhealthy   Readiness probe failed: HTTP probe failed with statuscode: 503
-shop-java-api-f7bcdfdd7-9ffn5      Unhealthy   Readiness probe failed: Get "http://10.244.1.134:8080/ready": context deadline exceeded (Client.Timeout exceeded 
-shop-node-api-688cc5c85f-xhzjk     Unhealthy   Readiness probe failed: Get "http://10.244.1.144:3000/ready": dial tcp 10.244.1.144:3000: connect: connection ref
-shop-node-api-688cc5c85f-4vjvt     Unhealthy   Readiness probe failed: Get "http://10.244.1.145:3000/ready": dial tcp 10.244.1.145:3000: connect: connection ref
-shop-java-api-5dd4d8bfd7-g62rl     Failed      Error: ErrImagePull
-shop-java-api-5dd4d8bfd7-g62rl     Failed      Failed to pull image "ghcr.io/sufyanahmadkamboh/bookshop-java-api:2.0.0": rpc error: code = NotFound desc = faile
-shop-java-api-5dd4d8bfd7-g62rl     Failed      Error: ImagePullBackOff
+shop-node-api-64f4cb4bcf-rvr9c     Unhealthy   Readiness probe failed: Get "http://10.244.1.189:3000/ready": context deadline exceeded (Client.Timeout exceeded 
+shop-node-api-64f4cb4bcf-7kmmr     Unhealthy   Readiness probe failed: HTTP probe failed with statuscode: 503
+shop-java-api-f7bcdfdd7-ljbxn      Unhealthy   Readiness probe failed: Get "http://10.244.1.187:8080/ready": context deadline exceeded (Client.Timeout exceeded 
+shop-node-api-688cc5c85f-bvnbx     Unhealthy   Readiness probe failed: Get "http://10.244.1.197:3000/ready": dial tcp 10.244.1.197:3000: connect: connection ref
+shop-node-api-688cc5c85f-6djkb     Unhealthy   Readiness probe failed: Get "http://10.244.1.198:3000/ready": dial tcp 10.244.1.198:3000: connect: connection ref
+shop-java-api-5dd4d8bfd7-54n4k     Failed      Error: ImagePullBackOff
+shop-java-api-5dd4d8bfd7-54n4k     Failed      Error: ErrImagePull
+shop-java-api-5dd4d8bfd7-54n4k     Failed      Failed to pull image "ghcr.io/sufyanahmadkamboh/bookshop-java-api:2.0.0": rpc error: code = NotFound desc = faile
 ```
 
 The history shows revision 3 `failed`; the events show `bookshop-java-api:2.0.0` cannot be pulled. The rest of the
@@ -427,8 +427,8 @@ helm test shop --namespace bookshop-prod
 
 ```text
 ...
-Last Started:   Mon Oct  5 00:37:54 2026
-Last Completed: Mon Oct  5 00:37:55 2026
+Last Started:   Mon Oct  5 01:24:59 2026
+Last Completed: Mon Oct  5 01:25:00 2026
 Phase:          Succeeded
 ```
 
@@ -468,14 +468,14 @@ helm list --all-namespaces --filter '^shop$'
 
 ```text
 REVISION	UPDATED                 	STATUS    	CHART         	APP VERSION	DESCRIPTION                                     
-1       	Mon Oct  5 00:35:13 2026	superseded	bookshop-1.2.0	1.0.0      	Install complete                                
-2       	Mon Oct  5 00:35:41 2026	superseded	bookshop-1.2.0	1.0.0      	Upgrade complete                                
-3       	Mon Oct  5 00:35:54 2026	failed    	bookshop-1.2.0	1.0.0      	Upgrade "shop" failed: resource Deployment/books
-4       	Mon Oct  5 00:37:26 2026	deployed  	bookshop-1.2.0	1.0.0      	Rollback to 2                                   
+1       	Mon Oct  5 01:22:30 2026	superseded	bookshop-1.2.0	1.0.0      	Install complete                                
+2       	Mon Oct  5 01:22:59 2026	superseded	bookshop-1.2.0	1.0.0      	Upgrade complete                                
+3       	Mon Oct  5 01:23:09 2026	failed    	bookshop-1.2.0	1.0.0      	Upgrade "shop" failed: resource Deployment/books
+4       	Mon Oct  5 01:24:41 2026	deployed  	bookshop-1.2.0	1.0.0      	Rollback to 2                                   
 NAME	NAMESPACE       	REVISION	UPDATED                               	STATUS  	CHART         	APP VERSION
-shop	bookshop-prod   	1       	2026-10-05 00:37:26.8396509 +0200 CEST	deployed	bookshop-1.2.1	1.0.0      
-shop	bookshop-staging	4       	2026-10-05 00:37:26.2333669 +0200 CEST	deployed	bookshop-1.2.0	1.0.0      
-shop	bookshop-dev    	28      	2026-10-05 00:20:12.067319 +0200 CEST 	deployed	bookshop-1.2.0	1.0.0      
+shop	bookshop-dev    	9       	2026-10-05 01:12:17.5247962 +0200 CEST	deployed	bookshop-1.2.0	1.0.0      
+shop	bookshop-prod   	1       	2026-10-05 01:24:42.071881 +0200 CEST 	deployed	bookshop-1.2.1	1.0.0      
+shop	bookshop-staging	4       	2026-10-05 01:24:41.3077983 +0200 CEST	deployed	bookshop-1.2.0	1.0.0      
 ```
 
 Read it as the story of the week: installed (1), node-api 1.1.0 (2), a failed java-api promotion (3), rolled back to
@@ -509,15 +509,15 @@ kubectl get namespaces
 ```
 
 ```text
-NAME   	NAMESPACE	REVISION	UPDATED                               	STATUS  	CHART         	APP VERSION
-traefik	traefik  	1       	2026-10-04 22:21:36.5148655 +0200 CEST	deployed	traefik-41.6.1	v3.7.13    
+NAME   	NAMESPACE	REVISION	UPDATED                              	STATUS  	CHART         	APP VERSION
+traefik	traefik  	1       	2026-10-05 00:55:58.745498 +0200 CEST	deployed	traefik-41.6.1	v3.7.13    
 NAME                 STATUS   AGE
-default              Active   136m
-kube-node-lease      Active   136m
-kube-public          Active   136m
-kube-system          Active   136m
-local-path-storage   Active   136m
-traefik              Active   136m
+default              Active   29m
+kube-node-lease      Active   29m
+kube-public          Active   29m
+kube-system          Active   29m
+local-path-storage   Active   29m
+traefik              Active   29m
 ```
 
 You took an application from 1,374 lines of copied YAML to a chart with three short environment files, and operated

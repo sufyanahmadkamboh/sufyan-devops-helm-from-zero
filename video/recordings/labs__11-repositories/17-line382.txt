@@ -1,0 +1,17 @@
+diff <(helm template catalog podinfo/podinfo --version 6.14.1 -f labs/work/podinfo-values.yaml --namespace lab-11) \
+     <(helm template catalog podinfo/podinfo --version 6.15.0 -f labs/work/podinfo-values.yaml --namespace lab-11) \
+  | grep -E '^[<>]' | head -12 || true
+---
+<     helm.sh/chart: podinfo-6.14.1
+>     helm.sh/chart: podinfo-6.15.0
+<     app.kubernetes.io/version: "6.14.1"
+>     app.kubernetes.io/version: "6.15.0"
+<     helm.sh/chart: podinfo-6.14.1
+>     helm.sh/chart: podinfo-6.15.0
+<     app.kubernetes.io/version: "6.14.1"
+>     app.kubernetes.io/version: "6.15.0"
+<           image: "ghcr.io/stefanprodan/podinfo:6.14.1"
+>           image: "ghcr.io/stefanprodan/podinfo:6.15.0"
+<     helm.sh/chart: podinfo-6.14.1
+>     helm.sh/chart: podinfo-6.15.0
+# exit 0

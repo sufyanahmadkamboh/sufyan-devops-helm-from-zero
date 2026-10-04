@@ -1,0 +1,13 @@
+helm get manifest demo --namespace demo-dev | grep -E '^(# Source|kind):'
+---
+# Source: demo-app/templates/serviceaccount.yaml
+kind: ServiceAccount
+# Source: demo-app/templates/configmap.yaml
+kind: ConfigMap
+# Source: demo-app/templates/service.yaml
+kind: Service
+# Source: demo-app/templates/deployment.yaml
+kind: Deployment
+# Source: demo-app/templates/ingress.yaml
+kind: Ingress
+# exit 0

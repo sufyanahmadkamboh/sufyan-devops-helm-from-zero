@@ -1,0 +1,9 @@
+helm install shopfront examples/dependency-example --namespace lab-12 --create-namespace --wait --timeout 3m
+---
+NAME: shopfront
+LAST DEPLOYED: Mon Oct  5 01:04:15 2026
+NAMESPACE: lab-12
+STATUS: deployed
+REVISION: 1
+DESCRIPTION: Install complete
+# exit 0

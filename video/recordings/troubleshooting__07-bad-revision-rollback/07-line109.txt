@@ -1,0 +1,4 @@
+helm rollback demo 2 --namespace trouble --wait --timeout 3m
+---
+Rollback was a success! Happy Helming!
+# exit 0

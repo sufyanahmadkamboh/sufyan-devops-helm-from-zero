@@ -1,0 +1,28 @@
+diff <(helm get values demo --namespace demo-staging) <(helm get values demo --namespace demo-prod) || true
+---
+2c2,9
+< environment: staging
+---
+> autoscaling:
+>   enabled: true
+>   maxReplicas: 6
+>   minReplicas: 3
+>   targetCPUUtilizationPercentage: 70
+> environment: prod
+> image:
+>   tag: 1.0.0
+6c13
+<   - host: demo-staging.localhost
+---
+>   - host: demo.localhost
+10c17,23
+< replicaCount: 2
+---
+> resources:
+>   limits:
+>     cpu: 500m
+>     memory: 256Mi
+>   requests:
+>     cpu: 50m
+>     memory: 64Mi
+# exit 0

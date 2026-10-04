@@ -1,0 +1,5 @@
+helm upgrade demo labs/work/ts04 --namespace trouble -f troubleshooting/values-trouble.yaml --wait --timeout 60s
+---
+level=WARN msg="upgrade failed" name=demo error="server-side apply failed for object trouble/demo-demo-app apps/v1, Kind=Deployment: Deployment.apps \"demo-demo-app\" is invalid: spec.selector: Invalid value: {\"matchLabels\":{\"app.kubernetes.io/component\":\"web\",\"app.kubernetes.io/instance\":\"demo\",\"app.kubernetes.io/name\":\"demo-app\"}}: field is immutable"
+Error: UPGRADE FAILED: server-side apply failed for object trouble/demo-demo-app apps/v1, Kind=Deployment: Deployment.apps "demo-demo-app" is invalid: spec.selector: Invalid value: {"matchLabels":{"app.kubernetes.io/component":"web","app.kubernetes.io/instance":"demo","app.kubernetes.io/name":"demo-app"}}: field is immutable
+# exit 1

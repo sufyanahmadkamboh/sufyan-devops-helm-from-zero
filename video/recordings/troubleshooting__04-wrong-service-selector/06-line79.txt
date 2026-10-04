@@ -1,0 +1,6 @@
+kubectl get endpointslices --namespace trouble -l kubernetes.io/service-name=demo-demo-app \
+  -o custom-columns='NAME:.metadata.name,ENDPOINTS:.endpoints[*].addresses[0]'
+---
+NAME                  ENDPOINTS
+demo-demo-app-k6rzq   <none>
+# exit 0

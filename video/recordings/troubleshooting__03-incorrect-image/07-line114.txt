@@ -1,0 +1,7 @@
+kubectl get pods --namespace trouble
+curl -s http://trouble.localhost:8080/config.js; echo
+---
+NAME                             READY   STATUS    RESTARTS   AGE
+demo-demo-app-68d8b4d8dc-7hf9j   1/1     Running   0          4s
+window.APP_CONFIG = { ADMIN_URL: "", APP_ENV: "dev" };
+# exit 0

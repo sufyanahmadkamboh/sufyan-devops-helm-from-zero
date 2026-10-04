@@ -123,7 +123,7 @@ helm install shopfront examples/dependency-example --namespace lab-12 --create-n
 
 ```text
 NAME: shopfront
-LAST DEPLOYED: Sun Oct  4 23:44:58 2026
+LAST DEPLOYED: Mon Oct  5 01:04:15 2026
 NAMESPACE: lab-12
 STATUS: deployed
 REVISION: 1
@@ -138,6 +138,11 @@ curl -s http://catalog.localhost:8080/ | grep '"message"'
 ```
 
 ```text
+NAME                                READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/shopfront-catalog   1/1     1            1           12s
+
+NAME                        TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)             AGE
+service/shopfront-catalog   ClusterIP   10.96.195.40   <none>        9898/TCP,9999/TCP   12s
 http://shopfront-catalog:9898
   "message": "catalog service, deployed as a dependency of storefront",
 ```
@@ -186,12 +191,12 @@ ls charts/bookshop/charts/
 
 ```text
 Hang tight while we grab the latest from your chart repositories...
-...Successfully got an update from the "podinfo" chart repository
 ...Successfully got an update from the "traefik" chart repository
+...Successfully got an update from the "podinfo" chart repository
 Update Complete. ⎈Happy Helming!⎈
 Saving 1 charts
 Deleting outdated charts
-postgres-0.1.0.tgz
+postgres-0.1.1.tgz
 ```
 
 Install the whole platform for dev (the first install pulls six images; give it a few minutes):
@@ -207,7 +212,7 @@ helm upgrade --install shop charts/bookshop \
 ```text
 Release "shop" does not exist. Installing it now.
 NAME: shop
-LAST DEPLOYED: Sun Oct  4 23:45:03 2026
+LAST DEPLOYED: Mon Oct  5 01:04:29 2026
 NAMESPACE: bookshop-dev
 STATUS: deployed
 REVISION: 1
@@ -238,13 +243,13 @@ kubectl get pods --namespace bookshop-dev
 
 ```text
 NAME                              READY   STATUS      RESTARTS   AGE
-shop-frontend-5d865884c8-dwdzh    1/1     Running     0          27s
-shop-go-status-6dc7845b99-hsp7x   1/1     Running     0          27s
-shop-java-api-7ff96666d4-hvlqq    1/1     Running     0          27s
-shop-node-api-fbb58c4c4-lxn7v     1/1     Running     0          27s
-shop-postgres-0                   1/1     Running     0          27s
-shop-python-api-9f4bcbc58-6wn2x   1/1     Running     0          27s
-shop-report-cmdk6                 0/1     Completed   0          3s
+shop-frontend-5d865884c8-bxc5k    1/1     Running     0          29s
+shop-go-status-6dc7845b99-tpns7   1/1     Running     0          29s
+shop-java-api-7ff96666d4-p2th7    1/1     Running     0          29s
+shop-node-api-fbb58c4c4-7hgsh     1/1     Running     0          29s
+shop-postgres-0                   1/1     Running     0          29s
+shop-python-api-9f4bcbc58-wr65p   1/1     Running     0          29s
+shop-report-bsl85                 0/1     Completed   0          5s
 ```
 
 <!-- test: retry=20; contains=Ada Lovelace; contains=APP_ENV: "dev"; output -->
@@ -256,7 +261,7 @@ curl -s http://dev.bookshop.localhost:8080/api/users | head -c 120; echo
 ```text
 window.APP_CONFIG = { ADMIN_URL: "", APP_ENV: "dev" };
 
-[{"id":1,"name":"Ada Lovelace","email":"ada@example.com","created_at":"2026-10-04T21:45:14.351Z"},{"id":2,"name":"Grace 
+[{"id":1,"name":"Ada Lovelace","email":"ada@example.com","created_at":"2026-10-04T23:04:40.796Z"},{"id":2,"name":"Grace 
 ```
 
 Open <http://dev.bookshop.localhost:8080/>: the full Bookshop, every panel green. Seven workloads from two charts,

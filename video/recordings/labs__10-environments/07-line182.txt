@@ -1,0 +1,10 @@
+for ns in demo-dev demo-staging demo-prod; do
+  printf '%-13s ' "$ns"
+  kubectl get deployment demo-demo-app --namespace $ns \
+    -o jsonpath='{.spec.template.spec.containers[0].image}{"  "}{.spec.template.spec.containers[0].resources}{"\n"}'
+done
+---
+demo-dev      ghcr.io/sufyanahmadkamboh/bookshop-frontend:1.0.0  {"limits":{"cpu":"200m","memory":"128Mi"},"requests":{"cpu":"10m","memory":"32Mi"}}
+demo-staging  ghcr.io/sufyanahmadkamboh/bookshop-frontend:1.0.0  {"limits":{"cpu":"200m","memory":"128Mi"},"requests":{"cpu":"10m","memory":"32Mi"}}
+demo-prod     ghcr.io/sufyanahmadkamboh/bookshop-frontend:1.0.0  {"limits":{"cpu":"500m","memory":"256Mi"},"requests":{"cpu":"50m","memory":"64Mi"}}
+# exit 0

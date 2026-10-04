@@ -1,0 +1,19 @@
+find labs/work/hello | sort
+---
+labs/work/hello
+labs/work/hello/.helmignore
+labs/work/hello/Chart.yaml
+labs/work/hello/charts
+labs/work/hello/templates
+labs/work/hello/templates/NOTES.txt
+labs/work/hello/templates/_helpers.tpl
+labs/work/hello/templates/deployment.yaml
+labs/work/hello/templates/hpa.yaml
+labs/work/hello/templates/httproute.yaml
+labs/work/hello/templates/ingress.yaml
+labs/work/hello/templates/service.yaml
+labs/work/hello/templates/serviceaccount.yaml
+labs/work/hello/templates/tests
+labs/work/hello/templates/tests/test-connection.yaml
+labs/work/hello/values.yaml
+# exit 0

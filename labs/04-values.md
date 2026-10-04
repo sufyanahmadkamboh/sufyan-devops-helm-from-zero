@@ -47,8 +47,8 @@ grep -nE '^replicaCount|^  repository|^  tag|^environment' examples/basic-chart/
 
 ```text
 11:  replicas: {{ .Values.replicaCount }}
-24:          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-30:              value: {{ .Values.environment | quote }}
+25:          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+31:              value: {{ .Values.environment | quote }}
 2:replicaCount: 2
 5:  repository: ghcr.io/sufyanahmadkamboh/bookshop-frontend
 6:  tag: ""                      # empty: "default" falls back to the chart's appVersion

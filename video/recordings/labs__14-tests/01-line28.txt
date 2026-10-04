@@ -1,0 +1,33 @@
+sed -n '1,30p' charts/bookshop/templates/tests/test-services.yaml
+---
+# "helm test <release>": every enabled service answers /health, the APIs reach the database (/ready),
+# and the frontend serves the configured environment.
+apiVersion: v1
+kind: Pod
+metadata:
+  name: {{ .Release.Name }}-test-services
+  labels:
+    {{- include "bookshop.labels" (dict "root" $ "name" "test") | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+    "helm.sh/hook-delete-policy": before-hook-creation
+spec:
+  restartPolicy: Never
+  automountServiceAccountToken: false
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 65534
+    seccompProfile:
+      type: RuntimeDefault
+  containers:
+    - name: check
+      image: busybox:1.37
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop: ["ALL"]
+      command: ["sh", "-c"]
+      args:
+        - |
+          set -e   # stop at the first failing check: the Pod fails, and so does "helm test"
+# exit 0

@@ -1,0 +1,16 @@
+helm template demo examples/values-example -f examples/values-example/team-defaults.yaml
+---
+---
+# Source: values-example/templates/configmap.yaml
+# The final values, after Helm merged: values.yaml < -f file1 < -f file2 < --set
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: demo-values
+data:
+  environment: "local"
+  replicaCount: "1"
+  logLevel: "warn"
+  imageTag: "1.0.0"
+  features: "{\"recommendations\":true,\"reviews\":true}"
+# exit 0

@@ -1,0 +1,4 @@
+kubectl get jobs --namespace lab-13 -o name | grep tidy
+---
+job.batch/tidy-pre-install
+# exit 0

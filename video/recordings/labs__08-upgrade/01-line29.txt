@@ -1,0 +1,13 @@
+helm template demo charts/demo-app --namespace demo-dev --skip-tests \
+  -f charts/demo-app/values-dev.yaml \
+  --set replicaCount=2 --set config.adminUrl=http://admin.example.com \
+  | kubectl diff --server-side --field-manager=helm --namespace demo-dev -f - \
+  | grep -E '^[-+] ' | grep -vE 'generation:|meta\.helm\.sh/|^-\s+annotations:$' || true
+---
+-  replicas: 1
++  replicas: 2
+-        checksum/config: 54958286d0b76d4d3f56e865ba7aac664ce6a00a2b1c2c37a9705fb86455ce26
++        checksum/config: dfb19afd95348e60cfd144eac490e1274279b4fc17370b8d5649585ebb8c5f07
+-  ADMIN_URL: ""
++  ADMIN_URL: http://admin.example.com
+# exit 0

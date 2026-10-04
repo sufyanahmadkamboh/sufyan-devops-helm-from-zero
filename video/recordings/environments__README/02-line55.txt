@@ -1,0 +1,13 @@
+for d in frontend node-api java-api python-api go-status; do
+  kubectl -n bookshop-dev rollout status deployment/$d --timeout=300s
+done
+---
+Waiting for deployment "frontend" rollout to finish: 0 of 1 updated replicas are available...
+deployment "frontend" successfully rolled out
+Waiting for deployment "node-api" rollout to finish: 0 of 1 updated replicas are available...
+deployment "node-api" successfully rolled out
+Waiting for deployment "java-api" rollout to finish: 0 of 1 updated replicas are available...
+deployment "java-api" successfully rolled out
+deployment "python-api" successfully rolled out
+deployment "go-status" successfully rolled out
+# exit 0

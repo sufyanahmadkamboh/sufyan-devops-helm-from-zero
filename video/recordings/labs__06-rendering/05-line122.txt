@@ -1,0 +1,227 @@
+helm install demo charts/demo-app -f charts/demo-app/values-dev.yaml --namespace default --dry-run=server
+---
+NAME: demo
+LAST DEPLOYED: Mon Oct  5 00:59:37 2026
+NAMESPACE: default
+STATUS: pending-install
+REVISION: 1
+DESCRIPTION: Dry run complete
+HOOKS:
+---
+# Source: demo-app/templates/tests/test-connection.yaml
+# A Helm test: a Pod that `helm test <release>` runs on demand. Exit code 0 = test passed.
+# It checks that the Service answers /health and that the configured environment reached the application.
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "demo-demo-app-test-connection"
+  labels:
+    helm.sh/chart: demo-app-1.0.0
+    app.kubernetes.io/name: demo-app
+    app.kubernetes.io/instance: demo
+    app.kubernetes.io/version: "1.0.0"
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: bookshop
+    environment: "dev"
+  annotations:
+    "helm.sh/hook": test
+    "helm.sh/hook-delete-policy": before-hook-creation
+spec:
+  restartPolicy: Never
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 65534
+    seccompProfile:
+      type: RuntimeDefault
+  containers:
+    - name: check
+      image: busybox:1.37
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop: ["ALL"]
+      command: ["sh", "-c"]
+      args:
+        - |
+          set -e
+          url=http://demo-demo-app:8080
+          echo "GET $url/health"
+          wget -qO- "$url/health"; echo
+          echo "GET $url/config.js (expecting APP_ENV dev)"
+          wget -qO- "$url/config.js" | grep -q 'APP_ENV: "dev"'
+          echo "test passed"
+
+MANIFEST:
+---
+# Source: demo-app/templates/serviceaccount.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: demo-demo-app
+  labels:
+    helm.sh/chart: demo-app-1.0.0
+    app.kubernetes.io/name: demo-app
+    app.kubernetes.io/instance: demo
+    app.kubernetes.io/version: "1.0.0"
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: bookshop
+    environment: "dev"
+automountServiceAccountToken: false
+
+---
+# Source: demo-app/templates/configmap.yaml
+# Application configuration from values. The Deployment loads it as environment variables (envFrom).
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: demo-demo-app
+  labels:
+    helm.sh/chart: demo-app-1.0.0
+    app.kubernetes.io/name: demo-app
+    app.kubernetes.io/instance: demo
+    app.kubernetes.io/version: "1.0.0"
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: bookshop
+    environment: "dev"
+data:
+  APP_ENV: "dev"
+  ADMIN_URL: ""
+
+---
+# Source: demo-app/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: demo-demo-app
+  labels:
+    helm.sh/chart: demo-app-1.0.0
+    app.kubernetes.io/name: demo-app
+    app.kubernetes.io/instance: demo
+    app.kubernetes.io/version: "1.0.0"
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: bookshop
+    environment: "dev"
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8080
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: demo-app
+    app.kubernetes.io/instance: demo
+
+---
+# Source: demo-app/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-demo-app
+  labels:
+    helm.sh/chart: demo-app-1.0.0
+    app.kubernetes.io/name: demo-app
+    app.kubernetes.io/instance: demo
+    app.kubernetes.io/version: "1.0.0"
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: bookshop
+    environment: "dev"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: demo-app
+      app.kubernetes.io/instance: demo
+  template:
+    metadata:
+      annotations:
+        # a hash of the ConfigMap: when the configuration changes, the Pod template changes, so the Pods are replaced
+        checksum/config: 54958286d0b76d4d3f56e865ba7aac664ce6a00a2b1c2c37a9705fb86455ce26
+      labels:
+        helm.sh/chart: demo-app-1.0.0
+        app.kubernetes.io/name: demo-app
+        app.kubernetes.io/instance: demo
+        app.kubernetes.io/version: "1.0.0"
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/part-of: bookshop
+        environment: "dev"
+    spec:
+      serviceAccountName: demo-demo-app
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 101
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: demo-app
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+          image: "ghcr.io/sufyanahmadkamboh/bookshop-frontend:1.0.0"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: demo-demo-app
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+            periodSeconds: 5
+          resources:
+            limits:
+              cpu: 200m
+              memory: 128Mi
+            requests:
+              cpu: 10m
+              memory: 32Mi
+
+---
+# Source: demo-app/templates/ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: demo-demo-app
+  labels:
+    helm.sh/chart: demo-app-1.0.0
+    app.kubernetes.io/name: demo-app
+    app.kubernetes.io/instance: demo
+    app.kubernetes.io/version: "1.0.0"
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: bookshop
+    environment: "dev"
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: "demo-dev.localhost"
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: demo-demo-app
+                port:
+                  number: 8080
+
+
+NOTES:
+demo-app 1.0.0 (chart 1.0.0) is deployed as release "demo" in namespace "default".
+Environment: dev · revision 1
+
+Open:  http://demo-dev.localhost:8080/
+
+Check it:
+  kubectl --namespace default get pods -l app.kubernetes.io/instance=demo
+  helm test demo --namespace default
+# exit 0

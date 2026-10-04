@@ -1,0 +1,11 @@
+helm template demo charts/demo-app -f charts/demo-app/values-prod.yaml | grep -E '^kind:|replicas:|minReplicas'
+---
+kind: ServiceAccount
+kind: ConfigMap
+kind: Service
+kind: Deployment
+kind: HorizontalPodAutoscaler
+  minReplicas: 3
+kind: Ingress
+kind: Pod
+# exit 0

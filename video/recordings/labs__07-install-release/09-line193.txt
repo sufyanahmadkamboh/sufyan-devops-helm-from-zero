@@ -1,0 +1,5 @@
+kubectl get secrets --namespace demo-dev -l owner=helm --show-labels
+---
+NAME                         TYPE                 DATA   AGE   LABELS
+sh.helm.release.v1.demo.v1   helm.sh/release.v1   1      4s    modifiedAt=1791154781,name=demo,owner=helm,status=deployed,version=1
+# exit 0

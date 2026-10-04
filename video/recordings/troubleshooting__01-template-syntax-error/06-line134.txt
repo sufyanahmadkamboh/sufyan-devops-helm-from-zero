@@ -1,0 +1,11 @@
+helm template demo labs/work/ts01 -f charts/demo-app/values-dev.yaml --show-only templates/ingress.yaml | grep -c 'kind: Ingress'
+helm template demo labs/work/ts01 -f charts/demo-app/values-dev.yaml --show-only templates/ingress.yaml \
+  --set 'ingress.tls[0].secretName=demo-tls' --set 'ingress.tls[0].hosts[0]=demo-dev.localhost' | sed -n '/tls:/,/rules:/p'
+---
+1
+  tls:
+    - hosts:
+        - "demo-dev.localhost"
+      secretName: demo-tls
+  rules:
+# exit 0

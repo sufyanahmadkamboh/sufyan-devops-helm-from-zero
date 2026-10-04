@@ -1,0 +1,9 @@
+helm status demo --namespace trouble | grep -E '^(STATUS|REVISION):'
+helm history demo --namespace trouble
+---
+STATUS: failed
+REVISION: 2
+REVISION	UPDATED                 	STATUS  	CHART         	APP VERSION	DESCRIPTION                                                                                                                    
+1       	Mon Oct  5 01:08:35 2026	deployed	demo-app-1.0.0	1.0.0      	Install complete                                                                                                               
+2       	Mon Oct  5 01:08:37 2026	failed  	demo-app-1.0.0	1.0.0      	Upgrade "demo" failed: resource Deployment/trouble/demo-demo-app not ready. status: InProgress, message: Pending termination...
+# exit 0

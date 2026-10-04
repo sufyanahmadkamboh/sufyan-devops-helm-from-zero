@@ -1,0 +1,6 @@
+kubectl get ingress --namespace demo-dev 2>&1
+kubectl get configmap demo-demo-app --namespace demo-dev -o jsonpath='{.data.APP_ENV}'; echo
+---
+No resources found in demo-dev namespace.
+local
+# exit 0

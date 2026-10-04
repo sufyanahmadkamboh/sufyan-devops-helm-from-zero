@@ -94,13 +94,13 @@ kubectl get pods --namespace bookshop-dev -l app.kubernetes.io/instance=shop \
 
 ```text
 POD                               NON_ROOT   USER    TOKEN
-shop-frontend-5d865884c8-dwdzh    true       101     false
-shop-go-status-6dc7845b99-hsp7x   true       65532   false
-shop-java-api-7ff96666d4-xf2bz    true       10001   false
-shop-node-api-fbb58c4c4-lxn7v     true       1000    false
+shop-frontend-5d865884c8-bxc5k    true       101     false
+shop-go-status-6dc7845b99-tpns7   true       65532   false
+shop-java-api-7ff96666d4-7znv8    true       10001   false
+shop-node-api-fbb58c4c4-7hgsh     true       1000    false
 shop-postgres-0                   true       70      false
-shop-python-api-9f4bcbc58-6wn2x   true       10001   false
-shop-report-qc67l                 true       1000    false
+shop-python-api-9f4bcbc58-wr65p   true       10001   false
+shop-report-g8nqj                 true       1000    false
 shop-test-services                true       65534   false
 ```
 

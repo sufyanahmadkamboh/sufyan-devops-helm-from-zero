@@ -1,0 +1,7 @@
+helm show chart oci://ghcr.io/stefanprodan/charts/podinfo --version 6.14.1 2>&1 | grep -E '^(Pulled|Digest|name|version)'
+---
+Pulled: ghcr.io/stefanprodan/charts/podinfo:6.14.1
+Digest: sha256:6432072d76519fd808e4fb6eb892f9cbcbb1a79c161ac02dbf6ad445c931616b
+name: podinfo
+version: 6.14.1
+# exit 0

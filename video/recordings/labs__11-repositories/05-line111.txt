@@ -1,0 +1,6 @@
+helm search hub podinfo --max-col-width 60
+---
+URL                                                 	CHART VERSION	APP VERSION	DESCRIPTION                               
+https://artifacthub.io/packages/helm/podinfo/podinfo	6.15.0       	6.15.0     	Podinfo Helm chart for Kubernetes         
+https://artifacthub.io/packages/helm/flagger/podinfo	6.1.4        	6.1.3      	Flagger canary deployment demo application
+# exit 0

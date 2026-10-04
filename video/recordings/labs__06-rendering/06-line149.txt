@@ -1,0 +1,8 @@
+for env in dev staging prod; do
+  helm lint charts/demo-app -f charts/demo-app/values-$env.yaml | tail -1
+done
+---
+1 chart(s) linted, 0 chart(s) failed
+1 chart(s) linted, 0 chart(s) failed
+1 chart(s) linted, 0 chart(s) failed
+# exit 0

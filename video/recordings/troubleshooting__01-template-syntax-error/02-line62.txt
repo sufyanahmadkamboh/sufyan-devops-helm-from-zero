@@ -1,0 +1,6 @@
+helm template demo labs/work/ts01 -f charts/demo-app/values-dev.yaml
+---
+Error: parse error at (demo-app/templates/ingress.yaml:37): unexpected EOF
+
+Use --debug flag to render out invalid YAML
+# exit 1
