@@ -1,0 +1,23 @@
+# Production: pinned image version, autoscaling instead of a fixed replica count, more resources.
+environment: prod
+image:
+  tag: "1.0.0"                 # pinned explicitly: production never follows a default
+autoscaling:
+  enabled: true
+  minReplicas: 3
+  maxReplicas: 6
+  targetCPUUtilizationPercentage: 70
+resources:
+  requests:
+    cpu: 50m
+    memory: 64Mi
+  limits:
+    cpu: 500m
+    memory: 256Mi
+ingress:
+  enabled: true
+  hosts:
+    - host: demo.localhost
+      paths:
+        - path: /
+          pathType: Prefix

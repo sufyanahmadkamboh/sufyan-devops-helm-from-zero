@@ -1,0 +1,10 @@
+# Application configuration from values. The Deployment loads it as environment variables (envFrom).
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "demo-app.fullname" . }}
+  labels:
+    {{- include "demo-app.labels" . | nindent 4 }}
+data:
+  APP_ENV: {{ .Values.environment | quote }}
+  ADMIN_URL: {{ .Values.config.adminUrl | quote }}

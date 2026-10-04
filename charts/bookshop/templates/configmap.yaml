@@ -1,0 +1,24 @@
+{{- /* Non-secret settings shared by all services. The password is NOT here: see secret.yaml. */ -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-config
+  labels:
+    {{- include "bookshop.labels" (dict "root" $ "name" "config") | nindent 4 }}
+data:
+  APP_ENV: {{ .Values.environment | quote }}
+  ADMIN_URL: {{ .Values.config.adminUrl | quote }}
+  DB_HOST: {{ include "bookshop.dbHost" . | quote }}
+  DB_PORT: {{ .Values.database.port | quote }}
+  DB_NAME: {{ .Values.database.name | quote }}
+  DB_USER: {{ .Values.database.user | quote }}
+  STATS_URL: "http://{{ .Release.Name }}-python-api:{{ (index .Values.services "python-api").port }}/api/stats"
+  STATUS_URL: "http://{{ .Release.Name }}-go-status:{{ (index .Values.services "go-status").port }}/api/status"
+  {{- /* go-status checks every enabled service: "name=url,name=url,..." built with range */}}
+  {{- $targets := list }}
+  {{- range $name, $svc := .Values.services }}
+  {{- if $svc.enabled }}
+  {{- $targets = append $targets (printf "%s=http://%s-%s:%v/health" $name $.Release.Name $name $svc.port) }}
+  {{- end }}
+  {{- end }}
+  TARGETS: {{ join "," $targets | quote }}

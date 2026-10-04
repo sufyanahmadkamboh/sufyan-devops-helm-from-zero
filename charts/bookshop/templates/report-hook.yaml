@@ -1,0 +1,52 @@
+{{- /*
+A hook: Helm runs this Job AFTER the release's resources are applied (post-install) and after every upgrade
+(post-upgrade), and waits for it to finish. If it fails, the install/upgrade is marked failed.
+Install with --wait so the services are ready before the report calls them.
+*/ -}}
+{{- if .Values.report.enabled }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Release.Name }}-report
+  labels:
+    {{- include "bookshop.labels" (dict "root" $ "name" "report" "version" .Values.report.image.tag) | nindent 4 }}
+  annotations:
+    "helm.sh/hook": post-install,post-upgrade
+    "helm.sh/hook-weight": "0"
+    # Delete the previous run's Job just before the next one starts; keep the last one for "kubectl logs".
+    "helm.sh/hook-delete-policy": before-hook-creation
+spec:
+  backoffLimit: 3
+  template:
+    metadata:
+      labels:
+        {{- include "bookshop.selectorLabels" (dict "root" $ "name" "report") | nindent 8 }}
+    spec:
+      restartPolicy: Never
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: report
+          image: {{ include "bookshop.image" (dict "root" $ "image" .Values.report.image) | quote }}
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-config
+          env:
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "bookshop.dbSecret" . }}
+                  key: DB_PASSWORD
+          resources:
+            requests: { cpu: 10m, memory: 32Mi }
+            limits: { cpu: 200m, memory: 128Mi }
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]
+{{- end }}

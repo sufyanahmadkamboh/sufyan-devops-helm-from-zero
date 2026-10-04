@@ -1,0 +1,70 @@
+# Bookshop, environment: prod. Deployed WITHOUT Helm: kubectl apply -f environments/prod/
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+  namespace: bookshop-prod
+  labels: { app: frontend, app.kubernetes.io/part-of: bookshop }
+spec:
+  type: ClusterIP
+  selector: { app: frontend }                # traffic goes to the Ready Pods with this label
+  ports:
+    - name: http
+      port: 8080
+      targetPort: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: node-api
+  namespace: bookshop-prod
+  labels: { app: node-api, app.kubernetes.io/part-of: bookshop }
+spec:
+  type: ClusterIP
+  selector: { app: node-api }                # traffic goes to the Ready Pods with this label
+  ports:
+    - name: http
+      port: 3000
+      targetPort: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: python-api
+  namespace: bookshop-prod
+  labels: { app: python-api, app.kubernetes.io/part-of: bookshop }
+spec:
+  type: ClusterIP
+  selector: { app: python-api }                # traffic goes to the Ready Pods with this label
+  ports:
+    - name: http
+      port: 8000
+      targetPort: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: go-status
+  namespace: bookshop-prod
+  labels: { app: go-status, app.kubernetes.io/part-of: bookshop }
+spec:
+  type: ClusterIP
+  selector: { app: go-status }                # traffic goes to the Ready Pods with this label
+  ports:
+    - name: http
+      port: 8080
+      targetPort: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: java-api
+  namespace: bookshop-prod
+  labels: { app: java-api, app.kubernetes.io/part-of: bookshop }
+spec:
+  type: ClusterIP
+  selector: { app: java-api }                # traffic goes to the Ready Pods with this label
+  ports:
+    - name: http
+      port: 8080
+      targetPort: http

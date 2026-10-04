@@ -1,0 +1,22 @@
+apiVersion: v2
+name: bookshop
+description: >-
+  The Bookshop platform (React frontend, Node.js, Python, Go and Java services, PostgreSQL) as one production-style
+  Helm chart: one template for every service, environment values, a database dependency, a hook and tests.
+type: application
+
+# Chart version: the packaging. 1.2.0 = third feature release of the chart itself.
+version: 1.2.0
+# Application version: the Bookshop release this chart deploys by default (the image tags).
+appVersion: "1.0.0"
+
+dependencies:
+  - name: postgres
+    version: 0.1.0
+    repository: "file://../postgres"     # a chart in this repository; could be https://... or oci://... as well
+    condition: postgres.enabled
+
+keywords: [bookshop, multi-stack, example]
+home: https://github.com/sufyanahmadkamboh/sufyan-devops-helm-from-zero
+maintainers:
+  - name: Sufyan Ahmad

@@ -1,0 +1,126 @@
+# Default values for the bookshop chart. Environment files (values-dev.yaml, ...) override only what differs.
+# Never put real secrets here: see database.existingSecret.
+
+# The environment of this release: an APP_ENV setting for the UI and a label on every resource.
+environment: local
+
+# The image registry all Bookshop images come from (published by the multi-stack project's CI).
+imageRegistry: ghcr.io/sufyanahmadkamboh
+
+# One entry per service. The same template (templates/services.yaml) renders a Deployment and a Service for each.
+#   image.tag empty = the chart's appVersion
+services:
+  frontend:
+    enabled: true
+    image: { name: bookshop-frontend, tag: "" }
+    replicas: 1
+    port: 8080
+    runAsUser: 101
+    database: false
+    probes: { liveness: /health, readiness: /health }
+    # Extra environment variables. Values may contain template expressions: the chart renders them with "tpl".
+    # nginx's own resolver ignores the DNS search domains, so the frontend's proxy needs full service names.
+    env:
+      NGINX_ENTRYPOINT_LOCAL_RESOLVERS: "1"
+      NODE_API_URL: "http://{{ .Release.Name }}-node-api.{{ .Release.Namespace }}.svc.cluster.local:3000"
+      JAVA_API_URL: "http://{{ .Release.Name }}-java-api.{{ .Release.Namespace }}.svc.cluster.local:8080"
+      PYTHON_API_URL: "http://{{ .Release.Name }}-python-api.{{ .Release.Namespace }}.svc.cluster.local:8000"
+      GO_STATUS_URL: "http://{{ .Release.Name }}-go-status.{{ .Release.Namespace }}.svc.cluster.local:8080"
+    resources:
+      requests: { cpu: 10m, memory: 32Mi }
+      limits: { cpu: 200m, memory: 128Mi }
+  node-api:
+    enabled: true
+    image: { name: bookshop-node-api, tag: "" }
+    replicas: 1
+    port: 3000
+    runAsUser: 1000
+    database: true
+    probes: { liveness: /health, readiness: /ready }
+    resources:
+      requests: { cpu: 50m, memory: 64Mi }
+      limits: { cpu: 500m, memory: 256Mi }
+  python-api:
+    enabled: true
+    image: { name: bookshop-python-api, tag: "" }
+    replicas: 1
+    port: 8000
+    runAsUser: 10001
+    database: true
+    probes: { liveness: /health, readiness: /ready }
+    resources:
+      requests: { cpu: 50m, memory: 96Mi }
+      limits: { cpu: 500m, memory: 256Mi }
+  go-status:
+    enabled: true
+    image: { name: bookshop-go-status, tag: "" }
+    replicas: 1
+    port: 8080
+    runAsUser: 65532
+    database: false
+    probes: { liveness: /health, readiness: /health }
+    resources:
+      requests: { cpu: 10m, memory: 16Mi }
+      limits: { cpu: 200m, memory: 64Mi }
+  java-api:
+    enabled: true
+    image: { name: bookshop-java-api, tag: "" }
+    replicas: 1
+    port: 8080
+    runAsUser: 10001
+    database: true
+    probes: { liveness: /health, readiness: /ready, startup: /health }   # the JVM starts slowly: a startup probe
+    resources:
+      requests: { cpu: 250m, memory: 256Mi }
+      limits: { cpu: "1", memory: 512Mi }
+
+# Application configuration (rendered into a ConfigMap).
+config:
+  adminUrl: ""
+
+database:
+  # Where the services find PostgreSQL. Empty host = the bundled dependency ("<release>-postgres").
+  host: ""
+  port: 5432
+  name: bookshop
+  user: bookshop
+  # Production: create the Secret yourself (or with an external secret manager) and name it here.
+  # Empty: the chart creates "<release>-db" with a random password on first install and KEEPS it on upgrades.
+  existingSecret: ""
+
+# The dependency (charts/postgres). Its values live under the dependency's name.
+# The subchart cannot read the parent's values: its own copy of the database settings lives here. Keep them equal.
+postgres:
+  enabled: true                    # false = use an external database (set database.host and database.existingSecret)
+  auth:
+    database: bookshop
+    username: bookshop
+    existingSecret: ""             # same as database.existingSecret
+  persistence:
+    size: 1Gi
+
+ingress:
+  enabled: true
+  className: traefik
+  host: bookshop.localhost
+  # One rule per path; each points at a service above (the template looks the port up).
+  paths:
+    - { path: /api/users, service: node-api }
+    - { path: /api/books, service: java-api }
+    - { path: /api/stats, service: python-api }
+    - { path: /api/status, service: go-status }
+    - { path: /, service: frontend }
+
+# Production-style extras, off by default.
+autoscaling:                       # a HorizontalPodAutoscaler for node-api
+  enabled: false
+  minReplicas: 2
+  maxReplicas: 6
+  targetCPUUtilizationPercentage: 70
+podDisruptionBudget:               # keep at least one Pod of each service during node maintenance
+  enabled: false
+
+# A post-install/post-upgrade hook: the report-worker job writes a deployment report after every release.
+report:
+  enabled: true
+  image: { name: bookshop-report-worker, tag: "" }

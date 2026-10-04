@@ -1,0 +1,18 @@
+Bookshop {{ .Chart.AppVersion }} (chart {{ .Chart.Version }}) · release "{{ .Release.Name }}" · namespace "{{ .Release.Namespace }}" · environment {{ .Values.environment }} · revision {{ .Release.Revision }}
+
+Services:
+{{- range $name, $svc := .Values.services }}
+{{- if $svc.enabled }}
+  {{ printf "%-11s" $name }} {{ include "bookshop.image" (dict "root" $ "image" $svc.image) }} × {{ $svc.replicas }}
+{{- end }}
+{{- end }}
+Database:    {{ if .Values.postgres.enabled }}bundled ({{ .Release.Name }}-postgres){{ else }}external ({{ .Values.database.host }}){{ end }} · password in Secret "{{ include "bookshop.dbSecret" . }}"
+{{- if .Values.ingress.enabled }}
+
+Open:  http://{{ .Values.ingress.host }}:8080/
+{{- end }}
+
+Check it:
+  kubectl --namespace {{ .Release.Namespace }} get pods -l app.kubernetes.io/instance={{ .Release.Name }}
+  kubectl --namespace {{ .Release.Namespace }} logs job/{{ .Release.Name }}-report      # the post-install report
+  helm test {{ .Release.Name }} --namespace {{ .Release.Namespace }}

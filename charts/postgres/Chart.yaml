@@ -1,0 +1,9 @@
+apiVersion: v2
+name: postgres
+description: A small PostgreSQL chart (StatefulSet + persistent volume) used as a dependency of the bookshop chart.
+type: application
+version: 0.1.0
+appVersion: "18.6"
+home: https://github.com/sufyanahmadkamboh/sufyan-devops-helm-from-zero
+maintainers:
+  - name: Sufyan Ahmad

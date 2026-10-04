@@ -1,0 +1,28 @@
+# Bookshop, environment: staging. Deployed WITHOUT Helm: kubectl apply -f environments/staging/
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: bookshop
+  namespace: bookshop-staging
+  labels: { app.kubernetes.io/part-of: bookshop }
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: staging.bookshop.localhost
+      http:
+        paths:
+          - path: /api/users
+            pathType: Prefix
+            backend: { service: { name: node-api, port: { number: 3000 } } }
+          - path: /api/books
+            pathType: Prefix
+            backend: { service: { name: java-api, port: { number: 8080 } } }
+          - path: /api/stats
+            pathType: Prefix
+            backend: { service: { name: python-api, port: { number: 8000 } } }
+          - path: /api/status
+            pathType: Prefix
+            backend: { service: { name: go-status, port: { number: 8080 } } }
+          - path: /
+            pathType: Prefix
+            backend: { service: { name: frontend, port: { number: 8080 } } }

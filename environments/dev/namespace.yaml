@@ -1,0 +1,8 @@
+# Bookshop, environment: dev. Deployed WITHOUT Helm: kubectl apply -f environments/dev/
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: bookshop-dev
+  labels:
+    app.kubernetes.io/part-of: bookshop
+    environment: dev

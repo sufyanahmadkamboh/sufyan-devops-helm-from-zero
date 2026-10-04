@@ -1,0 +1,35 @@
+# A Helm test: a Pod that `helm test <release>` runs on demand. Exit code 0 = test passed.
+# It checks that the Service answers /health and that the configured environment reached the application.
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "demo-app.fullname" . }}-test-connection"
+  labels:
+    {{- include "demo-app.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+    "helm.sh/hook-delete-policy": before-hook-creation
+spec:
+  restartPolicy: Never
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 65534
+    seccompProfile:
+      type: RuntimeDefault
+  containers:
+    - name: check
+      image: busybox:1.37
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop: ["ALL"]
+      command: ["sh", "-c"]
+      args:
+        - |
+          set -e
+          url=http://{{ include "demo-app.fullname" . }}:{{ .Values.service.port }}
+          echo "GET $url/health"
+          wget -qO- "$url/health"; echo
+          echo "GET $url/config.js (expecting APP_ENV {{ .Values.environment }})"
+          wget -qO- "$url/config.js" | grep -q 'APP_ENV: "{{ .Values.environment }}"'
+          echo "test passed"

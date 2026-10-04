@@ -1,0 +1,17 @@
+apiVersion: v2                 # chart API version 2 (Helm 3 and 4)
+name: demo-app
+description: The Bookshop frontend (React, served by nginx), packaged as a Helm chart. The chart of the Helm lessons.
+type: application              # an installable application (the other type, "library", only holds helpers)
+
+# The version of the CHART: change it whenever the chart (templates, values, this file) changes. Semantic versioning.
+version: 1.0.0
+
+# The version of the APPLICATION the chart deploys by default: the image tag, unless values override it.
+appVersion: "1.0.0"
+
+keywords: [bookshop, frontend, react, nginx, example]
+home: https://github.com/sufyanahmadkamboh/sufyan-devops-helm-from-zero
+sources:
+  - https://github.com/sufyanahmadkamboh/sufyan-devops-multi-stack-kubernetes/tree/main/applications/frontend
+maintainers:
+  - name: Sufyan Ahmad

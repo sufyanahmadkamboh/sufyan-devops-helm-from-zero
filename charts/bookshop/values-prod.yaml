@@ -1,0 +1,35 @@
+# prod: pinned image tags, more replicas, more resources, an autoscaler, disruption budgets, a bigger volume.
+# In a real production cluster also set database.existingSecret (and postgres.auth.existingSecret) to a Secret
+# created outside the chart, and an Ingress host with TLS.
+environment: prod
+services:
+  frontend:
+    image: { tag: "1.0.0" }
+    replicas: 2
+  node-api:
+    image: { tag: "1.0.0" }
+    resources:
+      requests: { cpu: 100m, memory: 128Mi }
+      limits: { cpu: "1", memory: 512Mi }
+  python-api:
+    image: { tag: "1.0.0" }
+    replicas: 2
+  go-status:
+    image: { tag: "1.0.0" }
+    replicas: 2
+  java-api:
+    image: { tag: "1.0.0" }
+    replicas: 2
+report:
+  image: { tag: "1.0.0" }
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 6
+podDisruptionBudget:
+  enabled: true
+postgres:
+  persistence:
+    size: 5Gi
+ingress:
+  host: bookshop.localhost

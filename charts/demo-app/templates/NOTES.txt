@@ -1,0 +1,18 @@
+demo-app {{ .Chart.AppVersion }} (chart {{ .Chart.Version }}) is deployed as release "{{ .Release.Name }}" in namespace "{{ .Release.Namespace }}".
+Environment: {{ .Values.environment }} · revision {{ .Release.Revision }}
+
+{{- if .Values.ingress.enabled }}
+{{- range .Values.ingress.hosts }}
+
+Open:  http://{{ .host }}:8080/
+{{- end }}
+{{- else }}
+
+No Ingress (ingress.enabled=false). Reach it with a port-forward:
+  kubectl --namespace {{ .Release.Namespace }} port-forward service/{{ include "demo-app.fullname" . }} 8080:{{ .Values.service.port }}
+  then open http://localhost:8080/
+{{- end }}
+
+Check it:
+  kubectl --namespace {{ .Release.Namespace }} get pods -l app.kubernetes.io/instance={{ .Release.Name }}
+  helm test {{ .Release.Name }} --namespace {{ .Release.Namespace }}

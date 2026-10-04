@@ -1,0 +1,257 @@
+# Bookshop, environment: staging. Deployed WITHOUT Helm: kubectl apply -f environments/staging/
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  namespace: bookshop-staging
+  labels: { app: frontend, app.kubernetes.io/part-of: bookshop }
+spec:
+  replicas: 2
+  selector:
+    matchLabels: { app: frontend }            # must match the Pod labels below, and the Service's selector
+  template:
+    metadata:
+      labels: { app: frontend, app.kubernetes.io/part-of: bookshop }
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 101
+        seccompProfile: { type: RuntimeDefault }
+      containers:
+        - name: frontend
+          image: ghcr.io/sufyanahmadkamboh/bookshop-frontend:1.0.0                # a versioned tag, never "latest"
+          imagePullPolicy: IfNotPresent      # pulled from the registry once per node
+          ports:
+            - name: http
+              containerPort: 8080
+          env:
+            - name: ADMIN_URL
+              valueFrom: { configMapKeyRef: { name: bookshop-config, key: ADMIN_URL } }
+            - name: APP_ENV
+              value: staging
+            - name: NGINX_ENTRYPOINT_LOCAL_RESOLVERS   # let nginx use the cluster DNS for its proxy locations
+              value: "1"
+            # nginx's own resolver does not use the cluster's DNS search domains, so its proxy needs full names.
+            # (Through the Ingress, /api/* goes straight to the APIs; these make the frontend work on its own too.)
+            - name: NODE_API_URL
+              value: http://node-api.bookshop-staging.svc.cluster.local:3000
+            - name: JAVA_API_URL
+              value: http://java-api.bookshop-staging.svc.cluster.local:8080
+            - name: PYTHON_API_URL
+              value: http://python-api.bookshop-staging.svc.cluster.local:8000
+            - name: GO_STATUS_URL
+              value: http://go-status.bookshop-staging.svc.cluster.local:8080
+          livenessProbe:                     # "should Kubernetes restart this container?"
+            httpGet: { path: /health, port: http }
+            periodSeconds: 10
+            failureThreshold: 3
+          readinessProbe:                    # "should this Pod receive traffic right now?"
+            httpGet: { path: /health, port: http }
+            periodSeconds: 5
+            failureThreshold: 2
+          resources:
+            requests: { cpu: 10m, memory: 32Mi }   # what the scheduler reserves
+            limits: { cpu: "200m", memory: 128Mi }       # the ceiling (above memory → OOMKilled)
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities: { drop: ["ALL"] }
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-api
+  namespace: bookshop-staging
+  labels: { app: node-api, app.kubernetes.io/part-of: bookshop }
+spec:
+  replicas: 2
+  selector:
+    matchLabels: { app: node-api }            # must match the Pod labels below, and the Service's selector
+  template:
+    metadata:
+      labels: { app: node-api, app.kubernetes.io/part-of: bookshop }
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        seccompProfile: { type: RuntimeDefault }
+      containers:
+        - name: node-api
+          image: ghcr.io/sufyanahmadkamboh/bookshop-node-api:1.0.0                # a versioned tag, never "latest"
+          imagePullPolicy: IfNotPresent      # pulled from the registry once per node
+          ports:
+            - name: http
+              containerPort: 3000
+          env:
+            - name: DB_HOST
+              valueFrom: { configMapKeyRef: { name: bookshop-config, key: DB_HOST } }
+            - name: DB_PORT
+              valueFrom: { configMapKeyRef: { name: bookshop-config, key: DB_PORT } }
+            - name: DB_NAME
+              valueFrom: { configMapKeyRef: { name: bookshop-config, key: DB_NAME } }
+            - name: DB_USER
+              valueFrom: { configMapKeyRef: { name: bookshop-config, key: DB_USER } }
+            - name: DB_PASSWORD                     # the only secret value, from a Secret, never from the ConfigMap
+              valueFrom: { secretKeyRef: { name: db-credentials, key: DB_PASSWORD } }
+          livenessProbe:                     # "should Kubernetes restart this container?"
+            httpGet: { path: /health, port: http }
+            periodSeconds: 10
+            failureThreshold: 3
+          readinessProbe:                    # "should this Pod receive traffic right now?"
+            httpGet: { path: /ready, port: http }
+            periodSeconds: 5
+            failureThreshold: 2
+          resources:
+            requests: { cpu: 50m, memory: 64Mi }   # what the scheduler reserves
+            limits: { cpu: "500m", memory: 256Mi }       # the ceiling (above memory → OOMKilled)
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities: { drop: ["ALL"] }
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: python-api
+  namespace: bookshop-staging
+  labels: { app: python-api, app.kubernetes.io/part-of: bookshop }
+spec:
+  replicas: 2
+  selector:
+    matchLabels: { app: python-api }            # must match the Pod labels below, and the Service's selector
+  template:
+    metadata:
+      labels: { app: python-api, app.kubernetes.io/part-of: bookshop }
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        seccompProfile: { type: RuntimeDefault }
+      containers:
+        - name: python-api
+          image: ghcr.io/sufyanahmadkamboh/bookshop-python-api:1.0.0                # a versioned tag, never "latest"
+          imagePullPolicy: IfNotPresent      # pulled from the registry once per node
+          ports:
+            - name: http
+              containerPort: 8000
+          env:
+            - name: DB_HOST
+              valueFrom: { configMapKeyRef: { name: bookshop-config, key: DB_HOST } }
+            - name: DB_PORT
+              valueFrom: { configMapKeyRef: { name: bookshop-config, key: DB_PORT } }
+            - name: DB_NAME
+              valueFrom: { configMapKeyRef: { name: bookshop-config, key: DB_NAME } }
+            - name: DB_USER
+              valueFrom: { configMapKeyRef: { name: bookshop-config, key: DB_USER } }
+            - name: DB_PASSWORD                     # the only secret value, from a Secret, never from the ConfigMap
+              valueFrom: { secretKeyRef: { name: db-credentials, key: DB_PASSWORD } }
+          livenessProbe:                     # "should Kubernetes restart this container?"
+            httpGet: { path: /health, port: http }
+            periodSeconds: 10
+            failureThreshold: 3
+          readinessProbe:                    # "should this Pod receive traffic right now?"
+            httpGet: { path: /ready, port: http }
+            periodSeconds: 5
+            failureThreshold: 2
+          resources:
+            requests: { cpu: 50m, memory: 96Mi }   # what the scheduler reserves
+            limits: { cpu: "500m", memory: 256Mi }       # the ceiling (above memory → OOMKilled)
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities: { drop: ["ALL"] }
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: go-status
+  namespace: bookshop-staging
+  labels: { app: go-status, app.kubernetes.io/part-of: bookshop }
+spec:
+  replicas: 2
+  selector:
+    matchLabels: { app: go-status }            # must match the Pod labels below, and the Service's selector
+  template:
+    metadata:
+      labels: { app: go-status, app.kubernetes.io/part-of: bookshop }
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 65532
+        seccompProfile: { type: RuntimeDefault }
+      containers:
+        - name: go-status
+          image: ghcr.io/sufyanahmadkamboh/bookshop-go-status:1.0.0                # a versioned tag, never "latest"
+          imagePullPolicy: IfNotPresent      # pulled from the registry once per node
+          ports:
+            - name: http
+              containerPort: 8080
+          env:
+            - name: TARGETS
+              valueFrom: { configMapKeyRef: { name: bookshop-config, key: TARGETS } }
+          livenessProbe:                     # "should Kubernetes restart this container?"
+            httpGet: { path: /health, port: http }
+            periodSeconds: 10
+            failureThreshold: 3
+          readinessProbe:                    # "should this Pod receive traffic right now?"
+            httpGet: { path: /health, port: http }
+            periodSeconds: 5
+            failureThreshold: 2
+          resources:
+            requests: { cpu: 10m, memory: 16Mi }   # what the scheduler reserves
+            limits: { cpu: "200m", memory: 64Mi }       # the ceiling (above memory → OOMKilled)
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities: { drop: ["ALL"] }
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: java-api
+  namespace: bookshop-staging
+  labels: { app: java-api, app.kubernetes.io/part-of: bookshop }
+spec:
+  replicas: 2
+  selector:
+    matchLabels: { app: java-api }            # must match the Pod labels below, and the Service's selector
+  template:
+    metadata:
+      labels: { app: java-api, app.kubernetes.io/part-of: bookshop }
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        seccompProfile: { type: RuntimeDefault }
+      containers:
+        - name: java-api
+          image: ghcr.io/sufyanahmadkamboh/bookshop-java-api:1.0.0                # a versioned tag, never "latest"
+          imagePullPolicy: IfNotPresent      # pulled from the registry once per node
+          ports:
+            - name: http
+              containerPort: 8080
+          env:
+            - name: DB_HOST
+              valueFrom: { configMapKeyRef: { name: bookshop-config, key: DB_HOST } }
+            - name: DB_PORT
+              valueFrom: { configMapKeyRef: { name: bookshop-config, key: DB_PORT } }
+            - name: DB_NAME
+              valueFrom: { configMapKeyRef: { name: bookshop-config, key: DB_NAME } }
+            - name: DB_USER
+              valueFrom: { configMapKeyRef: { name: bookshop-config, key: DB_USER } }
+            - name: DB_PASSWORD                     # the only secret value, from a Secret, never from the ConfigMap
+              valueFrom: { secretKeyRef: { name: db-credentials, key: DB_PASSWORD } }
+          startupProbe:                      # the JVM needs several seconds: give it up to 60 s before liveness starts
+            httpGet: { path: /health, port: http }
+            periodSeconds: 2
+            failureThreshold: 30
+          livenessProbe:                     # "should Kubernetes restart this container?"
+            httpGet: { path: /health, port: http }
+            periodSeconds: 10
+            failureThreshold: 3
+          readinessProbe:                    # "should this Pod receive traffic right now?"
+            httpGet: { path: /ready, port: http }
+            periodSeconds: 5
+            failureThreshold: 2
+          resources:
+            requests: { cpu: 250m, memory: 256Mi }   # what the scheduler reserves
+            limits: { cpu: "1", memory: 512Mi }       # the ceiling (above memory → OOMKilled)
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities: { drop: ["ALL"] }

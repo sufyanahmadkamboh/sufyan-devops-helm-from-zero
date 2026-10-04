@@ -1,0 +1,96 @@
+{{- /*
+ONE template for all five services: range over .Values.services and render a Deployment and a Service for each
+enabled entry. Adding a service = adding an entry to values.yaml, not copying 60 lines of YAML.
+*/ -}}
+{{- range $name, $svc := .Values.services }}
+{{- if $svc.enabled }}
+{{- $ctx := dict "root" $ "name" $name "version" $svc.image.tag }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "bookshop.name" $ctx }}
+  labels:
+    {{- include "bookshop.labels" $ctx | nindent 4 }}
+spec:
+  {{- /* with an autoscaler, the HPA owns the replica count: don't fight it on every upgrade */}}
+  {{- if not (and $.Values.autoscaling.enabled (eq $name "node-api")) }}
+  replicas: {{ $svc.replicas }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "bookshop.selectorLabels" $ctx | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "bookshop.labels" $ctx | nindent 8 }}
+      annotations:
+        # A changed ConfigMap changes this checksum, which changes the Pod template: the Pods restart with it.
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") $ | sha256sum }}
+    spec:
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: {{ $svc.runAsUser }}
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: {{ $name }}
+          image: {{ include "bookshop.image" (dict "root" $ "image" $svc.image) | quote }}
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: {{ $svc.port }}
+          envFrom:
+            - configMapRef:
+                name: {{ $.Release.Name }}-config
+          env:
+            - name: PORT
+              value: {{ $svc.port | quote }}
+            {{- if $svc.database }}
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "bookshop.dbSecret" $ }}
+                  key: DB_PASSWORD
+            {{- end }}
+            {{- range $key, $value := $svc.env }}
+            - name: {{ $key }}
+              value: {{ tpl $value $ | quote }}
+            {{- end }}
+          {{- with $svc.probes.startup }}
+          startupProbe:
+            httpGet: { path: {{ . }}, port: http }
+            periodSeconds: 2
+            failureThreshold: 30
+          {{- end }}
+          livenessProbe:
+            httpGet: { path: {{ $svc.probes.liveness }}, port: http }
+            periodSeconds: 10
+            failureThreshold: 3
+          readinessProbe:
+            httpGet: { path: {{ $svc.probes.readiness }}, port: http }
+            periodSeconds: 5
+            failureThreshold: 2
+          resources:
+            {{- toYaml $svc.resources | nindent 12 }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "bookshop.name" $ctx }}
+  labels:
+    {{- include "bookshop.labels" $ctx | nindent 4 }}
+spec:
+  selector:
+    {{- include "bookshop.selectorLabels" $ctx | nindent 4 }}
+  ports:
+    - name: http
+      port: {{ $svc.port }}
+      targetPort: http
+{{- end }}
+{{- end }}

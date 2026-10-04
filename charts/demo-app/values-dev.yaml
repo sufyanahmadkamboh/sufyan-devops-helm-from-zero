@@ -1,0 +1,10 @@
+# Development: one small Pod, its own host name. Only what differs from values.yaml.
+environment: dev
+replicaCount: 1
+ingress:
+  enabled: true
+  hosts:
+    - host: demo-dev.localhost
+      paths:
+        - path: /
+          pathType: Prefix

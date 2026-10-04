@@ -1,0 +1,10 @@
+# staging: like production, smaller. Two replicas of the APIs to catch "works with one Pod only" bugs.
+environment: staging
+services:
+  node-api: { replicas: 2 }
+  python-api: { replicas: 2 }
+postgres:
+  persistence:
+    size: 2Gi
+ingress:
+  host: staging.bookshop.localhost

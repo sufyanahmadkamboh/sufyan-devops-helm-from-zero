@@ -1,0 +1,10 @@
+# Staging: like production in shape (2 replicas, the same image version), smaller in size.
+environment: staging
+replicaCount: 2
+ingress:
+  enabled: true
+  hosts:
+    - host: demo-staging.localhost
+      paths:
+        - path: /
+          pathType: Prefix

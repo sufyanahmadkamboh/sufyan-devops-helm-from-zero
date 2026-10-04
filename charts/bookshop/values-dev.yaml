@@ -1,0 +1,5 @@
+# dev: one replica of everything, small volume, its own host.
+#   helm upgrade --install shop charts/bookshop -n bookshop-dev --create-namespace -f charts/bookshop/values-dev.yaml --wait
+environment: dev
+ingress:
+  host: dev.bookshop.localhost

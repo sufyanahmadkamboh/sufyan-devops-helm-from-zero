@@ -1,0 +1,8 @@
+tests/out/
+video/out/
+__pycache__/
+*.pyc
+.env
+kubeconfig*
+labs/work/
+*.tgz
