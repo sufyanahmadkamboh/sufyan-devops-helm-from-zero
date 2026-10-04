@@ -1,0 +1,7 @@
+grep -n -B1 -A2 'replicaCount' charts/demo-app/templates/deployment.yaml
+---
+8-  {{- if not .Values.autoscaling.enabled }}
+9:  replicas: {{ .Values.replicaCount }}
+10-  {{- end }}
+11-  selector:
+# exit 0

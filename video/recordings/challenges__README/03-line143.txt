@@ -1,0 +1,38 @@
+cd labs/work/challenges/shopfront
+printf 'environment: local\n' >> values.yaml
+cat > templates/deployment.yaml <<'EOF'
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: web
+          image: "ghcr.io/sufyanahmadkamboh/bookshop-frontend:{{ .Chart.AppVersion }}"
+          ports:
+            - name: http
+              containerPort: 8080
+          env:
+            - name: APP_ENV
+              value: {{ .Values.environment | quote }}
+          readinessProbe:
+            httpGet: { path: /health, port: http }
+EOF
+for e in dev:1 staging:2 prod:3; do
+  printf 'environment: %s\nreplicaCount: %s\n' "${e%%:*}" "${e##*:}" > "values-${e%%:*}.yaml"
+done
+helm template web . -f values-prod.yaml | grep -E 'replicas|value:'
+cd - > /dev/null
+---
+  replicas: 3
+              value: "prod"
+# exit 0

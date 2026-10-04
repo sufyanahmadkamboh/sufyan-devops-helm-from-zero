@@ -1,0 +1,12 @@
+kubectl get deployments --all-namespaces -l app.kubernetes.io/part-of=bookshop \
+  -o custom-columns='NAMESPACE:.metadata.namespace,NAME:.metadata.name,READY:.status.readyReplicas,IMAGE:.spec.template.spec.containers[0].image' \
+  | grep -E 'NAMESPACE|node-api|java-api'
+---
+NAMESPACE          NAME              READY   IMAGE
+bookshop-dev       shop-java-api     1       ghcr.io/sufyanahmadkamboh/bookshop-java-api:1.0.0
+bookshop-dev       shop-node-api     1       ghcr.io/sufyanahmadkamboh/bookshop-node-api:1.0.0
+bookshop-prod      shop-java-api     2       ghcr.io/sufyanahmadkamboh/bookshop-java-api:1.0.0
+bookshop-prod      shop-node-api     2       ghcr.io/sufyanahmadkamboh/bookshop-node-api:1.0.0
+bookshop-staging   shop-java-api     1       ghcr.io/sufyanahmadkamboh/bookshop-java-api:1.0.0
+bookshop-staging   shop-node-api     2       ghcr.io/sufyanahmadkamboh/bookshop-node-api:1.0.0
+# exit 0

@@ -1,0 +1,6 @@
+helm uninstall mystery --namespace trouble --wait
+kubectl delete namespace trouble --wait=false > /dev/null
+git checkout -- labs/broken-release-values.yaml
+---
+release "mystery" uninstalled
+# exit 0

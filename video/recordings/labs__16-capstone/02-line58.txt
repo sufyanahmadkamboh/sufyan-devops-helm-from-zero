@@ -1,0 +1,12 @@
+curl -s http://staging.bookshop.localhost:8080/config.js; echo
+kubectl get deployments --namespace bookshop-staging
+---
+window.APP_CONFIG = { ADMIN_URL: "", APP_ENV: "staging" };
+
+NAME         READY   UP-TO-DATE   AVAILABLE   AGE
+frontend     2/2     2            2           27s
+go-status    2/2     2            2           27s
+java-api     2/2     2            2           27s
+node-api     2/2     2            2           27s
+python-api   2/2     2            2           27s
+# exit 0

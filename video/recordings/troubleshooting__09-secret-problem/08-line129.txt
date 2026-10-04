@@ -1,0 +1,5 @@
+kubectl get deployment shop-node-api --namespace bookshop-dev \
+  -o jsonpath='{.spec.template.spec.containers[0].env[?(@.name=="DB_PASSWORD")].valueFrom.secretKeyRef.name}'; echo
+---
+shop-db-prod
+# exit 0

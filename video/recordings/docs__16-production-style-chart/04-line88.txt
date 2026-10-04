@@ -1,0 +1,7 @@
+grep -n 'NODE_API_URL' charts/bookshop/values.yaml
+helm template shop charts/bookshop --namespace bookshop-dev --show-only templates/services.yaml | grep -A1 'NODE_API_URL'
+---
+25:      NODE_API_URL: "http://{{ .Release.Name }}-node-api.{{ .Release.Namespace }}.svc.cluster.local:3000"
+            - name: NODE_API_URL
+              value: "http://shop-node-api.bookshop-dev.svc.cluster.local:3000"
+# exit 0

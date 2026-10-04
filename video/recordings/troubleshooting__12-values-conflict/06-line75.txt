@@ -1,0 +1,5 @@
+kubectl get hpa --namespace trouble
+---
+NAME            REFERENCE                  TARGETS              MINPODS   MAXPODS   REPLICAS   AGE
+demo-demo-app   Deployment/demo-demo-app   cpu: <unknown>/70%   3         6         1          3s
+# exit 0

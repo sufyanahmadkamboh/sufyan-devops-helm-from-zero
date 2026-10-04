@@ -1,0 +1,5 @@
+helm repo remove traefik podinfo
+---
+"traefik" has been removed from your repositories
+"podinfo" has been removed from your repositories
+# exit 0

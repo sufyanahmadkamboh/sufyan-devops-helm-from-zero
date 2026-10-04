@@ -1,0 +1,7 @@
+helm upgrade shop charts/bookshop --namespace bookshop-staging \
+  -f charts/bookshop/values-staging.yaml -f labs/work/capstone/node-api-1.1.0.yaml \
+  --wait --timeout 5m | grep -E '^(STATUS|REVISION):'
+---
+STATUS: deployed
+REVISION: 2
+# exit 0

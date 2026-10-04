@@ -1,0 +1,19 @@
+echo "--- raw (environments/staging)"
+sed -n '/name: node-api$/,/^---/p' environments/staging/deployments.yaml | grep -E 'replicas:|image:|containerPort:|path:' | sed 's/ *#.*//'
+echo "--- chart (charts/bookshop, staging values)"
+helm template shop charts/bookshop -f charts/bookshop/values-staging.yaml --show-only templates/services.yaml \
+  | sed -n '/name: shop-node-api$/,/^---/p' | grep -E 'replicas:|image:|containerPort:|path:'
+---
+--- raw (environments/staging)
+  replicas: 2
+          image: ghcr.io/sufyanahmadkamboh/bookshop-node-api:1.0.0
+              containerPort: 3000
+            httpGet: { path: /health, port: http }
+            httpGet: { path: /ready, port: http }
+--- chart (charts/bookshop, staging values)
+  replicas: 2
+          image: "ghcr.io/sufyanahmadkamboh/bookshop-node-api:1.0.0"
+              containerPort: 3000
+            httpGet: { path: /health, port: http }
+            httpGet: { path: /ready, port: http }
+# exit 0

@@ -1,0 +1,13 @@
+cat >> labs/work/challenges/shopfront/values.yaml <<'EOF'
+image:
+  repository: ghcr.io/sufyanahmadkamboh/bookshop-frontend
+  tag: ""
+EOF
+sed -i 's#image: "ghcr.io/sufyanahmadkamboh/bookshop-frontend:{{ .Chart.AppVersion }}"#image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"#' \
+  labs/work/challenges/shopfront/templates/deployment.yaml
+helm template web labs/work/challenges/shopfront | grep image:
+helm template web labs/work/challenges/shopfront --set image.repository=example.com/mirror/bookshop-frontend | grep image:
+---
+          image: "ghcr.io/sufyanahmadkamboh/bookshop-frontend:1.0.0"
+          image: "example.com/mirror/bookshop-frontend:1.0.0"
+# exit 0

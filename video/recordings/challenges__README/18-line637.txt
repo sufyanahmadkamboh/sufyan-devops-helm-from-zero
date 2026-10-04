@@ -1,0 +1,6 @@
+sed -i 's/      targetPort: http/      targetPort: 80/' labs/work/challenges/shopfront/templates/service.yaml
+helm upgrade web labs/work/challenges/shopfront --namespace challenges \
+  -f labs/work/challenges/shopfront/values-dev.yaml --set status.enabled=true --wait --timeout 3m | grep STATUS
+---
+STATUS: deployed
+# exit 0

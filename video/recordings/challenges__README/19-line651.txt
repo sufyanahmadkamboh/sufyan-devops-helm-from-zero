@@ -1,0 +1,14 @@
+helm test web --namespace challenges --filter name=web-test-health
+---
+NAME: web
+LAST DEPLOYED: Mon Oct  5 01:26:45 2026
+NAMESPACE: challenges
+STATUS: deployed
+REVISION: 8
+DESCRIPTION: Upgrade complete
+TEST SUITE:     web-test-health
+Last Started:   Mon Oct  5 01:26:45 2026
+Last Completed: Mon Oct  5 01:26:47 2026
+Phase:          Failed
+Error: resource Pod/challenges/web-test-health not ready. status: Failed, message: pod web-test-health failed
+# exit 1

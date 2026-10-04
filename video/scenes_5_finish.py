@@ -63,7 +63,7 @@ scene(None, "Recorded · troubleshooting/04", "A failed upgrade that still broke
 scene(None, "Recorded · troubleshooting/11", "Helm 4 and server-side apply: a conflict", terminal(
     rec(TS["11-failed-helm-test"], "helm get manifest demo --namespace trouble", cmd="helm get manifest demo | kubectl diff --server-side ...",
         tones={"prod": "bad", "dev": "ok"})
-    + rec(TS["11-failed-helm-test"], "helm upgrade demo charts/demo-app --namespace trouble -f troubleshooting/values-trouble.yaml --wait\n", step=1,
+    + rec(TS["11-failed-helm-test"], "helm upgrade demo charts/demo-app --namespace trouble -f troubleshooting/values-trouble.yaml --wait", step=1,
           out_has="conflict", tones={"conflict": "bad"}, drop="level=WARN", wrap=118)
     + rec(TS["11-failed-helm-test"], "--force-conflicts --wait", step=2, tones={"deployed": "ok"}),
     "bash (recorded)"), [

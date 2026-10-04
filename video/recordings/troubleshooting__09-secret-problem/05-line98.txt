@@ -1,0 +1,5 @@
+kubectl create secret generic shop-db-prod --namespace bookshop-dev \
+  --from-literal=DB_PASSWORD="$(kubectl get secret shop-db --namespace bookshop-dev -o jsonpath='{.data.DB_PASSWORD}' | base64 -d)"
+---
+secret/shop-db-prod created
+# exit 0

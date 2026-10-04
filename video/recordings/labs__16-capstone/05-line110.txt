@@ -1,0 +1,5 @@
+mkdir -p labs/work/capstone
+helm create labs/work/capstone/bookshop
+---
+Creating labs/work/capstone/bookshop
+# exit 0

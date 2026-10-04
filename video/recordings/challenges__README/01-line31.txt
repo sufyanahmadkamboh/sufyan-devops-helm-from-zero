@@ -1,0 +1,53 @@
+mkdir -p labs/work/challenges/shopfront/templates
+cat > labs/work/challenges/shopfront/Chart.yaml <<'EOF'
+apiVersion: v2
+name: shopfront
+description: The Bookshop frontend, a chart written from scratch
+type: application
+version: 0.1.0
+appVersion: "1.0.0"
+EOF
+cat > labs/work/challenges/shopfront/templates/deployment.yaml <<'EOF'
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: web
+          image: "ghcr.io/sufyanahmadkamboh/bookshop-frontend:{{ .Chart.AppVersion }}"
+          ports:
+            - name: http
+              containerPort: 8080
+          readinessProbe:
+            httpGet: { path: /health, port: http }
+EOF
+cat > labs/work/challenges/shopfront/templates/service.yaml <<'EOF'
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}
+spec:
+  selector:
+    app: {{ .Release.Name }}
+  ports:
+    - port: 8080
+      targetPort: http
+EOF
+helm lint labs/work/challenges/shopfront
+---
+==> Linting labs/work/challenges/shopfront
+[INFO] Chart.yaml: icon is recommended
+[INFO] values.yaml: file does not exist
+
+1 chart(s) linted, 0 chart(s) failed
+# exit 0

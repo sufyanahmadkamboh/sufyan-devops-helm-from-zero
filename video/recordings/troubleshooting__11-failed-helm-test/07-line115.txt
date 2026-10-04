@@ -1,0 +1,4 @@
+helm upgrade demo charts/demo-app --namespace trouble -f troubleshooting/values-trouble.yaml --force-conflicts --wait | grep STATUS
+---
+STATUS: deployed
+# exit 0

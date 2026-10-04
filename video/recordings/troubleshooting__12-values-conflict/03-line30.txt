@@ -1,0 +1,5 @@
+kubectl get deployment demo-demo-app --namespace trouble
+---
+NAME            READY   UP-TO-DATE   AVAILABLE   AGE
+demo-demo-app   3/3     3            3           2s
+# exit 0

@@ -1,0 +1,29 @@
+cd labs/work/challenges/shopfront
+printf 'ingress:\n  enabled: false\n  host: challenge.localhost\n' >> values.yaml
+cat > templates/ingress.yaml <<'EOF'
+{{- if .Values.ingress.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Release.Name }}
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: {{ .Values.ingress.host | quote }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ .Release.Name }}
+                port:
+                  number: 8080
+{{- end }}
+EOF
+printf 'ingress:\n  enabled: true\n' >> values-dev.yaml
+helm install web . --namespace challenges --create-namespace -f values-dev.yaml --wait --timeout 3m | grep STATUS
+cd - > /dev/null
+---
+STATUS: deployed
+# exit 0

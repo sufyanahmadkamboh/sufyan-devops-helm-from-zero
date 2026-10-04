@@ -1,0 +1,7 @@
+helm get manifest demo --namespace trouble \
+  | kubectl diff --server-side --field-manager=helm --force-conflicts --namespace trouble -f - 2>/dev/null \
+  | grep -E '^[-+] ' | grep -vE 'generation:|meta\.helm\.sh/|^-\s+annotations:$|restartedAt' || true
+---
+-  APP_ENV: prod
++  APP_ENV: dev
+# exit 0

@@ -1,0 +1,5 @@
+sed -i '/^containerPort:/d' labs/broken-release-values.yaml
+helm upgrade mystery charts/demo-app --namespace trouble -f labs/broken-release-values.yaml --wait --timeout 3m | grep STATUS
+---
+STATUS: deployed
+# exit 0

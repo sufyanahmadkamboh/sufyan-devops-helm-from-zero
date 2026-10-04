@@ -1,0 +1,20 @@
+helm test demo --namespace trouble --logs
+---
+NAME: demo
+LAST DEPLOYED: Mon Oct  5 01:15:30 2026
+NAMESPACE: trouble
+STATUS: deployed
+REVISION: 1
+DESCRIPTION: Install complete
+TEST SUITE:     demo-demo-app-test-connection
+Last Started:   Mon Oct  5 01:15:36 2026
+Last Completed: Mon Oct  5 01:15:38 2026
+Phase:          Failed
+
+POD LOGS: demo-demo-app-test-connection (check)
+GET http://demo-demo-app:8080/health
+{"status":"ok","service":"frontend","version":"1.0.0"}
+GET http://demo-demo-app:8080/config.js (expecting APP_ENV dev)
+
+Error: resource Pod/trouble/demo-demo-app-test-connection not ready. status: Failed, message: pod demo-demo-app-test-connection failed
+# exit 1

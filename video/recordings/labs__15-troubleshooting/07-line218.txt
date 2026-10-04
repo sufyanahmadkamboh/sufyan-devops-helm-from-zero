@@ -1,0 +1,13 @@
+helm test mystery --namespace trouble | grep Phase
+curl -s http://trouble.localhost:8080/config.js; echo
+helm history mystery --namespace trouble | cut -c1-110
+---
+Phase:          Succeeded
+window.APP_CONFIG = { ADMIN_URL: "", APP_ENV: "dev" };
+
+REVISION	UPDATED                 	STATUS    	CHART         	APP VERSION	DESCRIPTION                           
+1       	Mon Oct  5 01:18:20 2026	failed    	demo-app-1.0.0	1.0.0      	Release "mystery" failed: resource Dep
+        	                        	          	              	           	conte...                              
+2       	Mon Oct  5 01:19:22 2026	superseded	demo-app-1.0.0	1.0.0      	Upgrade "mystery" failed: resource Dep
+3       	Mon Oct  5 01:20:23 2026	deployed  	demo-app-1.0.0	1.0.0      	Upgrade complete                      
+# exit 0

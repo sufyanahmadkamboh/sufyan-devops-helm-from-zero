@@ -1,0 +1,11 @@
+helm test shop --namespace bookshop-staging --logs | sed -n '/POD LOGS/,$p'
+---
+POD LOGS: shop-test-services (check)
+frontend: {"status":"ok","service":"frontend","version":"1.0.0"}
+go-status: {"service":"go-status","status":"ok","version":"1.0.0"}
+java-api: {"status":"ready","service":"java-api","version":"1.0.0"}
+node-api: {"status":"ready","service":"node-api","version":"1.1.0"}
+python-api: {"status":"ready","service":"python-api","version":"1.0.0"}
+frontend environment: staging
+all checks passed
+# exit 0

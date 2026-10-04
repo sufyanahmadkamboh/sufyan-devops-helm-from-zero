@@ -1,0 +1,8 @@
+printf 'replicaCount: 1\n' > labs/work/challenges/shopfront/values.yaml
+sed -i 's/replicas: 1/replicas: {{ .Values.replicaCount }}/' labs/work/challenges/shopfront/templates/deployment.yaml
+helm template web labs/work/challenges/shopfront | grep replicas
+helm template web labs/work/challenges/shopfront --set replicaCount=3 | grep replicas
+---
+  replicas: 1
+  replicas: 3
+# exit 0

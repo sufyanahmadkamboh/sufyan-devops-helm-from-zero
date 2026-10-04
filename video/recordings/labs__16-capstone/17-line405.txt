@@ -1,0 +1,4 @@
+helm rollback shop 2 --namespace bookshop-staging --wait --timeout 5m
+---
+Rollback was a success! Happy Helming!
+# exit 0

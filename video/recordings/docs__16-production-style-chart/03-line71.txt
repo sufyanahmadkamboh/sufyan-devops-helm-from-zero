@@ -1,0 +1,7 @@
+grep -nE '\$ctx :=|include "bookshop.labels"' charts/bookshop/templates/services.yaml
+---
+7:{{- $ctx := dict "root" $ "name" $name "version" $svc.image.tag }}
+14:    {{- include "bookshop.labels" $ctx | nindent 4 }}
+26:        {{- include "bookshop.labels" $ctx | nindent 8 }}
+87:    {{- include "bookshop.labels" $ctx | nindent 4 }}
+# exit 0

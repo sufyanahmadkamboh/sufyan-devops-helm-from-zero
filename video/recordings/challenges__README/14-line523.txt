@@ -1,0 +1,20 @@
+cd labs/work/challenges/shopfront
+cat >> Chart.yaml <<'EOF'
+dependencies:
+  - name: podinfo
+    version: 6.15.0
+    repository: https://stefanprodan.github.io/podinfo
+    alias: status
+    condition: status.enabled
+EOF
+printf 'status:\n  enabled: false\n' >> values.yaml
+helm dependency update . > /dev/null
+helm dependency list .
+helm upgrade web . --namespace challenges -f values-dev.yaml --set status.enabled=true --wait --timeout 3m | grep STATUS
+cd - > /dev/null
+---
+NAME   	VERSION	REPOSITORY                            	STATUS
+podinfo	6.15.0 	https://stefanprodan.github.io/podinfo	ok    
+
+STATUS: deployed
+# exit 0

@@ -1,0 +1,8 @@
+helm upgrade shop charts/bookshop --namespace bookshop-staging \
+  -f charts/bookshop/values-staging.yaml -f labs/work/capstone/node-api-1.1.0.yaml \
+  --set services.java-api.image.tag=2.0.0 --wait --timeout 90s
+---
+level=WARN msg="upgrade failed" name=shop error="resource Deployment/bookshop-staging/shop-java-api not ready. status: InProgress, message: Pending termination: 1\ncontext deadline exceeded"
+Error: UPGRADE FAILED: resource Deployment/bookshop-staging/shop-java-api not ready. status: InProgress, message: Pending termination: 1
+context deadline exceeded
+# exit 1

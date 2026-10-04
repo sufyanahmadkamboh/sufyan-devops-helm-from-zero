@@ -1,0 +1,5 @@
+kind delete cluster --name helm-lab 2>&1
+---
+Deleting cluster "helm-lab" ...
+Deleted nodes: ["helm-lab-control-plane" "helm-lab-worker"]
+# exit 0

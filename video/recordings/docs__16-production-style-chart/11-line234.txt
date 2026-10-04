@@ -1,0 +1,14 @@
+for env in staging prod; do
+  helm uninstall shop --namespace bookshop-$env --wait
+  kubectl delete namespace bookshop-$env --wait=false > /dev/null
+done
+---
+These resources were kept due to the resource policy:
+[Secret] shop-db
+
+release "shop" uninstalled
+These resources were kept due to the resource policy:
+[Secret] shop-db
+
+release "shop" uninstalled
+# exit 0

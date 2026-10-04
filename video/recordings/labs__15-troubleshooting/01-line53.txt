@@ -1,0 +1,6 @@
+helm install mystery charts/demo-app --namespace trouble --create-namespace \
+  -f labs/broken-release-values.yaml --wait --timeout 60s
+---
+Error: INSTALLATION FAILED: resource Deployment/trouble/mystery-demo-app not ready. status: InProgress, message: Available: 0/1
+context deadline exceeded
+# exit 1

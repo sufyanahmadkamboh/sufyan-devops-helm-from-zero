@@ -1,0 +1,10 @@
+helm upgrade shop charts/bookshop --namespace bookshop-dev -f charts/bookshop/values-dev.yaml \
+  --set database.existingSecret=shop-db-prod \
+  --wait --timeout 90s
+---
+level=WARN msg="upgrade failed" name=shop error="resource Deployment/bookshop-dev/shop-java-api not ready. status: InProgress, message: Pending termination: 1\nresource Deployment/bookshop-dev/shop-node-api not ready. status: InProgress, message: Pending termination: 1\nresource Deployment/bookshop-dev/shop-python-api not ready. status: InProgress, message: Pending termination: 1\ncontext deadline exceeded"
+Error: UPGRADE FAILED: resource Deployment/bookshop-dev/shop-java-api not ready. status: InProgress, message: Pending termination: 1
+resource Deployment/bookshop-dev/shop-node-api not ready. status: InProgress, message: Pending termination: 1
+resource Deployment/bookshop-dev/shop-python-api not ready. status: InProgress, message: Pending termination: 1
+context deadline exceeded
+# exit 1

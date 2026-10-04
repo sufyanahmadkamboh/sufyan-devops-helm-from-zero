@@ -1,0 +1,10 @@
+helm dependency build labs/work/ts10/bookshop
+---
+Hang tight while we grab the latest from your chart repositories...
+...Successfully got an update from the "podinfo" chart repository
+...Successfully got an update from the "traefik" chart repository
+Update Complete. ⎈Happy Helming!⎈
+Saving 1 charts
+Save error occurred:  can't get a valid version for dependency postgres
+Error: can't get a valid version for dependency postgres
+# exit 1

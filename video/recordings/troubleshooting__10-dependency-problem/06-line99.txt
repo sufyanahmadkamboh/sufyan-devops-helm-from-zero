@@ -1,0 +1,10 @@
+sed -i '/- name: postgres/{n;s/version: 0.1.1/version: 0.2.0/}' labs/work/ts10/bookshop/Chart.yaml
+helm dependency update labs/work/ts10/bookshop
+---
+Hang tight while we grab the latest from your chart repositories...
+...Successfully got an update from the "podinfo" chart repository
+...Successfully got an update from the "traefik" chart repository
+Update Complete. ⎈Happy Helming!⎈
+Saving 1 charts
+Deleting outdated charts
+# exit 0

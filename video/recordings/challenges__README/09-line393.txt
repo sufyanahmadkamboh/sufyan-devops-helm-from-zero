@@ -1,0 +1,14 @@
+kubectl get deploy,svc,configmap,ingress --namespace challenges -l app.kubernetes.io/instance=web
+---
+NAME                  READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/web   1/1     1            1           7s
+
+NAME          TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
+service/web   ClusterIP   10.96.221.246   <none>        8080/TCP   7s
+
+NAME                   DATA   AGE
+configmap/web-config   1      7s
+
+NAME                            CLASS     HOSTS                 ADDRESS   PORTS   AGE
+ingress.networking.k8s.io/web   traefik   challenge.localhost             80      7s
+# exit 0

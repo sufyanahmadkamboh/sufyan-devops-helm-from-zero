@@ -1,0 +1,10 @@
+for host in dev.bookshop staging.bookshop bookshop; do
+  printf '%-18s ' "$host"; curl -s "http://$host.localhost:8080/config.js"; echo
+done
+---
+dev.bookshop       window.APP_CONFIG = { ADMIN_URL: "", APP_ENV: "dev" };
+
+staging.bookshop   window.APP_CONFIG = { ADMIN_URL: "", APP_ENV: "staging" };
+
+bookshop           window.APP_CONFIG = { ADMIN_URL: "", APP_ENV: "prod" };
+# exit 0

@@ -1,0 +1,8 @@
+helm get values demo --namespace trouble | grep -E 'replicaCount|enabled|minReplicas|maxReplicas'
+---
+  enabled: true
+  maxReplicas: 6
+  minReplicas: 3
+  enabled: true
+replicaCount: 5
+# exit 0

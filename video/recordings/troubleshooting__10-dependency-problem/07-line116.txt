@@ -1,0 +1,13 @@
+helm dependency list labs/work/ts10/bookshop
+grep version labs/work/ts10/bookshop/Chart.lock
+helm lint labs/work/ts10/bookshop | tail -1
+helm template shop labs/work/ts10/bookshop | grep 'helm.sh/chart: postgres' | sort -u
+---
+NAME    	VERSION	REPOSITORY        	STATUS
+postgres	0.2.0  	file://../postgres	ok    
+
+  version: 0.2.0
+1 chart(s) linted, 0 chart(s) failed
+        helm.sh/chart: postgres-0.2.0
+    helm.sh/chart: postgres-0.2.0
+# exit 0

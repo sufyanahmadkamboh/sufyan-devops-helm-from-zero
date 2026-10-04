@@ -1,0 +1,4 @@
+rm -rf labs/work/ts10
+---
+
+# exit 0

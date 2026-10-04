@@ -1,0 +1,14 @@
+sed -n '/^  java-api:/,/^$/p' charts/bookshop/values.yaml
+---
+  java-api:
+    enabled: true
+    image: { name: bookshop-java-api, tag: "" }
+    replicas: 1
+    port: 8080
+    runAsUser: 10001
+    database: true
+    probes: { liveness: /health, readiness: /ready, startup: /health }   # the JVM starts slowly: a startup probe
+    resources:
+      requests: { cpu: 250m, memory: 256Mi }
+      limits: { cpu: "1", memory: 512Mi }
+# exit 0

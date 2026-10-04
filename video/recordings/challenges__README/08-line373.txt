@@ -1,0 +1,19 @@
+cd labs/work/challenges/shopfront
+cat > templates/_helpers.tpl <<'EOF'
+{{- define "shopfront.labels" -}}
+app.kubernetes.io/name: {{ .Chart.Name }}
+app.kubernetes.io/instance: {{ .Release.Name }}
+app.kubernetes.io/version: {{ .Values.image.tag | default .Chart.AppVersion | quote }}
+app.kubernetes.io/managed-by: {{ .Release.Service }}
+environment: {{ .Values.environment | quote }}
+{{- end }}
+EOF
+for f in deployment service configmap ingress; do
+  sed -i '0,/^  name: .*/s//&\n  labels:\n    {{- include "shopfront.labels" . | nindent 4 }}/' templates/$f.yaml
+done
+helm lint . -f values-dev.yaml --quiet
+helm upgrade web . --namespace challenges -f values-dev.yaml --wait --timeout 3m | grep STATUS
+cd - > /dev/null
+---
+STATUS: deployed
+# exit 0

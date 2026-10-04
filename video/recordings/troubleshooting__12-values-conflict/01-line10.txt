@@ -1,0 +1,5 @@
+helm install demo charts/demo-app --namespace trouble --create-namespace \
+  -f charts/demo-app/values-prod.yaml --wait --timeout 3m | grep STATUS
+---
+STATUS: deployed
+# exit 0

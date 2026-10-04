@@ -1,0 +1,50 @@
+for env in dev staging prod; do echo "# values-$env.yaml"; grep -v '^#' charts/bookshop/values-$env.yaml; done
+---
+# values-dev.yaml
+environment: dev
+ingress:
+  host: dev.bookshop.localhost
+# values-staging.yaml
+environment: staging
+services:
+  node-api: { replicas: 2 }
+  python-api: { replicas: 2 }
+postgres:
+  persistence:
+    size: 2Gi
+ingress:
+  host: staging.bookshop.localhost
+# values-prod.yaml
+environment: prod
+services:
+  frontend:
+    image: { tag: "1.0.0" }
+    replicas: 2
+  node-api:
+    image: { tag: "1.0.0" }
+    resources:
+      requests: { cpu: 100m, memory: 128Mi }
+      limits: { cpu: "1", memory: 512Mi }
+  python-api:
+    image: { tag: "1.0.0" }
+    replicas: 2
+  go-status:
+    image: { tag: "1.0.0" }
+    replicas: 2
+  java-api:
+    image: { tag: "1.0.0" }
+    replicas: 2
+report:
+  image: { tag: "1.0.0" }
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 6
+podDisruptionBudget:
+  enabled: true
+postgres:
+  persistence:
+    size: 5Gi
+ingress:
+  host: bookshop.localhost
+# exit 0

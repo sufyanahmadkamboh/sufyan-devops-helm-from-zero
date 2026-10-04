@@ -1,0 +1,15 @@
+helm dependency build charts/bookshop > /dev/null
+for env in dev staging prod; do
+  helm lint charts/bookshop -f charts/bookshop/values-$env.yaml --quiet && echo "$env: lint ok"
+  helm template shop charts/bookshop -f charts/bookshop/values-$env.yaml | grep -c '^kind:' | sed "s/^/$env: objects rendered: /"
+done
+helm lint charts/bookshop -f charts/bookshop/values-staging.yaml | tail -1
+---
+dev: lint ok
+dev: objects rendered: 17
+staging: lint ok
+staging: objects rendered: 17
+prod: lint ok
+prod: objects rendered: 23
+1 chart(s) linted, 0 chart(s) failed
+# exit 0

@@ -1,0 +1,7 @@
+sed -i '/^image:/,/^  tag:/d' labs/broken-release-values.yaml
+helm upgrade mystery charts/demo-app --namespace trouble -f labs/broken-release-values.yaml --wait --timeout 60s
+---
+level=WARN msg="upgrade failed" name=mystery error="resource Deployment/trouble/mystery-demo-app not ready. status: InProgress, message: Pending termination: 1\ncontext deadline exceeded"
+Error: UPGRADE FAILED: resource Deployment/trouble/mystery-demo-app not ready. status: InProgress, message: Pending termination: 1
+context deadline exceeded
+# exit 1

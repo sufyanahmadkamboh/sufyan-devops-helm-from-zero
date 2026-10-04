@@ -1,0 +1,19 @@
+bash troubleshooting/triage.sh shop bookshop-staging | sed -n '/== helm history/,/== values/p;/== warning events/,$p'
+---
+== helm history (last 3)
+REVISION	UPDATED                 	STATUS    	CHART         	APP VERSION	DESCRIPTION                                                         
+1       	Mon Oct  5 01:22:30 2026	superseded	bookshop-1.2.0	1.0.0      	Install complete                                                    
+2       	Mon Oct  5 01:22:59 2026	deployed  	bookshop-1.2.0	1.0.0      	Upgrade complete                                                    
+3       	Mon Oct  5 01:23:09 2026	failed    	bookshop-1.2.0	1.0.0      	Upgrade "shop" failed: resource Deployment/bookshop-staging/shop-jav
+
+== values supplied by the user
+== warning events of the release's objects (last 8)
+shop-node-api-64f4cb4bcf-rvr9c     Unhealthy   Readiness probe failed: Get "http://10.244.1.189:3000/ready": context deadline exceeded (Client.Timeout exceeded 
+shop-node-api-64f4cb4bcf-7kmmr     Unhealthy   Readiness probe failed: HTTP probe failed with statuscode: 503
+shop-java-api-f7bcdfdd7-ljbxn      Unhealthy   Readiness probe failed: Get "http://10.244.1.187:8080/ready": context deadline exceeded (Client.Timeout exceeded 
+shop-node-api-688cc5c85f-bvnbx     Unhealthy   Readiness probe failed: Get "http://10.244.1.197:3000/ready": dial tcp 10.244.1.197:3000: connect: connection ref
+shop-node-api-688cc5c85f-6djkb     Unhealthy   Readiness probe failed: Get "http://10.244.1.198:3000/ready": dial tcp 10.244.1.198:3000: connect: connection ref
+shop-java-api-5dd4d8bfd7-54n4k     Failed      Error: ImagePullBackOff
+shop-java-api-5dd4d8bfd7-54n4k     Failed      Error: ErrImagePull
+shop-java-api-5dd4d8bfd7-54n4k     Failed      Failed to pull image "ghcr.io/sufyanahmadkamboh/bookshop-java-api:2.0.0": rpc error: code = NotFound desc = faile
+# exit 0

@@ -1,0 +1,6 @@
+grep -rn --include="*.yaml" "bookshop-node-api:" environments/ | sed 's/ *#.*//'
+---
+environments/dev/deployments.yaml:79:          image: ghcr.io/sufyanahmadkamboh/bookshop-node-api:1.0.0
+environments/prod/deployments.yaml:79:          image: ghcr.io/sufyanahmadkamboh/bookshop-node-api:1.0.0
+environments/staging/deployments.yaml:79:          image: ghcr.io/sufyanahmadkamboh/bookshop-node-api:1.0.0
+# exit 0

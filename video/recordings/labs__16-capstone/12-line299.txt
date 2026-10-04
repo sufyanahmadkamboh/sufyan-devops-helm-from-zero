@@ -1,0 +1,14 @@
+helm template shop charts/bookshop --namespace bookshop-staging --skip-tests \
+  -f charts/bookshop/values-staging.yaml -f labs/work/capstone/node-api-1.1.0.yaml \
+  | kubectl diff --server-side --field-manager=helm --namespace bookshop-staging -f - 2>/dev/null \
+  | grep -E '^[-+] ' | grep -vE 'generation:|meta\.helm\.sh/|^-\s+annotations:$|DB_PASSWORD' || true
+---
+-    app.kubernetes.io/version: 1.0.0
++    app.kubernetes.io/version: 1.1.0
+-        app.kubernetes.io/version: 1.0.0
++        app.kubernetes.io/version: 1.1.0
+-        image: ghcr.io/sufyanahmadkamboh/bookshop-node-api:1.0.0
++        image: ghcr.io/sufyanahmadkamboh/bookshop-node-api:1.1.0
+-    app.kubernetes.io/version: 1.0.0
++    app.kubernetes.io/version: 1.1.0
+# exit 0

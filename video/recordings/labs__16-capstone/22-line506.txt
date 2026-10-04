@@ -1,0 +1,13 @@
+helm list --all-namespaces
+kubectl get namespaces
+---
+NAME   	NAMESPACE	REVISION	UPDATED                              	STATUS  	CHART         	APP VERSION
+traefik	traefik  	1       	2026-10-05 00:55:58.745498 +0200 CEST	deployed	traefik-41.6.1	v3.7.13    
+NAME                 STATUS   AGE
+default              Active   29m
+kube-node-lease      Active   29m
+kube-public          Active   29m
+kube-system          Active   29m
+local-path-storage   Active   29m
+traefik              Active   29m
+# exit 0

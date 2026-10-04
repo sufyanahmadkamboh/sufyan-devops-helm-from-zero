@@ -1,0 +1,6 @@
+helm install demo charts/demo-app --namespace trouble --create-namespace \
+  -f troubleshooting/values-trouble.yaml --wait --timeout 3m > /dev/null
+helm test demo --namespace trouble | grep Phase
+---
+Phase:          Succeeded
+# exit 0

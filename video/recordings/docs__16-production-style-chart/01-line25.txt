@@ -1,0 +1,6 @@
+wc -l environments/*/*.yaml | tail -1
+cat charts/bookshop/templates/*.yaml charts/bookshop/templates/_helpers.tpl charts/bookshop/templates/tests/*.yaml | wc -l
+---
+ 1374 total
+351
+# exit 0

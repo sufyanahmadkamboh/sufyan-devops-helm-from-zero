@@ -1,0 +1,8 @@
+for env in dev staging prod; do
+  echo "== $env: $(helm get manifest shop --namespace bookshop-$env | grep -E '^kind:' | sort | uniq -c | awk '{printf "%s %s, ", $1, $3}')"
+done
+---
+== dev: 1 ConfigMap, 5 Deployment, 1 Ingress, 1 Secret, 6 Service, 1 StatefulSet, 
+== staging: 1 ConfigMap, 5 Deployment, 1 Ingress, 1 Secret, 6 Service, 1 StatefulSet, 
+== prod: 1 ConfigMap, 5 Deployment, 1 HorizontalPodAutoscaler, 1 Ingress, 5 PodDisruptionBudget, 1 Secret, 6 Service, 1 StatefulSet, 
+# exit 0

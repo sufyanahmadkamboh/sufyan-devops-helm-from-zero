@@ -1,0 +1,5 @@
+helm upgrade demo charts/demo-app --namespace trouble -f troubleshooting/values-trouble.yaml --wait
+---
+level=WARN msg="upgrade failed" name=demo error="conflict occurred while applying object trouble/demo-demo-app /v1, Kind=ConfigMap: Apply failed with 1 conflict: conflict with \"kubectl-patch\" using v1: .data.APP_ENV"
+Error: UPGRADE FAILED: conflict occurred while applying object trouble/demo-demo-app /v1, Kind=ConfigMap: Apply failed with 1 conflict: conflict with "kubectl-patch" using v1: .data.APP_ENV
+# exit 1

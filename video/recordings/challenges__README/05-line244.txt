@@ -1,0 +1,44 @@
+cd labs/work/challenges/shopfront
+cat > templates/configmap.yaml <<'EOF'
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-config
+data:
+  APP_ENV: {{ .Values.environment | quote }}
+EOF
+cat > templates/deployment.yaml <<'EOF'
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  template:
+    metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+      labels:
+        app: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: web
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          ports:
+            - name: http
+              containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-config
+          readinessProbe:
+            httpGet: { path: /health, port: http }
+EOF
+a=$(helm template web . | grep checksum); b=$(helm template web . --set environment=qa | grep checksum)
+[ "$a" != "$b" ] && echo "checksums differ: the Pods would restart"
+cd - > /dev/null
+---
+checksums differ: the Pods would restart
+# exit 0

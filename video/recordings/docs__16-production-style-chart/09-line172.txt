@@ -1,0 +1,8 @@
+for env in dev staging prod; do
+  echo "$env: $(helm test shop --namespace bookshop-$env | grep Phase | awk '{print $2}')"
+done
+---
+dev: Succeeded
+staging: Succeeded
+prod: Succeeded
+# exit 0

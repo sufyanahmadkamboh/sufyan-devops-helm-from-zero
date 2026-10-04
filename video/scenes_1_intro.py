@@ -94,7 +94,7 @@ scene("Kubernetes YAML Before Helm", "Recorded · environments/README.md", "Depl
 
 scene(None, "Recorded · environments/README.md", "Now imagine staging and production", terminal(
     rec(LEVEL1, "wc -l environments/dev/*.yaml")
-    + rec(LEVEL1, "grep -rn \"bookshop-node-api:\" environments/", step=1, width=140, tones={"node-api": "warn"})
+    + rec(LEVEL1, "\"bookshop-node-api:\" environments/", step=1, width=140, tones={"node-api": "warn"})
     + rec(LEVEL1, "grep -n -A1 \"stringData\" environments/dev/secret.yaml", step=2, tones={"password": "bad"}),
     "bash (recorded)"), [
     S("Now imagine maintaining it across three environments. About four hundred sixty lines each, and the diff between "

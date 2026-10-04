@@ -1,0 +1,12 @@
+echo "lines per environment: $(cat environments/staging/*.yaml | wc -l)"
+echo "lines that differ from dev: $(diff -r environments/dev environments/staging | grep -c '^[<>]')"
+grep -rn 'image:' environments/staging/deployments.yaml | sed 's/ *#.*//'
+---
+lines per environment: 458
+lines that differ from dev: 74
+22:          image: ghcr.io/sufyanahmadkamboh/bookshop-frontend:1.0.0
+79:          image: ghcr.io/sufyanahmadkamboh/bookshop-node-api:1.0.0
+130:          image: ghcr.io/sufyanahmadkamboh/bookshop-python-api:1.0.0
+181:          image: ghcr.io/sufyanahmadkamboh/bookshop-go-status:1.0.0
+224:          image: ghcr.io/sufyanahmadkamboh/bookshop-java-api:1.0.0
+# exit 0

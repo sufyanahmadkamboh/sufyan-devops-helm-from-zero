@@ -1,0 +1,16 @@
+sed -i 's/      targetPort: 80/      targetPort: http/' labs/work/challenges/shopfront/templates/service.yaml
+helm upgrade web labs/work/challenges/shopfront --namespace challenges \
+  -f labs/work/challenges/shopfront/values-dev.yaml --set status.enabled=true --wait --timeout 3m > /dev/null
+helm test web --namespace challenges --filter name=web-test-health
+---
+NAME: web
+LAST DEPLOYED: Mon Oct  5 01:26:48 2026
+NAMESPACE: challenges
+STATUS: deployed
+REVISION: 9
+DESCRIPTION: Upgrade complete
+TEST SUITE:     web-test-health
+Last Started:   Mon Oct  5 01:26:48 2026
+Last Completed: Mon Oct  5 01:26:51 2026
+Phase:          Succeeded
+# exit 0

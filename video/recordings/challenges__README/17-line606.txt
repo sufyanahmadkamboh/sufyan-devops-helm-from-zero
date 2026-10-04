@@ -1,0 +1,16 @@
+helm test web --namespace challenges --filter name=web-test-health --logs
+---
+NAME: web
+LAST DEPLOYED: Mon Oct  5 01:26:42 2026
+NAMESPACE: challenges
+STATUS: deployed
+REVISION: 7
+DESCRIPTION: Upgrade complete
+TEST SUITE:     web-test-health
+Last Started:   Mon Oct  5 01:26:42 2026
+Last Completed: Mon Oct  5 01:26:45 2026
+Phase:          Succeeded
+
+POD LOGS: web-test-health (check)
+{"status":"ok","service":"frontend","version":"1.0.0"} - environment dev confirmed
+# exit 0

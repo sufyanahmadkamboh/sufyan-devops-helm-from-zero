@@ -1,0 +1,13 @@
+cat > labs/work/capstone/node-api-1.1.0.yaml <<'EOF'
+# Release overlay: node-api 1.1.0 (applied on top of the environment's values file)
+services:
+  node-api:
+    image: { tag: "1.1.0" }
+EOF
+cat labs/work/capstone/node-api-1.1.0.yaml
+---
+# Release overlay: node-api 1.1.0 (applied on top of the environment's values file)
+services:
+  node-api:
+    image: { tag: "1.1.0" }
+# exit 0

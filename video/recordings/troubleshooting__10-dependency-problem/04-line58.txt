@@ -1,0 +1,5 @@
+helm dependency list labs/work/ts10/bookshop
+---
+NAME    	VERSION	REPOSITORY        	STATUS 
+postgres	0.1.1  	file://../postgres	missing
+# exit 0

@@ -1,0 +1,10 @@
+kubectl get pods --namespace bookshop-dev | grep -E 'NAME|api'
+---
+NAME                              READY   STATUS                       RESTARTS   AGE
+shop-java-api-6659d799c4-sg9xb    0/1     CreateContainerConfigError   0          90s
+shop-java-api-7ff96666d4-7znv8    1/1     Running                      0          5m44s
+shop-node-api-7cddbc795-mvbst     0/1     CreateContainerConfigError   0          90s
+shop-node-api-899845bc5-klcd4     1/1     Running                      0          115s
+shop-python-api-57cf464-p8wsq     0/1     CreateContainerConfigError   0          90s
+shop-python-api-9f4bcbc58-wr65p   1/1     Running                      0          7m32s
+# exit 0

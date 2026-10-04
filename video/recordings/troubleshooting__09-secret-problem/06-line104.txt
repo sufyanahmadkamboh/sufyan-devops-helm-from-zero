@@ -1,0 +1,6 @@
+helm upgrade shop charts/bookshop --namespace bookshop-dev -f charts/bookshop/values-dev.yaml \
+  --set database.existingSecret=shop-db-prod --set postgres.auth.existingSecret=shop-db-prod \
+  --wait --timeout 5m | grep STATUS
+---
+STATUS: deployed
+# exit 0

@@ -1,0 +1,10 @@
+for env in staging prod; do
+  helm upgrade --install shop charts/bookshop --namespace bookshop-$env --create-namespace \
+    -f charts/bookshop/values-$env.yaml --wait --timeout 10m | grep -E '^(NAMESPACE|STATUS):'
+done
+---
+NAMESPACE: bookshop-staging
+STATUS: deployed
+NAMESPACE: bookshop-prod
+STATUS: deployed
+# exit 0

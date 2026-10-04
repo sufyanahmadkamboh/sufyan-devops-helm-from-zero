@@ -1,0 +1,5 @@
+helm uninstall traefik --namespace traefik --wait
+kubectl delete namespace traefik --wait=false > /dev/null
+---
+release "traefik" uninstalled
+# exit 0

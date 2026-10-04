@@ -1,0 +1,10 @@
+cd labs/work/challenges/shopfront
+sed -i 's/^replicaCount: 1/replicaCount: 2/' values-dev.yaml
+helm template web . --namespace challenges -f values-dev.yaml \
+  | kubectl diff --server-side --field-manager=helm --namespace challenges -f - \
+  | grep -E '^[-+] ' | grep -vE 'generation:|meta\.helm\.sh/|^-\s+annotations:$' || true
+cd - > /dev/null
+---
+-  replicas: 1
++  replicas: 2
+# exit 0

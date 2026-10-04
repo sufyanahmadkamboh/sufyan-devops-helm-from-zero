@@ -1,0 +1,20 @@
+kubectl get pods --namespace bookshop-staging
+curl -s http://staging.bookshop.localhost:8080/config.js; echo
+curl -s http://staging.bookshop.localhost:8080/api/users | head -c 100; echo
+kubectl logs --namespace bookshop-staging job/shop-report | tail -1
+---
+NAME                               READY   STATUS      RESTARTS   AGE
+shop-frontend-5c9fb4cb45-sn77b     1/1     Running     0          26s
+shop-go-status-59cc574b9d-zwlzh    1/1     Running     0          26s
+shop-java-api-f7bcdfdd7-ljbxn      1/1     Running     0          26s
+shop-node-api-64f4cb4bcf-7kmmr     1/1     Running     0          26s
+shop-node-api-64f4cb4bcf-rvr9c     1/1     Running     0          26s
+shop-postgres-0                    1/1     Running     0          26s
+shop-python-api-5b48d98bf9-dtnxx   1/1     Running     0          26s
+shop-python-api-5b48d98bf9-xx8c2   1/1     Running     0          26s
+shop-report-rfsvk                  0/1     Completed   0          3s
+window.APP_CONFIG = { ADMIN_URL: "", APP_ENV: "staging" };
+
+[{"id":1,"name":"Ada Lovelace","email":"ada@example.com","created_at":"2026-10-04T23:22:41.956Z"},{"
+2026-10-04T23:22:55.849Z report-worker report #1 saved: users=3 books=5 reviews=0 services up=5/5
+# exit 0

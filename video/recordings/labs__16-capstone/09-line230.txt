@@ -1,0 +1,28 @@
+helm upgrade --install shop charts/bookshop --namespace bookshop-staging --create-namespace \
+  -f charts/bookshop/values-staging.yaml --wait --timeout 10m
+---
+Release "shop" does not exist. Installing it now.
+NAME: shop
+LAST DEPLOYED: Mon Oct  5 01:22:30 2026
+NAMESPACE: bookshop-staging
+STATUS: deployed
+REVISION: 1
+DESCRIPTION: Install complete
+NOTES:
+Bookshop 1.0.0 (chart 1.2.0) · release "shop" · namespace "bookshop-staging" · environment staging · revision 1
+
+Services:
+  frontend    ghcr.io/sufyanahmadkamboh/bookshop-frontend:1.0.0 × 1
+  go-status   ghcr.io/sufyanahmadkamboh/bookshop-go-status:1.0.0 × 1
+  java-api    ghcr.io/sufyanahmadkamboh/bookshop-java-api:1.0.0 × 1
+  node-api    ghcr.io/sufyanahmadkamboh/bookshop-node-api:1.0.0 × 2
+  python-api  ghcr.io/sufyanahmadkamboh/bookshop-python-api:1.0.0 × 2
+Database:    bundled (shop-postgres) · password in Secret "shop-db"
+
+Open:  http://staging.bookshop.localhost:8080/
+
+Check it:
+  kubectl --namespace bookshop-staging get pods -l app.kubernetes.io/instance=shop
+  kubectl --namespace bookshop-staging logs job/shop-report      # the post-install report
+  helm test shop --namespace bookshop-staging
+# exit 0

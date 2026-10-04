@@ -1,0 +1,6 @@
+kubectl rollout status deployment/shop-node-api --namespace bookshop-staging
+helm test shop --namespace bookshop-staging --logs | grep node-api
+---
+deployment "shop-node-api" successfully rolled out
+node-api: {"status":"ready","service":"node-api","version":"1.1.0"}
+# exit 0

@@ -1,0 +1,4 @@
+helm template shop labs/work/ts10/bookshop
+---
+Error: an error occurred while checking for chart dependencies. You may need to run 'helm dependency build' to fetch missing dependencies: found in Chart.yaml, but missing in charts/ directory: postgres
+# exit 1

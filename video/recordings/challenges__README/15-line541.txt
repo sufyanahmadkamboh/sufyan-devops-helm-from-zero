@@ -1,0 +1,6 @@
+kubectl get deployments --namespace challenges
+---
+NAME         READY   UP-TO-DATE   AVAILABLE   AGE
+web          2/2     2            2           83s
+web-status   1/1     1            1           13s
+# exit 0

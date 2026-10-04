@@ -1,0 +1,5 @@
+kubectl get events --namespace bookshop-dev --field-selector reason=Failed \
+  -o custom-columns='POD:.involvedObject.name,MESSAGE:.message' | grep node-api | grep secret | tail -2
+---
+shop-node-api-7cddbc795-mvbst    Error: secret "shop-db-prod" not found
+# exit 0

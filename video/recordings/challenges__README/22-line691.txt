@@ -1,0 +1,6 @@
+helm uninstall web --namespace challenges --wait
+kubectl delete namespace challenges --wait=false > /dev/null
+rm -rf labs/work/challenges
+---
+release "web" uninstalled
+# exit 0

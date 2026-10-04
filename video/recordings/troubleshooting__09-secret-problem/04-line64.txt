@@ -1,0 +1,8 @@
+kubectl get secrets --namespace bookshop-dev --field-selector type=Opaque
+helm get values shop --namespace bookshop-dev | grep -A1 database
+---
+NAME      TYPE     DATA   AGE
+shop-db   Opaque   1      7m33s
+database:
+  existingSecret: shop-db-prod
+# exit 0

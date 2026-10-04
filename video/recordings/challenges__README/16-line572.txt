@@ -1,0 +1,33 @@
+cd labs/work/challenges/shopfront
+mkdir -p templates/tests
+cat > templates/tests/test-health.yaml <<'EOF'
+apiVersion: v1
+kind: Pod
+metadata:
+  name: {{ .Release.Name }}-test-health
+  labels:
+    {{- include "shopfront.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+    "helm.sh/hook-delete-policy": before-hook-creation
+spec:
+  restartPolicy: Never
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 65534
+  containers:
+    - name: check
+      image: busybox:1.37
+      command: ["sh", "-c"]
+      args:
+        - |
+          set -e
+          wget -qO- http://{{ .Release.Name }}:8080/health
+          wget -qO- http://{{ .Release.Name }}:8080/config.js | grep -q 'APP_ENV: "{{ .Values.environment }}"'
+          echo " - environment {{ .Values.environment }} confirmed"
+EOF
+helm upgrade web . --namespace challenges -f values-dev.yaml --set status.enabled=true --wait --timeout 3m | grep STATUS
+cd - > /dev/null
+---
+STATUS: deployed
+# exit 0

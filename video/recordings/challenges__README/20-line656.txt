@@ -1,0 +1,6 @@
+kubectl get service web --namespace challenges -o jsonpath='{.spec.ports[0]}'; echo
+kubectl get pods --namespace challenges -l app=web -o jsonpath='{.items[0].spec.containers[0].ports}'; echo
+---
+{"port":8080,"protocol":"TCP","targetPort":80}
+[{"containerPort":8080,"name":"http","protocol":"TCP"}]
+# exit 0

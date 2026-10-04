@@ -1,0 +1,7 @@
+mkdir -p labs/work
+cp charts/demo-app/values-prod.yaml labs/work/values-prod-sale.yaml
+sed -i 's/^  minReplicas: 3/  minReplicas: 5   # sale: at least 5, until the end of the campaign/' labs/work/values-prod-sale.yaml
+grep minReplicas labs/work/values-prod-sale.yaml
+---
+  minReplicas: 5   # sale: at least 5, until the end of the campaign
+# exit 0

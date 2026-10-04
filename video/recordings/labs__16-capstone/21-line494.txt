@@ -1,0 +1,19 @@
+for ns in bookshop-dev bookshop-staging bookshop-prod; do
+  helm uninstall shop --namespace $ns --wait 2>/dev/null
+  kubectl delete namespace $ns --wait=false > /dev/null 2>&1
+done
+rm -rf labs/work/capstone
+---
+These resources were kept due to the resource policy:
+[Secret] shop-db
+
+release "shop" uninstalled
+These resources were kept due to the resource policy:
+[Secret] shop-db
+
+release "shop" uninstalled
+These resources were kept due to the resource policy:
+[Secret] shop-db
+
+release "shop" uninstalled
+# exit 0

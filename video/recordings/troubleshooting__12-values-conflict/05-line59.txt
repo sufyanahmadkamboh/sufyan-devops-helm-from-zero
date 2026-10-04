@@ -1,0 +1,11 @@
+helm get manifest demo --namespace trouble | grep -E '^kind:|replicas:|minReplicas|maxReplicas'
+---
+kind: ServiceAccount
+kind: ConfigMap
+kind: Service
+kind: Deployment
+kind: HorizontalPodAutoscaler
+  minReplicas: 3
+  maxReplicas: 6
+kind: Ingress
+# exit 0

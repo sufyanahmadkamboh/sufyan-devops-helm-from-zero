@@ -1,0 +1,7 @@
+kubectl rollout restart deployment/demo-demo-app --namespace trouble > /dev/null
+kubectl rollout status deployment/demo-demo-app --namespace trouble --timeout=120s
+---
+Waiting for deployment "demo-demo-app" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "demo-demo-app" rollout to finish: 1 old replicas are pending termination...
+deployment "demo-demo-app" successfully rolled out
+# exit 0

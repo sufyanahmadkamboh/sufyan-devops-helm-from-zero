@@ -1,0 +1,6 @@
+helm uninstall demo --namespace trouble --wait > /dev/null
+kubectl delete namespace trouble > /dev/null
+rm -f labs/work/values-prod-sale.yaml
+---
+
+# exit 0
