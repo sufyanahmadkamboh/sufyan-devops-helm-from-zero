@@ -1,0 +1,126 @@
+# Proves that every command in the lessons still works:
+#   static    links, charts (lint + render + kubeconform for every values file), scripts
+#   lessons   every lab, troubleshooting scenario, challenge and the capstone, in course order, on a kind cluster
+#   publish   (main only) packages the charts and pushes them to GHCR as OCI artifacts
+name: test-lessons
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 5 * * 1"     # weekly: catch upstream changes (charts, images, Helm)
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  HELM_VERSION: v4.3.0
+  KIND_VERSION: v0.33.0
+  KUBECTL_VERSION: v1.37.1
+  KUBECONFORM_VERSION: v0.8.0
+
+jobs:
+  static:
+    name: Static checks (links, charts, scripts)
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+      - name: Helm and kubeconform
+        run: |
+          f="helm-${HELM_VERSION}-linux-amd64.tar.gz"
+          curl -fsSLO "https://get.helm.sh/$f" && curl -fsSLO "https://get.helm.sh/$f.sha256sum"
+          sha256sum -c "$f.sha256sum"
+          tar xzf "$f" linux-amd64/helm && sudo mv linux-amd64/helm /usr/local/bin/helm && rm -rf "$f" "$f.sha256sum" linux-amd64
+          curl -fsSL "https://github.com/yannh/kubeconform/releases/download/${KUBECONFORM_VERSION}/kubeconform-linux-amd64.tar.gz" | tar xz kubeconform
+          helm version --short
+      - name: Relative links in every Markdown file
+        run: python3 tests/check_links.py
+      - name: Charts lint and render to valid Kubernetes objects (every values file)
+        run: |
+          helm dependency build charts/bookshop
+          helm dependency build examples/dependency-example
+          for chart in charts/demo-app charts/bookshop charts/postgres examples/basic-chart examples/values-example examples/dependency-example examples/hooks-example; do
+            files=$(ls $chart/values-*.yaml 2>/dev/null || true)
+            for values in "" $files; do
+              args=""; [ -n "$values" ] && args="-f $values"
+              echo "== $chart ${values:+($values)}"
+              helm lint "$chart" $args --strict --quiet
+              helm template check "$chart" $args | ./kubeconform -strict -summary -ignore-missing-schemas
+            done
+          done
+      - name: Environments (raw YAML) are valid
+        run: ./kubeconform -strict -summary environments/*/*.yaml
+      - name: Scripts (ShellCheck)
+        run: shellcheck -S style troubleshooting/triage.sh
+
+  lessons:
+    name: Lessons on kind (labs, troubleshooting, challenges, capstone)
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+      - name: Tools (Helm, kind, kubectl)
+        run: |
+          f="helm-${HELM_VERSION}-linux-amd64.tar.gz"
+          curl -fsSLO "https://get.helm.sh/$f" && curl -fsSLO "https://get.helm.sh/$f.sha256sum"
+          sha256sum -c "$f.sha256sum"
+          tar xzf "$f" linux-amd64/helm && sudo mv linux-amd64/helm /usr/local/bin/helm && rm -rf "$f" "$f.sha256sum" linux-amd64
+          curl -fsSLo kind "https://kind.sigs.k8s.io/dl/${KIND_VERSION}/kind-linux-amd64"
+          curl -fsSLo kubectl "https://dl.k8s.io/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl"
+          chmod +x kind kubectl && sudo mv kind kubectl /usr/local/bin/
+          helm version --short && kind version && kubectl version --client
+      - name: Run the lessons, in course order
+        run: |
+          files="labs/00-setup.md environments/README.md"
+          files="$files $(ls labs/0[1-9]-*.md labs/1[0-4]-*.md | sort)"
+          files="$files docs/13-security.md"
+          files="$files $(ls troubleshooting/[0-9]*.md | sort)"
+          files="$files labs/15-troubleshooting.md docs/16-production-style-chart.md labs/16-capstone.md"
+          files="$files challenges/README.md labs/cleanup.md"
+          python3 tests/mdrun.py --update --record tests/out --stop-on-failure $files
+      - name: Keep the real outputs and recordings
+        if: always()
+        run: git diff > tests/out/outputs.patch || true
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a  # v7.0.1
+        if: always()
+        with:
+          name: run-lessons
+          path: tests/out/
+          retention-days: 14
+
+  publish:
+    name: Publish charts to GHCR (OCI)
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: [static, lessons]
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+      - name: Helm
+        run: |
+          f="helm-${HELM_VERSION}-linux-amd64.tar.gz"
+          curl -fsSLO "https://get.helm.sh/$f" && curl -fsSLO "https://get.helm.sh/$f.sha256sum"
+          sha256sum -c "$f.sha256sum"
+          tar xzf "$f" linux-amd64/helm && sudo mv linux-amd64/helm /usr/local/bin/helm && rm -rf "$f" "$f.sha256sum" linux-amd64
+      - name: Package and push demo-app, postgres, bookshop
+        env:
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ACTOR: ${{ github.actor }}
+        run: |
+          echo "$TOKEN" | helm registry login ghcr.io --username "$ACTOR" --password-stdin
+          helm dependency build charts/bookshop
+          mkdir -p dist
+          for chart in charts/demo-app charts/postgres charts/bookshop; do
+            helm package "$chart" --destination dist
+          done
+          for pkg in dist/*.tgz; do
+            helm push "$pkg" "oci://ghcr.io/${GITHUB_REPOSITORY_OWNER}/charts"
+          done
+          helm registry logout ghcr.io
