@@ -24,7 +24,7 @@ the production-style Bookshop chart with its own PostgreSQL chart as a dependenc
 ```text
 storefront (parent chart)                       bookshop (parent chart)
  ├── templates/configmap.yaml                    ├── templates/  (5 services, config, secret, ingress, hook, test)
- └── dependency: podinfo 6.15.0                  └── dependency: postgres 0.1.0
+ └── dependency: podinfo 6.15.0                  └── dependency: postgres 0.1.1
        from https://stefanprodan.github.io/podinfo      from file://../postgres (this repository)
        alias: catalog, condition: catalog.enabled        condition: postgres.enabled
 ```
@@ -178,7 +178,7 @@ The podinfo objects are gone, and the parent's template reacted to the same valu
 repository (`repository: file://../postgres`). A fresh clone has no `charts/bookshop/charts/` folder; build it from the
 lock file:
 
-<!-- test: contains=postgres-0.1.0.tgz; output -->
+<!-- test: contains=postgres-0.1.1.tgz; output -->
 ```bash
 helm dependency build charts/bookshop
 ls charts/bookshop/charts/

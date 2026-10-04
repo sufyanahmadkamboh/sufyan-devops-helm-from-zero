@@ -8,12 +8,12 @@ a post-install/post-upgrade hook and a Helm test.
 |---|---|
 | Chart version | `1.2.0` |
 | App version | `1.0.0` (the default tag of every Bookshop image) |
-| Dependency | `postgres` `0.1.0` (local chart `../postgres`, switch: `postgres.enabled`) |
+| Dependency | `postgres` `0.1.1` (local chart `../postgres`, switch: `postgres.enabled`) |
 
 ## Install
 
 ```bash
-helm dependency build charts/bookshop       # puts charts/postgres-0.1.0.tgz in place (from Chart.lock)
+helm dependency build charts/bookshop       # puts charts/postgres-0.1.1.tgz in place (from Chart.lock)
 helm upgrade --install shop charts/bookshop -n bookshop-dev --create-namespace \
   -f charts/bookshop/values-dev.yaml --wait --timeout 5m
 helm test shop -n bookshop-dev
