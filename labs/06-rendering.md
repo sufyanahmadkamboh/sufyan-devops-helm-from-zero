@@ -101,17 +101,16 @@ The bookshop chart uses `lookup` to keep its database password stable across upg
 ([secret.yaml](../charts/bookshop/templates/secret.yaml)). Without a cluster there is nothing to look up, so each
 render generates a new random password:
 
-<!-- test: output -->
+<!-- test: contains=different passwords; output -->
 ```bash
 helm dependency build charts/bookshop > /dev/null
-for i in 1 2; do
-  helm template shop charts/bookshop --show-only templates/secret.yaml | grep DB_PASSWORD
-done
+first=$(helm template shop charts/bookshop --show-only templates/secret.yaml | grep DB_PASSWORD)
+second=$(helm template shop charts/bookshop --show-only templates/secret.yaml | grep DB_PASSWORD)
+[ "$first" != "$second" ] && echo "two renders, two different passwords"
 ```
 
 ```text
-  DB_PASSWORD: a0s2MDl1bjlPQ0FZYUJNRGNNbmVPN3R5
-  DB_PASSWORD: YlRTczVEZE1QRHVjazJBZlhONmxTZHM1
+two renders, two different passwords
 ```
 
 Two different values: expected for `helm template`, and the reason you never apply `helm template` output to
@@ -126,7 +125,7 @@ helm install demo charts/demo-app -f charts/demo-app/values-dev.yaml --namespace
 
 ```text
 NAME: demo
-LAST DEPLOYED: Sun Oct  4 23:25:31 2026
+LAST DEPLOYED: Sun Oct  4 23:25:56 2026
 NAMESPACE: default
 STATUS: pending-install
 REVISION: 1
