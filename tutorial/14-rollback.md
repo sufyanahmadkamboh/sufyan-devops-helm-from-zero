@@ -37,7 +37,7 @@ one. The record stays honest, including the failure.
 Note what saved users during the failure: Kubernetes' rolling update, not Helm. Helm noticed the failure because of
 `--wait`; without it, the bad revision would have been reported as `deployed`.
 
-The interrupted upgrade is the one you will meet in real life (a cancelled CI job): `another operation
+The killed upgrade is the one you will meet in real life (a CI runner that dies mid-deploy): `another operation
 (install/upgrade/rollback) is in progress`. The lock is real, the operation is dead, and the fix is a rollback to the
 last good revision, after making sure nobody else is deploying.
 

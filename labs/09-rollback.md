@@ -241,12 +241,12 @@ record in sync with the cluster.
 
 ## Break It
 
-An upgrade interrupted half-way (a CI job cancelled, a laptop closed, a network drop). `timeout 5` kills Helm after
-5 seconds, in the middle of its `--wait`:
+An upgrade killed half-way: a CI runner that dies, a `kill -9`, a laptop that loses power. `timeout -s KILL 5`
+kills Helm hard after 5 seconds, in the middle of its `--wait`:
 
 <!-- test: fail; timeout=120; output -->
 ```bash
-timeout 5 helm upgrade demo charts/demo-app --namespace demo-rollback \
+timeout -s KILL 5 helm upgrade demo charts/demo-app --namespace demo-rollback \
   -f charts/demo-app/values-dev.yaml --set 'ingress.hosts[0].host=demo-rollback.localhost' \
   --set image.tag=1.0.1-hotfix --wait --timeout 5m
 ```
@@ -254,7 +254,9 @@ timeout 5 helm upgrade demo charts/demo-app --namespace demo-rollback \
 ```text
 ```
 
-No output: `timeout` stopped Helm (exit code 124) while it was waiting. Now try any normal upgrade:
+No output: Helm was killed (exit code 137) while it was waiting, without any chance to clean up. (A polite stop is
+different: on SIGTERM or Ctrl+C, Helm 4 cancels the operation itself and marks the revision `failed: context
+canceled`, and nothing gets stuck. A hard kill gives it no chance.) Now try any normal upgrade:
 
 <!-- test: fail; contains=another operation (install/upgrade/rollback) is in progress; output -->
 ```bash

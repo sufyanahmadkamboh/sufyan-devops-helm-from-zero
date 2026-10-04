@@ -93,7 +93,7 @@ values, not data (migrations, volumes). `--rollback-on-failure` automates it for
 
 <details><summary>12. "another operation (install/upgrade/rollback) is in progress": what do you do?</summary>
 
-A previous operation died after writing a `pending-*` revision (a cancelled CI job, a closed laptop). Check that nothing
+A previous operation was killed after writing a `pending-*` revision (a CI runner that died, a `kill -9`, a lost machine; a polite Ctrl+C or SIGTERM lets Helm 4 mark it failed instead). Check that nothing
 is really running (CI, teammates), then `helm rollback REL LAST_GOOD`, which replaces the pending state.
 ([lab 09](../labs/09-rollback.md#break-it))
 </details>

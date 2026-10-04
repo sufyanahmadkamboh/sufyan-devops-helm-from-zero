@@ -106,7 +106,7 @@ scene(None, "Recorded · labs/09-rollback.md", "Automatic rollback, and a releas
     "bash (recorded)"), [
     S("dash dash rollback on failure does it automatically: the upgrade fails, Helm rolls back to the previous revision "
       "immediately.", zoom=1.3),
-    S("And the one you will meet in real life: a deployment interrupted half-way, a cancelled pipeline. The next upgrade "
+    S("And the one you will meet in real life: a deployment killed half-way, by a runner that died. The next upgrade "
       "says another operation is in progress. It is not: the process that started it is dead.", zoom=1.3),
     S("Helm wrote the revision as pending upgrade before applying, and only that process could have completed it. The "
       "way out is a rollback to the last good revision. Check that nobody is really deploying first.", zoom=1.25),
