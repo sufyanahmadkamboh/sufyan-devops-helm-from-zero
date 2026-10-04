@@ -15,7 +15,8 @@ spec:
   template:
     metadata:
       labels:
-        {{- include "basic.selectorLabels" . | nindent 8 }}
+        # the Pods get all labels (the selector labels are among them), so you can filter Pods by environment
+        {{- include "basic.labels" . | nindent 8 }}
     spec:
       containers:
         # .Chart: the fields of Chart.yaml (here its name)
