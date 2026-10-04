@@ -1,0 +1,37 @@
+# demo-app
+
+The Bookshop frontend (a React app served by nginx) as a Helm chart: the chart of the course's lessons.
+Image: `ghcr.io/sufyanahmadkamboh/bookshop-frontend`, listening on port 8080, health check on `/health`, its
+environment shown at `/config.js` and in the page footer.
+
+| | |
+|---|---|
+| Chart version | `1.0.0` (the version of this package) |
+| App version | `1.0.0` (the image tag deployed unless `image.tag` is set) |
+
+## Install
+
+```bash
+helm upgrade --install demo charts/demo-app -n demo-dev --create-namespace -f charts/demo-app/values-dev.yaml --wait
+helm test demo -n demo-dev
+```
+
+## Values
+
+| Key | Default | Meaning |
+|---|---|---|
+| `environment` | `local` | Name of the environment: shown in the UI, set as the `environment` label |
+| `replicaCount` | `1` | Pods (ignored when `autoscaling.enabled`) |
+| `image.repository` | `ghcr.io/sufyanahmadkamboh/bookshop-frontend` | Image without tag |
+| `image.tag` | `""` | Empty = the chart's `appVersion` |
+| `config.adminUrl` | `""` | Link of the "Reviews admin" menu entry (empty = hidden) |
+| `service.port` | `8080` | Port of the Service |
+| `ingress.enabled` | `false` | Create an Ingress (class `traefik`) for `ingress.hosts` |
+| `autoscaling.enabled` | `false` | Create a HorizontalPodAutoscaler (`minReplicas`–`maxReplicas`) |
+| `resources` | 10m/32Mi → 200m/128Mi | Requests and limits |
+
+Environment files: [values-dev.yaml](values-dev.yaml), [values-staging.yaml](values-staging.yaml),
+[values-prod.yaml](values-prod.yaml). They contain only what differs from [values.yaml](values.yaml).
+
+No secrets: this chart needs none. The production-style chart [bookshop](../bookshop/README.md) shows how a chart
+handles a database password.

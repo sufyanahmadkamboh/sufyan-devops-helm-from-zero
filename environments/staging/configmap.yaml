@@ -1,4 +1,4 @@
-# Bookshop, environment: staging. Deployed WITHOUT Helm: kubectl apply -f environments/staging/
+# Bookshop, environment: staging. Deployed WITHOUT Helm: kubectl apply -f environments/staging/namespace.yaml -f environments/staging/
 apiVersion: v1
 kind: ConfigMap
 metadata:

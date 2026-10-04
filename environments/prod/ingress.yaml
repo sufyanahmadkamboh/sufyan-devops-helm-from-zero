@@ -1,4 +1,4 @@
-# Bookshop, environment: prod. Deployed WITHOUT Helm: kubectl apply -f environments/prod/
+# Bookshop, environment: prod. Deployed WITHOUT Helm: kubectl apply -f environments/prod/namespace.yaml -f environments/prod/
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:

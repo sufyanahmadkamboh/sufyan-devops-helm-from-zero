@@ -1,4 +1,4 @@
-# Bookshop, environment: dev. Deployed WITHOUT Helm: kubectl apply -f environments/dev/
+# Bookshop, environment: dev. Deployed WITHOUT Helm: kubectl apply -f environments/dev/namespace.yaml -f environments/dev/
 apiVersion: apps/v1
 kind: Deployment
 metadata:

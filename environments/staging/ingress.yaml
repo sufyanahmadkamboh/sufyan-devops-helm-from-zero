@@ -1,4 +1,4 @@
-# Bookshop, environment: staging. Deployed WITHOUT Helm: kubectl apply -f environments/staging/
+# Bookshop, environment: staging. Deployed WITHOUT Helm: kubectl apply -f environments/staging/namespace.yaml -f environments/staging/
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
