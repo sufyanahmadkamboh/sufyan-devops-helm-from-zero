@@ -27,10 +27,11 @@ spec:
       command: ["sh", "-c"]
       args:
         - |
-          set -e
+          set -e   # stop at the first failing check: the Pod fails, and so does "helm test"
           {{- range $name, $svc := .Values.services }}
           {{- if $svc.enabled }}
-          echo "{{ $name }}: $(wget -qO- http://{{ $.Release.Name }}-{{ $name }}:{{ $svc.port }}{{ $svc.probes.readiness }})"
+          out=$(wget -qO- http://{{ $.Release.Name }}-{{ $name }}:{{ $svc.port }}{{ $svc.probes.readiness }})
+          echo "{{ $name }}: $out"
           {{- end }}
           {{- end }}
           {{- if .Values.services.frontend.enabled }}

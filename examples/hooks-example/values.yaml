@@ -12,5 +12,10 @@ hooks:
   - event: pre-delete        # on "helm uninstall", before anything is deleted
     weight: 0
 
+# Each entry may also set deletePolicy (default: before-hook-creation).
+
+# Make one hook fail on purpose, to see what Helm does then: e.g. --set failAt=pre-upgrade
+failAt: ""
+
 # The release's ordinary resources: just a ConfigMap.
 message: "hello from the hooks example"

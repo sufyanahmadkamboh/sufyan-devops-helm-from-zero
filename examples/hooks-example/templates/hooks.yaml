@@ -10,9 +10,9 @@ metadata:
   annotations:
     "helm.sh/hook": {{ .event }}
     "helm.sh/hook-weight": {{ .weight | quote }}
-    # before-hook-creation: delete the previous Job of this hook only when it runs again. The finished Job stays,
-    # so you can read its log. (hook-succeeded would delete it right after it succeeds.)
-    "helm.sh/hook-delete-policy": before-hook-creation
+    # Default before-hook-creation: delete the previous Job of this hook only when it runs again. The finished Job
+    # stays, so you can read its log. (hook-succeeded would delete it right after it succeeds.)
+    "helm.sh/hook-delete-policy": {{ .deletePolicy | default "before-hook-creation" }}
 spec:
   backoffLimit: 0
   template:
@@ -33,5 +33,10 @@ spec:
             capabilities: { drop: ["ALL"] }
           command: ["sh", "-c"]
           args:
-            - echo "{{ .event }} hook · release {{ $.Release.Name }} · revision {{ $.Release.Revision }} · $(date -u +%H:%M:%S)"
+            - |
+              echo "{{ .event }} hook · release {{ $.Release.Name }} · revision {{ $.Release.Revision }} · $(date -u +%H:%M:%S)"
+              {{- if eq $.Values.failAt .event }}
+              echo "{{ .event }}: simulated failure (failAt={{ $.Values.failAt }})"
+              exit 1
+              {{- end }}
 {{- end }}
