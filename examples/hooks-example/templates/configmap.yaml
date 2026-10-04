@@ -1,0 +1,7 @@
+# The release's ordinary resource (no hook annotation): created after pre-install, deleted after pre-delete.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-settings
+data:
+  MESSAGE: {{ .Values.message | quote }}

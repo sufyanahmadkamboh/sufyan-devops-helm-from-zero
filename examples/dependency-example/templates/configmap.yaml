@@ -1,0 +1,13 @@
+# The parent chart's own resource: settings that point at the dependency's Service.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-storefront
+data:
+  TITLE: {{ .Values.storefront.title | quote }}
+  {{- if .Values.catalog.enabled }}
+  # the podinfo chart names its Service "<release>-<alias>"; it listens on 9898
+  CATALOG_URL: "http://{{ .Release.Name }}-catalog:9898"
+  {{- else }}
+  CATALOG_URL: ""
+  {{- end }}

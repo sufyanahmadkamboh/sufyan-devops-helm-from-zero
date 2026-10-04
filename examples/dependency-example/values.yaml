@@ -1,0 +1,22 @@
+# The parent's own values.
+storefront:
+  title: "Bookshop storefront"
+
+# Values for the dependency: everything under its alias is passed to the podinfo chart as ITS values.
+# (Look them up with: helm show values podinfo/podinfo --version 6.15.0)
+catalog:
+  enabled: true
+  replicaCount: 1
+  ui:
+    message: "catalog service, deployed as a dependency of storefront"
+  ingress:
+    enabled: true
+    className: traefik
+    hosts:
+      - host: catalog.localhost
+        paths:
+          - path: /
+            pathType: Prefix
+  resources:
+    requests: { cpu: 10m, memory: 32Mi }
+    limits: { memory: 64Mi }

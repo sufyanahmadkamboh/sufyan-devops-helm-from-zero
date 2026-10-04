@@ -1,0 +1,16 @@
+# One Job per entry. A Job annotated with "helm.sh/hook" is NOT part of the release's normal resources:
+# Helm creates it at the hook's moment, waits for it to finish, and (with a delete policy) deletes it.
+hooks:
+  - event: pre-install       # before any resource of the release is created
+    weight: -5               # lower weight first, when several hooks share an event
+  - event: post-install      # after all resources are created (and ready, with --wait)
+    weight: 0
+  - event: pre-upgrade       # before the upgraded resources are applied
+    weight: 0
+  - event: post-upgrade      # after the upgrade is applied
+    weight: 0
+  - event: pre-delete        # on "helm uninstall", before anything is deleted
+    weight: 0
+
+# The release's ordinary resources: just a ConfigMap.
+message: "hello from the hooks example"

@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  # include: insert a named template from _helpers.tpl
+  name: {{ include "basic.fullname" . }}
+  labels:
+    # nindent 4: a new line, then indent every line by 4 spaces (YAML is indentation-sensitive)
+    {{- include "basic.labels" . | nindent 4 }}
+spec:
+  # .Values: anything from values.yaml, -f files or --set
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "basic.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "basic.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        # .Chart: the fields of Chart.yaml (here its name)
+        - name: {{ .Chart.Name }}
+          # default: use the tag if set, otherwise the chart's appVersion
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          ports:
+            - containerPort: {{ .Values.service.port }}
+          env:
+            # quote: always a YAML string ("dev"), even for values like 1.10 or true
+            - name: APP_ENV
+              value: {{ .Values.environment | quote }}
+            # .Release: facts about this install (name, namespace, revision, IsInstall, IsUpgrade)
+            - name: RELEASE
+              value: "{{ .Release.Name }} rev {{ .Release.Revision }} in {{ .Release.Namespace }}"
+          {{- /* if / else: render a block only when a condition is true */}}
+          {{- if eq .Values.environment "prod" }}
+          imagePullPolicy: Always
+          {{- else }}
+          imagePullPolicy: IfNotPresent
+          {{- end }}
+          # toYaml: a whole map from values, written as YAML (here the resources block)
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}

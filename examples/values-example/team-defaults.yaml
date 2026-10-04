@@ -1,0 +1,4 @@
+# 2. A values file (-f). Overrides values.yaml, only the keys it contains.
+logLevel: warn
+features:
+  recommendations: true          # maps are MERGED: features.reviews keeps its default

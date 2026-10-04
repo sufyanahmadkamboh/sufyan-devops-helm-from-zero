@@ -1,0 +1,30 @@
+# Everything that raw/deployment.yaml hard-codes, as values.
+replicaCount: 2
+
+image:
+  repository: ghcr.io/sufyanahmadkamboh/bookshop-frontend
+  tag: ""                      # empty: "default" falls back to the chart's appVersion
+
+environment: dev
+
+service:
+  type: ClusterIP
+  port: 8080
+
+# A map: the ConfigMap template ranges over it, one key per entry.
+config:
+  LOG_LEVEL: info
+  FEATURE_REVIEWS: "true"
+
+# Extra labels, added with "with" only when the map is not empty.
+extraLabels:
+  team: web
+
+resources:
+  requests:
+    cpu: 10m
+    memory: 32Mi
+
+ingress:
+  enabled: false
+  host: basic.localhost

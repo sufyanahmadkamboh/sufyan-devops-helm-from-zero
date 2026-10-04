@@ -1,0 +1,9 @@
+# 1. The chart's defaults: the lowest priority. Every other source overrides keys from here.
+environment: local
+replicaCount: 1
+logLevel: info
+image:
+  tag: "1.0.0"
+features:
+  reviews: true
+  recommendations: false

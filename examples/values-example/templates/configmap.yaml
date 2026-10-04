@@ -1,0 +1,11 @@
+# The final values, after Helm merged: values.yaml < -f file1 < -f file2 < --set
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-values
+data:
+  environment: {{ .Values.environment | quote }}
+  replicaCount: {{ .Values.replicaCount | quote }}
+  logLevel: {{ .Values.logLevel | quote }}
+  imageTag: {{ .Values.image.tag | quote }}
+  features: {{ .Values.features | toJson | quote }}

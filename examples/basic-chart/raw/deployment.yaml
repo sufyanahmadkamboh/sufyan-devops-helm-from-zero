@@ -1,0 +1,30 @@
+# BEFORE Helm: a hard-coded Deployment. Every value below is fixed: to run 3 replicas in production, or another
+# image tag, you copy this file and edit the copy. Compare with ../templates/deployment.yaml.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web
+  labels:
+    app: web
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      containers:
+        - name: web
+          image: ghcr.io/sufyanahmadkamboh/bookshop-frontend:1.0.0
+          ports:
+            - containerPort: 8080
+          env:
+            - name: APP_ENV
+              value: dev
+          resources:
+            requests:
+              cpu: 10m
+              memory: 32Mi

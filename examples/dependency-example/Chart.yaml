@@ -1,0 +1,13 @@
+apiVersion: v2
+name: storefront
+description: A parent chart with one dependency (podinfo, from its public chart repository) under the alias "catalog".
+type: application
+version: 0.1.0
+appVersion: "1.0.0"
+
+dependencies:
+  - name: podinfo                                      # the chart's name in the repository
+    version: 6.15.0                                    # pinned: an exact version, never a floating range in production
+    repository: https://stefanprodan.github.io/podinfo # where "helm dependency update" downloads it from
+    alias: catalog                                     # the name inside this chart: values live under "catalog:"
+    condition: catalog.enabled                         # catalog.enabled=false leaves it out entirely

@@ -1,0 +1,4 @@
+# 3. A second values file (-f, given AFTER team-defaults.yaml): the later file wins where both set a key.
+environment: prod
+replicaCount: 3
+logLevel: error

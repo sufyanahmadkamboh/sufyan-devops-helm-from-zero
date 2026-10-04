@@ -1,0 +1,37 @@
+{{- range .Values.hooks }}
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ $.Release.Name }}-{{ .event }}
+  labels:
+    app.kubernetes.io/instance: {{ $.Release.Name }}
+    hook: {{ .event }}
+  annotations:
+    "helm.sh/hook": {{ .event }}
+    "helm.sh/hook-weight": {{ .weight | quote }}
+    # before-hook-creation: delete the previous Job of this hook only when it runs again. The finished Job stays,
+    # so you can read its log. (hook-succeeded would delete it right after it succeeds.)
+    "helm.sh/hook-delete-policy": before-hook-creation
+spec:
+  backoffLimit: 0
+  template:
+    metadata:
+      labels:
+        hook: {{ .event }}
+    spec:
+      restartPolicy: Never
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 65534
+        seccompProfile: { type: RuntimeDefault }
+      containers:
+        - name: hook
+          image: busybox:1.37
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities: { drop: ["ALL"] }
+          command: ["sh", "-c"]
+          args:
+            - echo "{{ .event }} hook · release {{ $.Release.Name }} · revision {{ $.Release.Revision }} · $(date -u +%H:%M:%S)"
+{{- end }}

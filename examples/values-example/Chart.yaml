@@ -1,0 +1,6 @@
+apiVersion: v2
+name: values-example
+description: Shows which value wins. It renders one ConfigMap containing the final, merged values.
+type: application
+version: 0.1.0
+appVersion: "1.0.0"

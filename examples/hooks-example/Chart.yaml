@@ -1,0 +1,6 @@
+apiVersion: v2
+name: hooks-example
+description: One small Job per lifecycle hook, to SEE when Helm runs each one. A teaching chart, not a pattern to copy.
+type: application
+version: 0.1.0
+appVersion: "1.0.0"

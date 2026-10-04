@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "basic.fullname" . }}-config
+  labels:
+    {{- include "basic.labels" . | nindent 4 }}
+data:
+  {{- /* range: repeat for each entry of a map ($key, $value) or of a list */}}
+  {{- range $key, $value := .Values.config }}
+  {{ $key }}: {{ $value | quote }}
+  {{- end }}

@@ -1,0 +1,27 @@
+{{- /*
+.Capabilities: what the target cluster supports. Render the Ingress only when it is switched on AND the cluster
+serves the networking.k8s.io/v1 API. (With "helm template" there is no cluster: Helm assumes its default API list.)
+*/}}
+{{- if and .Values.ingress.enabled (.Capabilities.APIVersions.Has "networking.k8s.io/v1") }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "basic.fullname" . }}
+  labels:
+    {{- include "basic.labels" . | nindent 4 }}
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ include "basic.fullname" . }}
+                port:
+                  number: {{ .Values.service.port }}
+      # with: if the value is set, run the block with "." = that value. No host = a rule for every host name.
+      {{- with .Values.ingress.host }}
+      host: {{ . | quote }}
+      {{- end }}
+{{- end }}
