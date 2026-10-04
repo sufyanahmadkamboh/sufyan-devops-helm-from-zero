@@ -145,7 +145,7 @@ deployment.apps/demo-demo-app   5/5     5            5           10s
 <!-- test: timeout=300 -->
 ```bash
 helm uninstall demo --namespace trouble --wait > /dev/null
-kubectl delete namespace trouble --wait=false > /dev/null
+kubectl delete namespace trouble > /dev/null
 rm -f labs/work/values-prod-sale.yaml
 ```
 

@@ -27,8 +27,9 @@ kubectl get deployments,statefulsets,services,ingresses --namespace "$ns" -l "$s
 
 section "service endpoints"
 kubectl get endpointslices --namespace "$ns" \
-  -o custom-columns='SERVICE:.metadata.labels.kubernetes\.io/service-name,ENDPOINTS:.endpoints[*].addresses[0]' 2>&1
+  -o custom-columns='SERVICE:.metadata.labels.kubernetes\.io/service-name,ENDPOINTS:.endpoints[*].addresses[0],READY:.endpoints[*].conditions.ready' 2>&1
 
-section "warning events (last 8)"
+section "warning events of the release's objects (last 8)"
 kubectl get events --namespace "$ns" --field-selector type=Warning --sort-by=.lastTimestamp \
-  -o custom-columns='OBJECT:.involvedObject.name,REASON:.reason,MESSAGE:.message' 2>&1 | tail -8 | cut -c1-160
+  -o custom-columns='OBJECT:.involvedObject.name,REASON:.reason,MESSAGE:.message' --no-headers 2>&1 \
+  | grep -E "^${release}-" | tail -8 | cut -c1-160
