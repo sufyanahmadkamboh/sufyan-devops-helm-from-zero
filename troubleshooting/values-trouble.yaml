@@ -1,0 +1,10 @@
+# The release every demo-app troubleshooting scenario starts from: dev settings on its own host name.
+environment: dev
+replicaCount: 1
+ingress:
+  enabled: true
+  hosts:
+    - host: trouble.localhost
+      paths:
+        - path: /
+          pathType: Prefix
