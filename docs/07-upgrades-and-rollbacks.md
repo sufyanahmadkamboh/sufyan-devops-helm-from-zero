@@ -52,7 +52,7 @@ helm upgrade ... --rollback-on-failure --timeout 60s     # automatic rollback (H
 | Problem | Where |
 |---|---|
 | Forgotten values files → defaults | [lab 08](../labs/08-upgrade.md#break-it) |
-| Upgrade never ready (image, probes, OOM) | [lab 09](../labs/09-rollback.md), [06](../troubleshooting/06-failed-upgrade.md) |
+| Upgrade never ready (image, probes, a missing service account) | [lab 09](../labs/09-rollback.md), [06](../troubleshooting/06-failed-upgrade.md) |
 | Successful but wrong upgrade | [07](../troubleshooting/07-bad-revision-rollback.md) |
 | Partially applied failed upgrade (immutable field) | [04](../troubleshooting/04-wrong-service-selector.md) |
 | `another operation ... is in progress` | interrupted operation, [lab 09](../labs/09-rollback.md#break-it) |

@@ -21,7 +21,7 @@ The things that surprised me while building and testing it:
 ✅ Every command in 17 labs, the 12 scenarios, 12 challenges and the 19-step capstone runs automatically in GitHub Actions on a real kind cluster with Helm 4.3; the outputs in the docs are the real outputs.
 ✅ CI lints every chart with every values file, validates the rendered YAML with kubeconform, and publishes the charts to GHCR as OCI artifacts.
 
-Study material: 16 concept pages (10 questions each), a cheat sheet, a 24-chapter guided course, a 24-chapter video ({{VIDEO_LEN}}, full and silent versions), a {{PDF_PAGES}}-page study guide PDF, a 71-term glossary and 25 interview questions.
+Study material: 16 concept pages (10 questions each), a cheat sheet, a 24-chapter guided course, a 24-chapter video (27 minutes, full and silent versions), a 74-page study guide PDF, a 71-term glossary and 25 interview questions.
 
 🔗 Repository: https://github.com/sufyanahmadkamboh/sufyan-devops-helm-from-zero
 🌐 All my projects: https://sufyanahmadkamboh.github.io/

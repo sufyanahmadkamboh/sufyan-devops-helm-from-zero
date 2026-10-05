@@ -16,7 +16,7 @@ then learned as a list of commands instead of an engineering practice.
   Troubleshoot It and a challenge
 - 16 concept pages answering ten questions each, security and best-practice pages, a cheat sheet
 - 12 troubleshooting scenarios: template syntax, wrong value, incorrect image, wrong Service selector (partial upgrade
-  with an immutable selector), wrong environment values, failed upgrade (OOMKilled), bad revision and rollback,
+  with an immutable selector), wrong environment values, failed upgrade (a missing service account), bad revision and rollback,
   missing ConfigMap, Secret problem, dependency problem, failed Helm test (drift and a server-side apply conflict),
   values conflict (HPA vs replicaCount); plus a read-only triage script
 - 12 challenges that build one chart from an empty folder; a 19-step capstone; a 24-chapter guided course; a study

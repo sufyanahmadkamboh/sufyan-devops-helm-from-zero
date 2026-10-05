@@ -30,7 +30,7 @@ kind create cluster --config kubernetes/cluster/kind-config.yaml 2>&1
 ...
 kubectl cluster-info --context kind-helm-lab
 
-Have a question, bug, or feature request? Let us know! https://kind.sigs.k8s.io/#community 🙂
+Not sure what to do next? 😅  Check out https://kind.sigs.k8s.io/docs/user/quick-start/
 ```
 
 <!-- test: retry=30; contains=helm-lab-worker; absent=NotReady; output -->
@@ -43,7 +43,7 @@ kubectl get nodes
 kind-helm-lab
 NAME                     STATUS   ROLES           AGE   VERSION
 helm-lab-control-plane   Ready    control-plane   26s   v1.37.0
-helm-lab-worker          Ready    <none>          15s   v1.37.0
+helm-lab-worker          Ready    <none>          14s   v1.37.0
 ```
 
 ## Step 2 · An ingress controller
