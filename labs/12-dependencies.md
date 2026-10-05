@@ -108,7 +108,9 @@ generated: "2026-10-04T23:13:45.2821502+02:00"
 | `helm dependency update` | resolves the versions in `Chart.yaml`, downloads them, **rewrites `Chart.lock`** | you changed a dependency |
 | `helm dependency build` | downloads exactly what `Chart.lock` says | a fresh clone, CI |
 
-Commit `Chart.lock` (exact versions + a digest) so everyone builds the same thing. This repository does **not**
+Commit `Chart.lock` (exact versions + a digest) so everyone builds the same thing. For a dependency from an `https://`
+repository, Helm 4 needs that repository added first (`helm repo add`, done in lab 11); otherwise both commands stop
+with `no repository definition for https://...`. `file://` and `oci://` dependencies need no `repo add`. This repository does **not**
 commit the downloaded `.tgz` files ([.gitignore](../.gitignore)); `helm dependency build` recreates them.
 
 ### 3 · Install, and configure the child from the parent
