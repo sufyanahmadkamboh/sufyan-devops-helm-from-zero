@@ -1011,813 +1011,813 @@ dash dash rollback on failure does it automatically:
 the upgrade fails, Helm rolls back to the previous revision immediately.
 
 254
-00:14:31,167 --> 00:14:33,640
+00:14:31,167 --> 00:14:33,627
 And the one you will meet in real life:
 
 255
-00:14:33,640 --> 00:14:37,191
-a deployment interrupted half-way, a cancelled pipeline.
+00:14:33,627 --> 00:14:36,908
+a deployment killed half-way, by a runner that died.
 
 256
-00:14:37,191 --> 00:14:40,679
+00:14:36,908 --> 00:14:40,379
 The next upgrade says another operation is in progress.
 
 257
-00:14:40,679 --> 00:14:41,313
+00:14:40,379 --> 00:14:41,010
 It is not:
 
 258
-00:14:41,313 --> 00:14:43,596
+00:14:41,010 --> 00:14:43,281
 the process that started it is dead.
 
 259
-00:14:44,133 --> 00:14:50,170
+00:14:43,833 --> 00:14:49,870
 Helm wrote the revision as pending upgrade before applying, and only that process could have completed it.
 
 260
-00:14:50,170 --> 00:14:53,132
+00:14:49,870 --> 00:14:52,832
 The way out is a rollback to the last good revision.
 
 261
-00:14:53,132 --> 00:14:55,638
+00:14:52,832 --> 00:14:55,338
 Check that nobody is really deploying first.
 
 262
-00:14:57,400 --> 00:15:03,206
+00:14:57,100 --> 00:15:02,906
 One chart, three environment files, each with only what differs from the defaults.
 
 263
-00:15:03,206 --> 00:15:04,338
+00:15:02,906 --> 00:15:04,038
 Dev and staging:
 
 264
-00:15:04,338 --> 00:15:05,471
+00:15:04,038 --> 00:15:05,171
 nine lines each.
 
 265
-00:15:06,033 --> 00:15:08,486
+00:15:05,733 --> 00:15:08,186
 Production pins the image tag explicitly,
 
 266
-00:15:08,486 --> 00:15:14,828
+00:15:08,186 --> 00:15:14,528
 replaces the fixed replica count with an autoscaler between three and six, and gets more C P U and memory.
 
 267
-00:15:16,567 --> 00:15:21,363
+00:15:16,267 --> 00:15:21,063
 helm upgrade dash dash install, the same command for every environment.
 
 268
-00:15:21,363 --> 00:15:27,173
+00:15:21,063 --> 00:15:26,873
 Dev with one replica, staging with two, production with three, kept by the autoscaler.
 
 269
-00:15:27,733 --> 00:15:30,825
+00:15:27,433 --> 00:15:30,525
 Each environment answers with its own configuration.
 
 270
-00:15:31,367 --> 00:15:35,568
+00:15:31,067 --> 00:15:35,268
 And the differences between staging and production are exactly the values:
 
 271
-00:15:35,568 --> 00:15:36,306
+00:15:35,268 --> 00:15:36,006
 nothing else.
 
 272
-00:15:36,306 --> 00:15:38,917
+00:15:36,006 --> 00:15:38,617
 Every environment runs the same chart version,
 
 273
-00:15:38,917 --> 00:15:42,778
+00:15:38,617 --> 00:15:42,478
 so a change is tested with the templates that will reach production.
 
 274
-00:15:44,533 --> 00:15:47,321
+00:15:44,233 --> 00:15:47,021
 Charts are distributed by name and version.
 
 275
-00:15:47,321 --> 00:15:50,173
+00:15:47,021 --> 00:15:49,873
 The author packages a chart into an archive.
 
 276
-00:15:50,733 --> 00:15:55,954
+00:15:50,433 --> 00:15:55,654
 Either an H T T P repository, which is a web server with an index and the archives,
 
 277
-00:15:55,954 --> 00:16:00,798
+00:15:55,654 --> 00:16:00,498
 or an O C I registry, the same kind of registry that stores container images.
 
 278
-00:16:01,333 --> 00:16:03,886
+00:16:01,033 --> 00:16:03,586
 You consume them with a pinned version:
 
 279
-00:16:03,886 --> 00:16:05,785
+00:16:03,586 --> 00:16:05,485
 the same package, every time.
 
 280
-00:16:06,333 --> 00:16:08,208
+00:16:06,033 --> 00:16:07,908
 This is most of Helm at work:
 
 281
-00:16:08,208 --> 00:16:13,963
+00:16:07,908 --> 00:16:13,663
 installing ingress controllers, monitoring, cert manager, from their maintainers' charts.
 
 282
-00:16:15,700 --> 00:16:20,763
+00:16:15,400 --> 00:16:20,463
 podinfo, a small, well-maintained demo application with a public chart.
 
 283
-00:16:20,763 --> 00:16:23,330
+00:16:20,463 --> 00:16:23,029
 Search shows chart and app versions.
 
 284
-00:16:23,867 --> 00:16:28,834
+00:16:23,567 --> 00:16:28,534
 Before installing, render it and look at what it creates and which images it pulls.
 
 285
-00:16:28,834 --> 00:16:32,126
+00:16:28,534 --> 00:16:31,826
 A Deployment and a Service with the maintainer's image.
 
 286
-00:16:32,126 --> 00:16:37,213
+00:16:31,826 --> 00:16:36,913
 But also three test Pods with three more images from Docker Hub, one without any tag.
 
 287
-00:16:37,213 --> 00:16:39,786
+00:16:36,913 --> 00:16:39,486
 That is the kind of detail a review is for.
 
 288
-00:16:41,533 --> 00:16:45,426
+00:16:41,233 --> 00:16:45,126
 Installed with a pinned version and a reviewed values file:
 
 289
-00:16:45,426 --> 00:16:47,933
+00:16:45,126 --> 00:16:47,633
 our message, two replicas, an Ingress.
 
 290
-00:16:48,467 --> 00:16:50,032
+00:16:48,167 --> 00:16:49,732
 And the other direction:
 
 291
-00:16:50,032 --> 00:16:56,033
+00:16:49,732 --> 00:16:55,733
 package demo app and push it to an O C I registry, here a local one standing in for G H C R.
 
 292
-00:16:56,567 --> 00:17:01,521
+00:16:56,267 --> 00:17:01,221
 Anyone can now install it by reference and version, instead of copying a folder.
 
 293
-00:17:03,267 --> 00:17:08,066
+00:17:02,967 --> 00:17:07,766
 The Bookshop chart depends on a small PostgreSQL chart from this repository.
 
 294
-00:17:08,600 --> 00:17:14,789
+00:17:08,300 --> 00:17:14,489
 The repository can be a folder, an H T T P repository, or an O C I registry.
 
 295
-00:17:15,333 --> 00:17:17,383
+00:17:15,033 --> 00:17:17,083
 And a condition makes it optional:
 
 296
-00:17:17,383 --> 00:17:21,483
+00:17:17,083 --> 00:17:21,183
 the bundled database for dev and C I, an external one in production.
 
 297
-00:17:23,233 --> 00:17:26,869
+00:17:22,933 --> 00:17:26,569
 A dependency must be in the parent's charts folder.
 
 298
-00:17:26,869 --> 00:17:28,438
+00:17:26,569 --> 00:17:28,138
 Declared, but missing.
 
 299
-00:17:29,000 --> 00:17:32,907
+00:17:28,700 --> 00:17:32,607
 helm dependency update downloads it and writes Chart.lock:
 
 300
-00:17:32,907 --> 00:17:34,592
+00:17:32,607 --> 00:17:34,292
 exact version and digest.
 
 301
-00:17:34,592 --> 00:17:37,421
+00:17:34,292 --> 00:17:37,121
 Commit the lock, and build from it in C I.
 
 302
-00:17:37,967 --> 00:17:43,636
+00:17:37,667 --> 00:17:43,336
 One release, objects from two charts, and the child configured through the parent's values.
 
 303
-00:17:45,400 --> 00:17:50,670
+00:17:45,100 --> 00:17:50,370
 Five services, the database from the dependency, and a completed report Job:
 
 304
-00:17:50,670 --> 00:17:54,692
+00:17:50,370 --> 00:17:54,392
 seven workloads from two charts, one release, one command.
 
 305
-00:17:54,692 --> 00:17:56,564
+00:17:54,392 --> 00:17:56,264
 Compare with chapter three.
 
 306
-00:17:57,100 --> 00:17:58,083
+00:17:56,800 --> 00:17:57,783
 And it works:
 
 307
-00:17:58,083 --> 00:18:03,681
+00:17:57,783 --> 00:18:03,381
 dev environment, users from PostgreSQL, with a password nobody ever typed.
 
 308
-00:18:05,433 --> 00:18:08,338
+00:18:05,133 --> 00:18:08,038
 A hook is an ordinary Job with an annotation.
 
 309
-00:18:08,338 --> 00:18:11,371
+00:18:08,038 --> 00:18:11,071
 Helm creates it at its moment and waits for it.
 
 310
-00:18:11,371 --> 00:18:17,503
+00:18:11,071 --> 00:18:17,203
 Pre install before anything exists, post install after, pre and post upgrade around an upgrade.
 
 311
-00:18:18,067 --> 00:18:21,861
+00:18:17,767 --> 00:18:21,561
 Pre delete runs on uninstall, before anything is deleted.
 
 312
-00:18:21,861 --> 00:18:22,593
+00:18:21,561 --> 00:18:22,293
 And notice:
 
 313
-00:18:22,593 --> 00:18:26,254
+00:18:22,293 --> 00:18:25,954
 all five hook Jobs are still there after the uninstall.
 
 314
-00:18:26,254 --> 00:18:28,651
+00:18:25,954 --> 00:18:28,351
 They were never part of the release.
 
 315
-00:18:28,651 --> 00:18:31,713
+00:18:28,351 --> 00:18:31,413
 Hooks are powerful, and they add moving parts.
 
 316
-00:18:33,467 --> 00:18:35,450
+00:18:33,167 --> 00:18:35,150
 The Bookshop has exactly one hook:
 
 317
-00:18:35,450 --> 00:18:40,001
+00:18:35,150 --> 00:18:39,701
 after every install and upgrade, the report worker writes a deployment report.
 
 318
-00:18:40,001 --> 00:18:43,501
+00:18:39,701 --> 00:18:43,201
 A task that must run at a precise moment of each deployment:
 
 319
-00:18:43,501 --> 00:18:45,718
+00:18:43,201 --> 00:18:45,418
 that is when a hook is the right tool.
 
 320
-00:18:46,267 --> 00:18:50,409
+00:18:45,967 --> 00:18:50,109
 Its delete policy replaces the previous Job just before the next run,
 
 321
-00:18:50,409 --> 00:18:52,871
+00:18:50,109 --> 00:18:52,571
 so the last report's log is always there.
 
 322
-00:18:54,633 --> 00:18:58,217
+00:18:54,333 --> 00:18:57,917
 Now a pre upgrade hook fails, as a migration might.
 
 323
-00:18:58,217 --> 00:19:01,520
+00:18:57,917 --> 00:19:01,220
 The upgrade fails immediately, naming the hook.
 
 324
-00:19:02,067 --> 00:19:06,395
+00:19:01,767 --> 00:19:06,095
 Revision two is failed, and the ConfigMap still holds the old message:
 
 325
-00:19:06,395 --> 00:19:07,631
+00:19:06,095 --> 00:19:07,331
 nothing was touched.
 
 326
-00:19:07,631 --> 00:19:10,043
+00:19:07,331 --> 00:19:09,743
 That is what a pre upgrade hook is for.
 
 327
-00:19:10,043 --> 00:19:15,731
+00:19:09,743 --> 00:19:15,431
 Before writing one, ask whether an init container, a normal Job or a pipeline step would do:
 
 328
-00:19:15,731 --> 00:19:18,266
+00:19:15,431 --> 00:19:17,966
 a rollback does not undo what a hook did.
 
 329
-00:19:20,000 --> 00:19:23,047
+00:19:19,700 --> 00:19:22,747
 A Helm test is a Pod that only helm test creates.
 
 330
-00:19:23,047 --> 00:19:26,468
+00:19:22,747 --> 00:19:26,168
 The Bookshop's calls every service through its Service,
 
 331
-00:19:26,468 --> 00:19:32,686
+00:19:26,168 --> 00:19:32,386
 the A P Is check their database connection, and the frontend must report this release's environment.
 
 332
-00:19:32,686 --> 00:19:33,806
+00:19:32,386 --> 00:19:33,506
 All checks passed.
 
 333
-00:19:33,806 --> 00:19:36,666
+00:19:33,506 --> 00:19:36,366
 Run it after every upgrade, and on a schedule.
 
 334
-00:19:38,400 --> 00:19:41,239
+00:19:38,100 --> 00:19:40,939
 Someone scales java A P I to zero by hand.
 
 335
-00:19:41,239 --> 00:19:43,401
+00:19:40,939 --> 00:19:43,101
 helm status still says deployed:
 
 336
-00:19:43,401 --> 00:19:47,456
+00:19:43,101 --> 00:19:47,156
 Helm records what it applied, it does not watch the cluster.
 
 337
-00:19:48,000 --> 00:19:49,263
+00:19:47,700 --> 00:19:48,963
 The test does.
 
 338
-00:19:49,263 --> 00:19:54,676
+00:19:48,963 --> 00:19:54,376
 After go status, the next check, java A P I, cannot connect.
 
 339
-00:19:55,233 --> 00:19:58,136
+00:19:54,933 --> 00:19:57,836
 Compare what Helm applied with what is live:
 
 340
-00:19:58,136 --> 00:20:01,500
+00:19:57,836 --> 00:20:01,200
 the release says one replica, the cluster has zero.
 
 341
-00:20:01,500 --> 00:20:01,896
+00:20:01,200 --> 00:20:01,596
 Drift.
 
 342
-00:20:01,896 --> 00:20:06,448
+00:20:01,596 --> 00:20:06,148
 An upgrade re-applies the release's state, and the test passes again.
 
 343
-00:20:08,200 --> 00:20:12,906
+00:20:07,900 --> 00:20:12,606
 Installing a chart creates Kubernetes resources, with your credentials.
 
 344
-00:20:12,906 --> 00:20:16,154
+00:20:12,606 --> 00:20:15,854
 Traefik, from chapter one, created a ClusterRole:
 
 345
-00:20:16,154 --> 00:20:18,606
+00:20:15,854 --> 00:20:18,306
 permissions across the whole cluster.
 
 346
-00:20:19,167 --> 00:20:20,479
+00:20:18,867 --> 00:20:20,179
 Read what it may do:
 
 347
-00:20:20,479 --> 00:20:25,400
+00:20:20,179 --> 00:20:25,100
 get, list and watch Secrets in every namespace, to load T L S certificates.
 
 348
-00:20:25,400 --> 00:20:30,386
+00:20:25,100 --> 00:20:30,086
 Expected for an ingress controller, and worth knowing before you install it.
 
 349
-00:20:30,933 --> 00:20:32,704
+00:20:30,633 --> 00:20:32,404
 And what the Bookshop runs:
 
 350
-00:20:32,704 --> 00:20:35,524
+00:20:32,404 --> 00:20:35,224
 every Pod non root, no A P I token mounted.
 
 351
-00:20:35,524 --> 00:20:42,148
+00:20:35,224 --> 00:20:41,848
 The audit found one gap while this course was being built, the database Pod, and the chart was fixed.
 
 352
-00:20:43,900 --> 00:20:45,767
+00:20:43,600 --> 00:20:45,467
 Values files end up in Git.
 
 353
-00:20:45,767 --> 00:20:47,910
+00:20:45,467 --> 00:20:47,610
 And dash dash set is not safer:
 
 354
-00:20:47,910 --> 00:20:50,815
+00:20:47,610 --> 00:20:50,515
 the value is stored in the release record.
 
 355
-00:20:51,367 --> 00:20:54,863
+00:20:51,067 --> 00:20:54,563
 Here it is, read back with nothing but kubectl:
 
 356
-00:20:54,863 --> 00:20:58,211
+00:20:54,563 --> 00:20:57,911
 base sixty-four, base sixty-four again, gzip.
 
 357
-00:20:58,211 --> 00:21:00,071
+00:20:57,911 --> 00:20:59,771
 Encoding, not encryption.
 
 358
-00:21:00,071 --> 00:21:04,311
+00:20:59,771 --> 00:21:04,011
 Anyone who can read Secrets in the namespace can read it.
 
 359
-00:21:04,867 --> 00:21:05,936
+00:21:04,567 --> 00:21:05,636
 The safe patterns:
 
 360
-00:21:05,936 --> 00:21:10,569
+00:21:05,636 --> 00:21:10,269
 generate the password in the cluster, or reference an existing Secret by name.
 
 361
-00:21:10,569 --> 00:21:14,192
+00:21:10,269 --> 00:21:13,892
 With existing secret set, the chart renders no Secret at all:
 
 362
-00:21:14,192 --> 00:21:20,013
+00:21:13,892 --> 00:21:19,713
 every service and the database point at the named one, and the password never passes through Helm.
 
 363
-00:21:21,767 --> 00:21:25,009
+00:21:21,467 --> 00:21:24,709
 Twelve broken deployments, and one method.
 
 364
-00:21:25,009 --> 00:21:26,012
+00:21:24,709 --> 00:21:25,712
 Render first:
 
 365
-00:21:26,012 --> 00:21:27,865
+00:21:25,712 --> 00:21:27,565
 is the chart even valid?
 
 366
-00:21:28,400 --> 00:21:29,108
+00:21:28,100 --> 00:21:28,808
 Compare:
 
 367
-00:21:29,108 --> 00:21:32,294
+00:21:28,808 --> 00:21:31,994
 is what Helm applied what you meant?
 
 368
-00:21:32,294 --> 00:21:34,595
+00:21:31,994 --> 00:21:34,295
 Values, manifest, history.
 
 369
-00:21:35,133 --> 00:21:35,707
+00:21:34,833 --> 00:21:35,407
 Observe:
 
 370
-00:21:35,707 --> 00:21:38,788
+00:21:35,407 --> 00:21:38,488
 what does Kubernetes say about the objects?
 
 371
-00:21:39,333 --> 00:21:44,028
+00:21:39,033 --> 00:21:43,728
 Fix through Helm, in values or the chart, never only in the cluster.
 
 372
-00:21:44,567 --> 00:21:47,991
+00:21:44,267 --> 00:21:47,691
 And verify, with a test and the application itself.
 
 373
-00:21:47,991 --> 00:21:51,751
+00:21:47,691 --> 00:21:51,451
 Three of the twelve, the ones that surprise most people.
 
 374
-00:21:53,500 --> 00:21:56,510
+00:21:53,200 --> 00:21:56,210
 A tidy-up adds a label to the selector helper.
 
 375
-00:21:56,510 --> 00:21:57,688
+00:21:56,210 --> 00:21:57,388
 The upgrade fails:
 
 376
-00:21:57,688 --> 00:22:00,110
+00:21:57,388 --> 00:21:59,810
 a Deployment's selector is immutable.
 
 377
-00:22:00,667 --> 00:22:02,514
+00:22:00,367 --> 00:22:02,214
 So nothing changed?
 
 378
-00:22:02,514 --> 00:22:04,166
+00:22:02,214 --> 00:22:03,866
 The site is down.
 
 379
-00:22:04,700 --> 00:22:09,372
+00:22:04,400 --> 00:22:09,072
 The Service accepted the new selector before the Deployment was rejected.
 
 380
-00:22:09,372 --> 00:22:13,468
+00:22:09,072 --> 00:22:13,168
 Helm stops at the first error and does not undo what it applied.
 
 381
-00:22:13,468 --> 00:22:15,324
+00:22:13,168 --> 00:22:15,024
 No Pod matches, no endpoints.
 
 382
-00:22:15,324 --> 00:22:18,140
+00:22:15,024 --> 00:22:17,840
 A rollback restores one consistent revision.
 
 383
-00:22:19,900 --> 00:22:23,606
+00:22:19,600 --> 00:22:23,306
 Someone patched a ConfigMap with kubectl during debugging.
 
 384
-00:22:23,606 --> 00:22:28,717
+00:22:23,306 --> 00:22:28,417
 The test fails; the diff of Helm's manifest against the cluster shows the drift:
 
 385
-00:22:28,717 --> 00:22:29,995
+00:22:28,417 --> 00:22:29,695
 prod instead of dev.
 
 386
-00:22:30,533 --> 00:22:31,950
+00:22:30,233 --> 00:22:31,650
 The repair fails too.
 
 387
-00:22:31,950 --> 00:22:34,715
+00:22:31,650 --> 00:22:34,415
 Helm four applies with server side apply,
 
 388
-00:22:34,715 --> 00:22:39,840
+00:22:34,415 --> 00:22:39,540
 which records an owner for every field, and kubectl patch now owns this one.
 
 389
-00:22:39,840 --> 00:22:42,403
+00:22:39,540 --> 00:22:42,103
 Helm refuses to overwrite it silently.
 
 390
-00:22:42,967 --> 00:22:47,741
+00:22:42,667 --> 00:22:47,441
 We know the manual change was wrong, so Helm takes the field back:
 
 391
-00:22:47,741 --> 00:22:49,621
+00:22:47,441 --> 00:22:49,321
 dash dash force conflicts.
 
 392
-00:22:49,621 --> 00:22:51,936
+00:22:49,321 --> 00:22:51,636
 A safety net, used deliberately.
 
 393
-00:22:53,700 --> 00:23:00,046
+00:22:53,400 --> 00:22:59,746
 Production, autoscaling, and a request for five replicas with dash dash set.
 
 394
-00:23:00,046 --> 00:23:01,466
+00:22:59,746 --> 00:23:01,166
 Still three Pods.
 
 395
-00:23:01,466 --> 00:23:03,219
+00:23:01,166 --> 00:23:02,919
 Did the value arrive?
 
 396
-00:23:03,219 --> 00:23:03,553
+00:23:02,919 --> 00:23:03,253
 Yes:
 
 397
-00:23:03,553 --> 00:23:05,056
+00:23:03,253 --> 00:23:04,756
 precedence worked.
 
 398
-00:23:05,600 --> 00:23:11,751
+00:23:05,300 --> 00:23:11,451
 But the rendered Deployment has no replicas field at all, and an autoscaler with a minimum of three.
 
 399
-00:23:11,751 --> 00:23:15,318
+00:23:11,451 --> 00:23:15,018
 The template ignores replica count when autoscaling is on.
 
 400
-00:23:15,318 --> 00:23:19,685
+00:23:15,018 --> 00:23:19,385
 Precedence decides a key's value; the chart decides whether it matters.
 
 401
-00:23:19,685 --> 00:23:23,191
+00:23:19,385 --> 00:23:22,891
 Scale through the autoscaler's minimum, in a values file.
 
 402
-00:23:24,933 --> 00:23:25,721
+00:23:24,633 --> 00:23:25,421
 Lab fifteen:
 
 403
-00:23:25,721 --> 00:23:28,017
+00:23:25,421 --> 00:23:27,717
 a release with more than one fault.
 
 404
-00:23:28,017 --> 00:23:32,742
+00:23:27,717 --> 00:23:32,442
 The triage script prints Helm's view and Kubernetes' view in one screen.
 
 405
-00:23:32,742 --> 00:23:33,661
+00:23:32,442 --> 00:23:33,361
 First anomaly:
 
 406
-00:23:33,661 --> 00:23:36,548
+00:23:33,361 --> 00:23:36,248
 the image tag one point zero does not exist.
 
 407
-00:23:37,100 --> 00:23:38,790
+00:23:36,800 --> 00:23:38,490
 Fix it, triage again:
 
 408
-00:23:38,790 --> 00:23:43,700
+00:23:38,490 --> 00:23:43,400
 now the Pod runs, but its probes fail on port three thousand.
 
 409
-00:23:43,700 --> 00:23:47,162
+00:23:43,400 --> 00:23:46,862
 A second fault was hiding behind the first.
 
 410
-00:23:47,162 --> 00:23:50,381
+00:23:46,862 --> 00:23:50,081
 One hypothesis, one fix, verify, repeat.
 
 411
-00:23:52,133 --> 00:23:55,422
+00:23:51,833 --> 00:23:55,122
 The production style chart reads like a list of answers.
 
 412
-00:23:55,422 --> 00:23:59,945
+00:23:55,122 --> 00:23:59,645
 Five near-identical blocks become one template that ranges over the services.
 
 413
-00:24:00,500 --> 00:24:03,592
+00:24:00,200 --> 00:24:03,292
 The environment folders become values files:
 
 414
-00:24:03,592 --> 00:24:05,912
+00:24:03,292 --> 00:24:05,612
 three, nine and thirty-two lines.
 
 415
-00:24:06,467 --> 00:24:11,995
+00:24:06,167 --> 00:24:11,695
 URLs that depend on the release are built with T P L; the database password is generated once,
 
 416
-00:24:11,995 --> 00:24:16,760
+00:24:11,695 --> 00:24:16,460
 read back with lookup on every upgrade, and kept when the release is uninstalled,
 
 417
-00:24:16,760 --> 00:24:18,583
+00:24:16,460 --> 00:24:18,283
 because the volume outlives it.
 
 418
-00:24:19,133 --> 00:24:21,970
+00:24:18,833 --> 00:24:21,670
 The database is a dependency with a condition.
 
 419
-00:24:22,533 --> 00:24:25,593
+00:24:22,233 --> 00:24:25,293
 A hook, a test and NOTES make it operable.
 
 420
-00:24:26,133 --> 00:24:29,623
+00:24:25,833 --> 00:24:29,323
 And production adds an autoscaler and disruption budgets.
 
 421
-00:24:31,367 --> 00:24:32,529
+00:24:31,067 --> 00:24:32,229
 Dev and staging:
 
 422
-00:24:32,529 --> 00:24:33,765
+00:24:32,229 --> 00:24:33,465
 the same objects.
 
 423
-00:24:33,765 --> 00:24:38,053
+00:24:33,465 --> 00:24:37,753
 Production adds the autoscaler and five disruption budgets.
 
 424
-00:24:38,600 --> 00:24:41,483
+00:24:38,300 --> 00:24:41,183
 And the gate a promotion pipeline uses:
 
 425
-00:24:41,483 --> 00:24:43,701
+00:24:41,183 --> 00:24:43,401
 the test of every environment.
 
 426
-00:24:43,701 --> 00:24:46,066
+00:24:43,401 --> 00:24:45,766
 Succeeded, succeeded, succeeded.
 
 427
-00:24:47,800 --> 00:24:50,290
+00:24:47,500 --> 00:24:49,990
 The capstone runs the whole life cycle.
 
 428
-00:24:50,290 --> 00:24:53,930
+00:24:49,990 --> 00:24:53,630
 Deploy staging with raw YAML and measure the duplication.
 
 429
-00:24:54,467 --> 00:24:57,561
+00:24:54,167 --> 00:24:57,261
 Build the chart, or study the reference one.
 
 430
-00:24:58,100 --> 00:25:02,283
+00:24:57,800 --> 00:25:01,983
 Lint and render for every environment, install, verify.
 
 431
-00:25:02,833 --> 00:25:09,268
+00:25:02,533 --> 00:25:08,968
 Upgrade node A P I to one point one point zero, through a small overlay file, reviewed as a diff.
 
 432
-00:25:09,833 --> 00:25:13,728
+00:25:09,533 --> 00:25:13,428
 Break the next upgrade, investigate it, roll back.
 
 433
-00:25:14,267 --> 00:25:17,401
+00:25:13,967 --> 00:25:17,101
 Test, read the history, clean up.
 
 434
-00:25:19,167 --> 00:25:21,057
+00:25:18,867 --> 00:25:20,757
 The upgrade, previewed:
 
 435
-00:25:21,057 --> 00:25:23,686
+00:25:20,757 --> 00:25:23,386
 only node A P I's image changes.
 
 436
-00:25:24,233 --> 00:25:27,362
+00:25:23,933 --> 00:25:27,062
 Then a java A P I tag that was never published:
 
 437
-00:25:27,362 --> 00:25:30,358
+00:25:27,062 --> 00:25:30,058
 the upgrade fails, the old Pod keeps serving.
 
 438
-00:25:30,900 --> 00:25:34,726
+00:25:30,600 --> 00:25:34,426
 Roll back to revision two, and the test proves the state:
 
 439
-00:25:34,726 --> 00:25:40,230
+00:25:34,426 --> 00:25:39,930
 java A P I back on one point zero, node A P I on one point one, all checks passed.
 
 440
-00:25:41,967 --> 00:25:43,713
+00:25:41,667 --> 00:25:43,413
 Read the history as a story:
 
 441
-00:25:43,713 --> 00:25:49,137
+00:25:43,413 --> 00:25:48,837
 installed, node A P I one point one, a failed java A P I promotion, rolled back to two.
 
 442
-00:25:49,137 --> 00:25:54,375
+00:25:48,837 --> 00:25:54,075
 And production runs chart one point two point one, staging one point two point zero:
 
 443
-00:25:54,375 --> 00:25:58,365
+00:25:54,075 --> 00:25:58,065
 the chart version tells you which package each environment runs.
 
 444
-00:25:58,365 --> 00:26:01,483
+00:25:58,065 --> 00:26:01,183
 Nothing about this needs a meeting to reconstruct.
 
 445
-00:26:03,233 --> 00:26:06,824
+00:26:02,933 --> 00:26:06,524
 Twelve challenges build one chart from an empty folder:
 
 446
-00:26:06,824 --> 00:26:09,827
+00:26:06,524 --> 00:26:09,527
 values, environments, a ConfigMap, an Ingress,
 
 447
-00:26:09,827 --> 00:26:15,312
+00:26:09,527 --> 00:26:15,012
 a helper, an upgrade, a rollback, a dependency, a test, and a broken release to fix.
 
 448
-00:26:15,867 --> 00:26:17,047
+00:26:15,567 --> 00:26:16,747
 And the cleanup:
 
 449
-00:26:17,047 --> 00:26:21,106
+00:26:16,747 --> 00:26:20,806
 uninstall, remove the repositories, delete the cluster.
 
 450
-00:26:22,867 --> 00:26:29,888
+00:26:22,567 --> 00:26:29,588
 You can now explain why Helm exists, how charts, values and templates work, and how to manage releases.
 
 451
-00:26:30,433 --> 00:26:33,113
+00:26:30,133 --> 00:26:32,813
 How to run many environments from one chart,
 
 452
-00:26:33,113 --> 00:26:37,497
+00:26:32,813 --> 00:26:37,197
 use repositories and dependencies, and use hooks and tests deliberately.
 
 453
-00:26:38,033 --> 00:26:41,904
+00:26:37,733 --> 00:26:41,604
 And how to review a chart's security, troubleshoot with a method,
 
 454
-00:26:41,904 --> 00:26:45,835
+00:26:41,604 --> 00:26:45,535
 and operate a production style chart through its whole life cycle.
 
 455
-00:26:45,835 --> 00:26:48,039
+00:26:45,535 --> 00:26:47,739
 Everything is in the free repository.
 
 456
-00:26:48,039 --> 00:26:49,230
+00:26:47,739 --> 00:26:48,930
 Thanks for watching.

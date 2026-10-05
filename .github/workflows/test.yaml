@@ -44,6 +44,8 @@ jobs:
       - name: Charts lint and render to valid Kubernetes objects (every values file)
         run: |
           helm dependency build charts/bookshop
+          # an https:// dependency needs its repository added before build/update
+          helm repo add podinfo https://stefanprodan.github.io/podinfo > /dev/null
           helm dependency build examples/dependency-example
           for chart in charts/demo-app charts/bookshop charts/postgres examples/basic-chart examples/values-example examples/dependency-example examples/hooks-example; do
             files=$(ls $chart/values-*.yaml 2>/dev/null || true)

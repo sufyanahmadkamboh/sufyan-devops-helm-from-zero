@@ -7,6 +7,7 @@ storefront (parent chart)
 ```
 
 ```bash
+helm repo add podinfo https://stefanprodan.github.io/podinfo   # Helm needs the dependency's repository
 helm dependency update examples/dependency-example     # downloads charts/podinfo-6.15.0.tgz, writes Chart.lock
 helm install shopfront examples/dependency-example -n deps --create-namespace --wait
 curl -s http://catalog.localhost:8080/

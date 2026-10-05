@@ -24,12 +24,12 @@ Helm From Zero: start from an application deployed with plain Kubernetes YAML (1
 12:13 Upgrade
 13:30 Rollback
 14:56 Environment Values
-15:44 Repositories
+15:43 Repositories
 17:02 Dependencies
 18:04 Hooks
 19:19 Tests
 20:07 Secrets & Security
-21:21 Troubleshooting
+21:20 Troubleshooting
 23:51 Production-Style Chart
 24:47 Capstone
 26:02 Cleanup
