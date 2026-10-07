@@ -6,3 +6,7 @@ __pycache__/
 kubeconfig*
 labs/work/
 *.tgz
+
+# Social media packages (LinkedIn carousel/post, YouTube upload package): kept locally, not published
+linkedin/
+video/youtube/
